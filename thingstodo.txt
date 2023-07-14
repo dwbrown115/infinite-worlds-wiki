@@ -1,7 +1,7 @@
 Make sure passwords match ✓
 Check if usename exists ✓
 Check if email exists ✓
-Forgot password link ✓
+Forgot password link ✓ 
 Forgot email link
 username sign-in
 captcha test when creating account and creating a wiki page
