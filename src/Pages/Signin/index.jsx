@@ -19,7 +19,7 @@ function SignIn() {
       if (auth.currentUser.emailVerified != false) {
         navigate("/user");
       } else {
-        navigate("/user/auth");
+        navigate("/user/authentication");
       }
     } catch (e) {
       console.log(e);
@@ -31,9 +31,13 @@ function SignIn() {
     } else {
       // else successful
       // console.log(result);
-      return navigate("/user/auth");
+      return navigate("/user/authentication");
     }
   };
+
+  function handleClick() {
+    navigate("/auth/reset-password");
+  }
   return (
     <>
       <div className="form-wrapper">
@@ -65,6 +69,8 @@ function SignIn() {
           </label>
           <button type="submit">Sign in</button>
         </form>
+        <br />
+        <button onClick={handleClick}>Forgot password?</button>
         <Link to={"/"}>Home</Link>
       </div>
     </>

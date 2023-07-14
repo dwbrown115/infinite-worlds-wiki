@@ -8,7 +8,7 @@ export default async function logOut() {
   try {
     result = await signOut(auth)
       .then(() => {
-        console.log("signout successful");
+        // console.log("signout successful");
       })
       .catch((error) => {
         console.log(error);

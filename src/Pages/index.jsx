@@ -8,3 +8,4 @@ export { default as ContentId } from "./Content-Dashboard/Content-Id/content-id"
 export { default as SignIn } from "./Signin";
 export { default as SignUp } from "./Signup";
 export { default as SearchResults } from "./SearchResults";
+export { default as ResetPassword } from './ResetPassword'

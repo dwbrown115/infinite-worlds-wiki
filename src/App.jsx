@@ -11,6 +11,7 @@ import {
   SignUp,
   SearchResults,
   IsAuth,
+  ResetPassword,
 } from "./Pages";
 import { Searchbar } from "./components";
 import "./App.scss";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/user/authentication" Component={IsAuth} />
           <Route path="/content" Component={ContentDashboard} />
           <Route path="/user/upload" Component={ContentUpload} />
+          <Route path="/auth/reset-password" Component={ResetPassword} />
           <Route path="/user/edit/:id" Component={ContentEdit} />
           <Route path="/content/:id" Component={ContentId} />
           <Route path="/signin" Component={SignIn} />

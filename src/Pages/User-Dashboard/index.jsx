@@ -129,10 +129,21 @@ function UserDashboard() {
           })}
           <br />
           <br />
-          <button onClick={handleTest}>Test</button>
+          {/* <button onClick={handleTest}>Test</button> */}
           <button onClick={handleLogout}>Sign out</button>
+          <br />
           <Link to={"/user/upload"}>Create Content</Link>
+          <br />
           <Link to={"/content"}>Content Dashboard</Link>
+          <br />
+          {/* <Link to={"/auth/reset-password"}>Reset password</Link> */}
+          <button
+            onClick={() => {
+              router("/auth/reset-password");
+            }}
+          >
+            Change password
+          </button>
         </div>
       </>
     );
