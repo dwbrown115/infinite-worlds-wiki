@@ -36,7 +36,7 @@ function SignIn() {
   };
 
   function handleClick() {
-    navigate("/auth/reset-password");
+    navigate("/signin/forgot-password");
   }
   return (
     <>

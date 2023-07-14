@@ -11,7 +11,8 @@ import {
   SignUp,
   SearchResults,
   IsAuth,
-  ResetPassword,
+  NewPassword,
+  ForgotPassword,
 } from "./Pages";
 import { Searchbar } from "./components";
 import "./App.scss";
@@ -28,10 +29,11 @@ function App() {
           <Route path="/user/authentication" Component={IsAuth} />
           <Route path="/content" Component={ContentDashboard} />
           <Route path="/user/upload" Component={ContentUpload} />
-          <Route path="/auth/reset-password" Component={ResetPassword} />
+          <Route path="/auth/reset-password" Component={NewPassword} />
           <Route path="/user/edit/:id" Component={ContentEdit} />
           <Route path="/content/:id" Component={ContentId} />
           <Route path="/signin" Component={SignIn} />
+          <Route path="/signin/forgot-password" Component={ForgotPassword} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/search_results/:id" Component={SearchResults} />
         </Routes>
