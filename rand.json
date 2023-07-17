@@ -1,0 +1,130 @@
+[
+  {
+    "SectionName": "Character blurb",
+    "SectionContent": [
+      { "text": "Rand al'Thor" },
+      {
+        "text": "\"He came like the wind, like the wind touched everything, and like the wind was gone.\"—from The Dragon Reborn. By Loial, son of Arent, son of Halan, the Fourth Age"
+      },
+      {
+        "text": "Rand al'Thor is the Dragon Reborn, the champion of the Light in the battle against the Dark One and one of the main protagonists of the series."
+      },
+      {
+        "text": "He, together with Mat Cauthon and Perrin Aybara, is a strong ta'veren."
+      }
+    ]
+  },
+  {
+    "SectionName": "Character info",
+    "SectionContent": {
+      "Image": "https://static.wikia.nocookie.net/wot/images/5/57/Rand_al%27thor_by_reddera-d761cuv_%281%29.jpg/revision/latest?cb=20160605153830",
+      "Name": "Rand al'Thor",
+      "Sections": [
+        {
+          "SectionName": "Biographical Information",
+          "SectionContent": [
+            {
+              "title": "Nationality",
+              "text": "Andoran"
+            },
+            {
+              "title": "Date of birth",
+              "text": "2 Danu 978 NE"
+            },
+            {
+              "title": "Current status",
+              "text": "Alive"
+            }
+          ]
+        },
+        {
+          "SectionName": "Physical description",
+          "SectionContent": [
+            {
+              "title": "Gender",
+              "text": "Male"
+            },
+            {
+              "title": "Height",
+              "text": "6' 6\", 198cm"
+            },
+            {
+              "title": "Build",
+              "text": "Muscular"
+            },
+            {
+              "title": "Weight",
+              "text": "235 lbs, 16 st 11 lbs, 106.6 kg"
+            },
+            {
+              "title": "Hair",
+              "text": "Dark red"
+            },
+            {
+              "title": "Eyes",
+              "text": "Gray-blue"
+            }
+          ]
+        },
+        {
+          "SectionName": "Chronological and political information",
+          "SectionContent": [
+            {
+              "title": "First mentioned",
+              "text": "NS 2"
+            },
+            {
+              "title": "First appeared",
+              "text": "TEOTW Ravens"
+            },
+            {
+              "title": "Last appeared",
+              "text": "AMOL Epilogue"
+            },
+            {
+              "title": "Titles",
+              "text": "Dragon Reborn, Coramoor, Car'a'carn, He Who Comes With the Dawn, Shadowkiller, King of Illian, Lord of the Morning"
+            },
+            {
+              "title": "Rank",
+              "text": "King"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "SectionName": "Character info",
+    "SectionContent": [
+      {
+        "SectionName": "Appearance",
+        "SectionContent": [
+          {
+            "text": "Rand is very tall - 6'6\" or 198 cm in height. He has blue-gray eyes and dark hair with a \"reddish tinge\", both features of his Aiel heritage. He is broad-shouldered and slender, but muscular."
+          },
+          {
+            "text": "His appearance changes throughout the length of the series. By the time of Winter's Heart, for example, his hair is in \"dark, reddish curls that hung to his neck\". Other physical changes occur in the form of injuries or permanent marks. His palms have brands in the shape of a heron and his forearms are covered by two scarlet and gold dragon tattoos that mark him as the Car'a'carn. He has a wound that does not heal in his side, although this is not visible while he is fully clothed. Lastly, he lost his left hand from a fireball thrown by Semirhage."
+          }
+        ]
+      },
+      {
+        "SectionName": "Channeling abilities",
+        "SectionContent": [
+          {
+            "text": "At level ++1, Rand al'Thor is as strong in the One Power as it is possible to be. The only channelers we know of the same strength are the Forsaken Ishamael and Rahvin."
+          },
+          {
+            "text": "Asides from raw strength, his skill in the One Power may be unsurpassed, something that may be expected as the prophesied saviour of the world. There are many examples of this prowess; in the Stone of Tear, he effortlessly held Egwene al'Vere and Elayne Trakand captive in shields while weaving over a dozen other flows.[9] Later, this ability to split flows is even greater, notably at the Shadowspawn attacks at Algarin Pendaloan's manor and Maradon, where Naeff is unable to track the number of weaves created by Rand."
+          },
+          {
+            "text": "It hinted that he is particularly strong in both Fire and Spirit, because he can force his dreams on others, which requires strength in Spirit, and he can create weaves of Fire without much trouble at all.[9] Although he learned much from the Forsaken Asmodean, he still lacked some areas of knowledge that might be considered basic among male channelers of the Age of Legends. Mazrim Taim, for example, expresses surprise that he did not know how to detect the ability to channel in another man, yet knew how to Travel.[10] As he merges more with Lews Therin, it can be assumed that he knows as least as much as the Dragon did about the One Power."
+          },
+          {
+            "text": "In addition to his own natural strength, he has several angreal and sa'angreal that allow that strength to be boosted by a considerable factor. Of these, only the fat man angreal is of practical use at close range."
+          }
+        ]
+      }
+    ]
+  }
+]

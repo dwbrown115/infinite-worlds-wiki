@@ -85,6 +85,9 @@ function ContentId() {
   const handlePageContent = () => {
     return (
       <div>
+        <br />
+        <Link to={`/content/${id}/synopsis`}>Synopsis</Link>
+        <Link to={`/content/${id}/relationships`}>Relationships</Link>
         <div>Content</div>
         <div>
           {/* <div>

@@ -7,7 +7,7 @@ import firebase_app from "../../firebase/config";
 
 function SignIn() {
   const auth = getAuth(firebase_app);
-  const navigate = useNavigate();
+  const router = useNavigate();
   const [email, setEmail] = useState("jinsai115@gmail.com");
   const [password, setPassword] = useState("@Jivvc115");
 
@@ -17,9 +17,9 @@ function SignIn() {
     try {
       await signIn(email, password);
       if (auth.currentUser.emailVerified != false) {
-        navigate("/user");
+        router("/user");
       } else {
-        navigate("/user/authentication");
+        router("/user/authentication");
       }
     } catch (e) {
       console.log(e);
@@ -31,12 +31,12 @@ function SignIn() {
     } else {
       // else successful
       // console.log(result);
-      return navigate("/user/authentication");
+      return router("/user/authentication");
     }
   };
 
   function handleClick() {
-    navigate("/signin/forgot-password");
+    router("/signin/forgot-password");
   }
   return (
     <>

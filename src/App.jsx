@@ -13,6 +13,8 @@ import {
   IsAuth,
   NewPassword,
   ForgotPassword,
+  ContentSynopsis,
+  ContentRelationships,
 } from "./Pages";
 import { Searchbar } from "./components";
 import "./App.scss";
@@ -32,6 +34,11 @@ function App() {
           <Route path="/auth/reset-password" Component={NewPassword} />
           <Route path="/user/edit/:id" Component={ContentEdit} />
           <Route path="/content/:id" Component={ContentId} />
+          <Route path="/content/:id?/synopsis" Component={ContentSynopsis} />
+          <Route
+            path="/content/:id?/relationships"
+            Component={ContentRelationships}
+          />
           <Route path="/signin" Component={SignIn} />
           <Route path="/signin/forgot-password" Component={ForgotPassword} />
           <Route path="/signup" Component={SignUp} />

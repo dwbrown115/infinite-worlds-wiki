@@ -11,6 +11,7 @@ import { Loading } from "../../../helpers";
 import firebase_app from "../../../firebase/config";
 import addData from "../../../firebase/firestore/addData";
 import makeid from "../../../helpers/randomString";
+import CharacterPageTemplate from "./Content-templates/CharacterPageTemplate";
 
 function ContentUpload() {
   const db = getFirestore(firebase_app);
@@ -30,7 +31,11 @@ function ContentUpload() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const editedBy = email;
+  const [characterArr, setCharacterArr] = useState([]);
+
+  const doSomething = (inputArray) => {
+    setCharacterArr(inputArray);
+  };
 
   const grabUser = async () => {
     const collection = "users";
@@ -69,31 +74,33 @@ function ContentUpload() {
       storage,
       `/${collection}/${image.name}+${makeid(16)}`
     );
-    if (image != "") {
-      await uploadBytes(contentRef, image).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          const imageUrl = url;
-          const time = Date().toLocaleString();
-          const data = {
-            title: title,
-            text,
-            imageUrl,
-            createdBy: editedBy,
-            createdAt: time,
-          };
-          handleUpload(data);
-        });
-      });
-    } else {
-      const time = Date().toLocaleString();
-      const data = {
-        title: title,
-        text,
-        createdBy: editedBy,
-        createdAt: time,
-      };
-      handleUpload(data);
-    }
+    console.log(image);
+    // await uploadBytes(contentRef, image);
+    // if (image != "") {
+    //   await uploadBytes(contentRef, image).then((snapshot) => {
+    //     getDownloadURL(snapshot.ref).then(async (url) => {
+    //       const imageUrl = url;
+    //       const time = Date().toLocaleString();
+    //       const data = {
+    //         title: title,
+    //         text,
+    //         imageUrl,
+    //         createdBy: editedBy,
+    //         createdAt: time,
+    //       };
+    //       handleUpload(data);
+    //     });
+    //   });
+    // } else {
+    //   const time = Date().toLocaleString();
+    //   const data = {
+    //     title: title,
+    //     text,
+    //     createdBy: editedBy,
+    //     createdAt: time,
+    //   };
+    //   handleUpload(data);
+    // }
   };
 
   const handleForm = async (e) => {
@@ -135,15 +142,41 @@ function ContentUpload() {
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setImageUrl(URL.createObjectURL(event.target.files[0]));
-      setImage(event.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageUrl(URL.createObjectURL(event.target.files[0]));
+        setImage(event.target.files[0]);
+        // console.log(image);
+        // console.log(URL.createObjectURL(event.target.files[0]));
+      };
+      reader.readAsDataURL(event.target.files[0]);
+      // // setImage(event.target.files[0]);
+      // console.log(event.target.files[0]);
     }
   };
+
+  const handleImageChange = (e, index) => {
+    if (e.target.files && e.target.files[0]) {
+      // Use FileReader to convert the image file to a data URL
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(e.target.files[0]);
+        // console.log(image);
+        // console.log(URL.createObjectURL(e.target.files[0]));
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      // console.log(reader.readAsDataURL(e.target.files[0]))
+    }
+  };
+
+  function handleTest() {
+    console.log(characterArr);
+  }
 
   const handlePageContent = () => {
     return (
       <>
-        <div>
+        {/* <div>
           <h3>Create Content</h3>
           <form id="contentForm" onSubmit={handleForm}>
             <label>
@@ -170,17 +203,19 @@ function ContentUpload() {
             </label>
             <br />
             <br />
-            <label>
-              Image:
-              <img src={imageUrl} />
-              <br />
+            <div className="image">
+              <label htmlFor={`image`}>Image:</label>
               <input
+                id={`image`}
                 type="file"
                 name="myImage"
                 accept="image/*"
-                onChange={onImageChange}
+                onChange={(e) => handleImageChange(e)}
               />
-            </label>
+              {image && (
+                <img src={URL.createObjectURL(image)} alt="Section Image" />
+              )}
+            </div>
             <br />
             <br />
             <div>
@@ -190,7 +225,9 @@ function ContentUpload() {
               </button>
             </div>
           </form>
-        </div>
+        </div> */}
+        <CharacterPageTemplate doSomethingMethod={doSomething} />
+        {/* <button onClick={handleTest}>test</button> */}
         <Link to={"/user"}>Go Back</Link>
       </>
     );
@@ -204,3 +241,12 @@ function ContentUpload() {
 }
 
 export default ContentUpload;
+
+{
+  /* <label>
+  Image:
+  <img src={imageUrl} />
+  <br />
+  <input type="file" name="myImage" accept="image/*" onChange={onImageChange} />
+</label>; */
+}

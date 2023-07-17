@@ -1,13 +1,21 @@
+✓ = done 
+✘ = no longer persued/not possible
+○ = later
 Make sure passwords match ✓
 Check if usename exists ✓
 Check if email exists ✓
 Forgot password link ✓
-Forgot email link
-username sign-in
-captcha test when creating account and creating a wiki page
-dynamically add elements to a wiki page
-Maybe dashboard notifications
-Signin with google and if a user has done that make it so that user has to complete registration 
-Have a basic page creation setup, but allow users to dynamically add or remove elements based on what they are writing about
-Link to other pages dynamically based on if a word in a page contains the title of another page's title
+dynamically add elements to a wiki page ✓
+Have a basic page creation setup, but allow users 
+to dynamically add or remove elements based on what they are writing about
 Have preset content forms for the most common page types
+Only send certain parts of an object to algolia ie: only a username ✓
+Signin with google and if a user has done that make it so that user has to complete registration ✘
+Forgot email link ✘
+username sign-in ✘
+captcha test when creating account and creating a wiki page ○
+Draggable form elements ○
+add alert to make sure user wants to leave page when editing or creating content ○
+Maybe dashboard notifications
+Link to other pages dynamically based on if a word in a page contains the title of another page's title
+add comments to an individual wiki page
