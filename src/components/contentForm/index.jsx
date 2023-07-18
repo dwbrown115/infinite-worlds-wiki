@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-function ContentForm({ handleFormContents }) {
-  const [sections, setSections] = useState([]);
+function ContentForm({ handleFormContents, isManualOfStyle, section }) {
+  const [sections, setSections] = useState(section);
+
   const [showSections, setShowSections] = useState(false);
+
+  useEffect(() => {
+    handleFormContents(sections);
+  }, [sections]);
 
   const addSection = () => {
     setSections([
@@ -92,6 +97,10 @@ function ContentForm({ handleFormContents }) {
           onChange={(e) => handleChange(e, index, "sectionName")}
           required
         />
+        <button type="button" onClick={() => removeSection(index)}>
+          Remove Section
+        </button>
+        <br />
         {/* This is the button to add an image */}
         {section.sectionImage === null ? (
           <button type="button" onClick={() => addImage(index)}>
@@ -100,9 +109,6 @@ function ContentForm({ handleFormContents }) {
         ) : (
           <div />
         )}
-        <button type="button" onClick={() => removeSection(index)}>
-          Remove Section
-        </button>
         <br />
         {/* <br /> */}
         {section.sectionImage !== null && (
@@ -128,15 +134,25 @@ function ContentForm({ handleFormContents }) {
         )}
         {section.sectionContent.map((content, contentIndex) => (
           <div key={contentIndex} className="content">
-            <label htmlFor={`title${index}${contentIndex}`}>Title:</label>
-            <input
-              id={`title${index}${contentIndex}`}
-              type="text"
-              value={content.title}
-              data-content-index={contentIndex}
-              onChange={(e) => handleChange(e, index, "title")}
-            />
-            <label htmlFor={`text${index}${contentIndex}`}>Text:</label>
+            {isManualOfStyle === true ? (
+              <div>
+                <label htmlFor={`title${index}${contentIndex}`}>Title:</label>
+                <input
+                  id={`title${index}${contentIndex}`}
+                  type="text"
+                  value={content.title}
+                  data-content-index={contentIndex}
+                  onChange={(e) => handleChange(e, index, "title")}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+            {isManualOfStyle === true ? (
+              <label htmlFor={`text${index}${contentIndex}`}>Text:</label>
+            ) : (
+              <label htmlFor={`text${index}${contentIndex}`}>Paragraph:</label>
+            )}
             <textarea
               id={`text${index}${contentIndex}`}
               type="text"
@@ -154,11 +170,9 @@ function ContentForm({ handleFormContents }) {
           </div>
         ))}
         <br />
-        <br />
         <button type="button" onClick={() => addContent(index)}>
           Add Content
         </button>
-        {/* This is the file input to upload an image */}
       </div>
     ));
   };
@@ -187,10 +201,6 @@ function ContentForm({ handleFormContents }) {
       </ul>
     );
   };
-
-  useEffect(() => {
-    handleFormContents(sections);
-  }, [sections]);
 
   function handleReset() {
     setSections([]);

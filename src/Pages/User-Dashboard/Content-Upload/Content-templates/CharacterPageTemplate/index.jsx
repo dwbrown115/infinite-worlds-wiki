@@ -1,86 +1,109 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ContentForm } from "../../../../../components";
 
 function CharacterPageTemplate({ doSomethingMethod }) {
-  const [manualOfStyle, setManualOfStyle] = useState(null);
-  const [blurb, setBlurb] = useState(null);
-  const [info, setInfo] = useState(null);
-  const [synopsis, setSynopsis] = useState(null);
-  const [relationships, setRelationships] = useState(null);
+  const [manualOfStyle, setManualOfStyle] = useState([]);
+  const [blurb, setBlurb] = useState([]);
+  const [info, setInfo] = useState([]);
+  const [synopsis, setSynopsis] = useState([]);
+  const [relationships, setRelationships] = useState([]);
   const [allInfoArr, setAllInfoArr] = useState([]);
   const [allArr, setAllArr] = useState([]);
-  const [character, setCharacter] = useState("");
+  const [character, setCharacter] = useState("hgyi9ihioihb");
 
-  const handleManualOfStyle = (inputArray) => {
+  const handleManualOfStyle = (inputArrayMOS) => {
     // Do something with your array of strings in here
     setManualOfStyle({
       contentType: "CharacterManualofsyle",
-      content: inputArray,
+      content: inputArrayMOS,
     });
     // console.log(arr);
   };
 
-  const handleBlurb = (inputArray) => {
+  const handleBlurb = (inputArrayB) => {
     // Do something with your array of strings in here
     setBlurb({
       contentType: "CharacterBlurb",
-      content: inputArray,
+      content: inputArrayB,
     });
     // console.log(arr);
   };
 
-  const handleInfo = (inputArray) => {
+  const handleInfo = (inputArrayI) => {
     // Do something with your array of strings in here
     setInfo({
       contentType: "CharacterInfo",
-      content: inputArray,
+      content: inputArrayI,
     });
     // console.log(arr);
   };
 
-  const handleSynopsis = (inputArray) => {
+  const handleSynopsis = (inputArrayS) => {
     // Do something with your array of strings in here
     setSynopsis({
       contentType: "CharacterSynopsis",
-      content: inputArray,
+      content: inputArrayS,
     });
     // console.log(arr);
   };
 
-  const handleRelationships = (inputArray) => {
+  const handleRelationships = (inputArrayR) => {
     // Do something with your array of strings in here
     setRelationships({
       contentType: "CharacterRelationships",
-      content: inputArray,
+      content: inputArrayR,
     });
     // console.log(arr);
   };
 
-  function handleCharacterInfoSubmit() {
-    allInfoArr.push(...allInfoArr, manualOfStyle, blurb, info);
-    allArr.push(...allArr, {
-      PageType: "CharacterInfoPage",
-      content: allInfoArr,
+  async function handleCharacterInfoSubmit() {
+    const allCharInfoArr = [];
+    allCharInfoArr.push(...allInfoArr, manualOfStyle, blurb, info);
+    allArr.push({
+      pageType: "CharacterInfoPage",
+      content: allCharInfoArr,
     });
-    console.log(allArr);
+    setManualOfStyle([]);
+    setBlurb([]);
+    setInfo([]);
+    // console.log(allArr.map((item) => console.log(item.PageType)));
   }
 
   function handleCharacterSynopsisSubmit() {
-    allInfoArr.push(...allInfoArr, synopsis);
-    allArr.push(...allArr, {
-      PageType: "CharacterSynopsisPage",
-      content: allInfoArr,
+    const allCharSynopsisArr = [];
+    allCharSynopsisArr.push(...allInfoArr, synopsis);
+    allArr.push({
+      pageType: "CharacterSynopsisPage",
+      content: allCharSynopsisArr,
     });
-    console.log(allArr);
+    setSynopsis([]);
+    // console.log(allArr);
   }
   function handleCharacterRelationshipSubmit() {
-    allInfoArr.push(...allInfoArr, relationships);
-    allArr.push(...allArr, {
-      PageType: "CharacterRelationshipPage",
-      content: allInfoArr,
+    const allCharRelationshipArr = [];
+    allCharRelationshipArr.push(...allInfoArr, relationships);
+    allArr.push({
+      pageType: "CharacterRelationshipPage",
+      content: allCharRelationshipArr,
     });
-    console.log(allArr);
+    setRelationships([]);
+    // console.log(allArr);
+  }
+  function replaceImage(array) {
+    array.map((item) => {
+      {
+        item.content.map((item) => {
+          // console.log(item)
+          {
+            item.content.map((item) => {
+              console.log(item.sectionImage);
+            });
+          }
+        });
+      }
+    });
   }
   // useEffect(() => {
   //   doSomethingMethod(manualOfStyle);
@@ -92,56 +115,81 @@ function CharacterPageTemplate({ doSomethingMethod }) {
     await handleCharacterInfoSubmit();
     await handleCharacterSynopsisSubmit();
     await handleCharacterRelationshipSubmit();
-    try {
-      finalArr.push(...finalArr, {
-        contentType: "Character",
-        character: character,
-        content: allArr,
-      });
-      console.log(finalArr);
-    } catch (e) {
-      console.log(e);
-    }
+    // console.log(allArr);
+    console.log(replaceImage(allArr));
+    // setAllArr([]);
+    // await
+    // try {
+    //   finalArr.push(...finalArr, {
+    //     contentType: "Character",
+    //     character: character,
+    //     content: allArr,
+    //   });
+    //   console.log(finalArr);
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
   return (
     <div className="CharacterPageTemplate">
       <hr />
-      <form onSubmit={handleUpload}>
-        <h1>Character Info Page</h1>
+      {/* <form onSubmit={handleUpload}> */}
+      <h1>Character Info Page</h1>
+      <div>
+        <h2>Character Name</h2>
+        <input
+          type="text"
+          placeholder="Character name:"
+          value={character}
+          onChange={(e) => setCharacter(e.target.value)}
+          required
+        />
+      </div>
+      <div>
         <div>
-          <h2>Character Name</h2>
-          <input
-            type="text"
-            placeholder="Character name:"
-            value={character}
-            onChange={(e) => setCharacter(e.target.value)}
-            required
+          <h2>Manual of syle</h2>
+          <ContentForm
+            handleFormContents={handleManualOfStyle}
+            isManualOfStyle={true}
+            section={manualOfStyle}
           />
         </div>
         <div>
-          <div>
-            <h2>Manual of syle</h2>
-            <ContentForm handleFormContents={handleManualOfStyle} />
-          </div>
-          <div>
-            <h2>Quick Blurb</h2>
-            <ContentForm handleFormContents={handleBlurb} />
-          </div>
+          <h2>Quick Blurb</h2>
+          <ContentForm
+            handleFormContents={handleBlurb}
+            isManualOfStyle={false}
+            section={blurb}
+          />
         </div>
-        <div>
-          <h2>Character Info</h2>
-          <ContentForm handleFormContents={handleInfo} />
-        </div>
-        {/* <button onClick={handleSubmit}>Submit</button> */}
-        <hr />
-        <h1>Character Synopsis Page</h1>
-        <ContentForm handleFormContents={handleSynopsis} />
-        <hr />
-        <h1>Character Relationships Page</h1>
-        <ContentForm handleFormContents={handleRelationships} />
-        <button type="submit">Submit</button>
-      </form>
+      </div>
+      <div>
+        <h2>Character Info</h2>
+        <ContentForm
+          handleFormContents={handleInfo}
+          isManualOfStyle={false}
+          section={info}
+        />
+      </div>
+      {/* <button onClick={handleSubmit}>Submit</button> */}
+      <hr />
+      <h1>Character Synopsis Page</h1>
+      <ContentForm
+        handleFormContents={handleSynopsis}
+        isManualOfStyle={false}
+        section={synopsis}
+      />
+      <hr />
+      <h1>Character Relationships Page</h1>
+      <ContentForm
+        handleFormContents={handleRelationships}
+        isManualOfStyle={false}
+        section={relationships}
+      />
+      {/* <button type="submit">Submit</button> */}
+      <button onClick={handleUpload}>Submit</button>
+      {/* </form> */}
       <hr />
     </div>
   );
