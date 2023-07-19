@@ -1,3 +1,4 @@
+Setup github codespace ✓
 Make sure passwords match ✓
 Check if usename exists ✓
 Check if email exists ✓
