@@ -120,6 +120,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section }) {
               name="myImage"
               accept="image/*"
               onChange={(e) => handleImageChange(e, index)}
+              required
             />
             {section.sectionImage && (
               <img
@@ -170,9 +171,15 @@ function ContentForm({ handleFormContents, isManualOfStyle, section }) {
           </div>
         ))}
         <br />
-        <button type="button" onClick={() => addContent(index)}>
-          Add Content
-        </button>
+        {isManualOfStyle === true ? (
+          <button type="button" onClick={() => addContent(index)}>
+            Add Content
+          </button>
+        ) : (
+          <button type="button" onClick={() => addContent(index)}>
+            Add Paragraph
+          </button>
+        )}
       </div>
     ));
   };

@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
+import { replaceImage, checkForImage } from "../../../../../helpers";
+import addData from "../../../../../firebase/firestore/addData";
+import firebase_app from "../../../../../firebase/config";
 
-function CharacterPageTemplate({ doSomethingMethod }) {
+function CharacterPageTemplate() {
+  const db = getFirestore(firebase_app);
+  const auth = getAuth(firebase_app);
+  const user = auth.currentUser;
+  const router = useNavigate();
+
   const [manualOfStyle, setManualOfStyle] = useState([]);
   const [blurb, setBlurb] = useState([]);
   const [info, setInfo] = useState([]);
@@ -12,6 +22,38 @@ function CharacterPageTemplate({ doSomethingMethod }) {
   const [allInfoArr, setAllInfoArr] = useState([]);
   const [allArr, setAllArr] = useState([]);
   const [character, setCharacter] = useState("hgyi9ihioihb");
+  const [email, setEmail] = useState("");
+
+  const grabUser = async () => {
+    const collection = "users";
+    const userId = auth.currentUser;
+    const id = userId.uid;
+    const docRef = doc(db, collection, id);
+    const docSnap = await getDoc(docRef);
+    try {
+      const data = docSnap.data();
+      setEmail(data["email"]);
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        if (user.emailVerified) {
+          grabUser();
+          // console.log("user email is authenticated");
+        } else {
+          router("/user/authentication");
+          // console.log("please check your email");
+        }
+      } else {
+        router("/");
+      }
+    });
+  }, [user]);
 
   const handleManualOfStyle = (inputArrayMOS) => {
     // Do something with your array of strings in here
@@ -91,50 +133,44 @@ function CharacterPageTemplate({ doSomethingMethod }) {
     setRelationships([]);
     // console.log(allArr);
   }
-  function replaceImage(array) {
-    array.map((item) => {
-      {
-        item.content.map((item) => {
-          // console.log(item)
-          {
-            item.content.map((item) => {
-              console.log(item.sectionImage);
-            });
-          }
-        });
-      }
-    });
+
+  function handleUpload() {
+    const finalArr = [];
+    const time = Date().toLocaleString();
+    try {
+      finalArr.push(...finalArr, {
+        contentType: "Character",
+        character: character,
+        content: allArr,
+        createdBy: email,
+        createdAt: time,
+      });
+      console.log(finalArr);
+    } catch (e) {
+      console.log(e);
+    }
   }
-  // useEffect(() => {
-  //   doSomethingMethod(manualOfStyle);
-  // }, [manualOfStyle]);
 
   async function handleUpload(e) {
     e.preventDefault();
-    const finalArr = [];
     await handleCharacterInfoSubmit();
     await handleCharacterSynopsisSubmit();
     await handleCharacterRelationshipSubmit();
     // console.log(allArr);
-    console.log(replaceImage(allArr));
+    if (checkForImage != false) {
+      console.log("image exists");
+      await replaceImage(allArr, character);
+    } else {
+      console.log("image doesn't exists");
+    }
     // setAllArr([]);
-    // await
-    // try {
-    //   finalArr.push(...finalArr, {
-    //     contentType: "Character",
-    //     character: character,
-    //     content: allArr,
-    //   });
-    //   console.log(finalArr);
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    // awai
   }
 
   return (
     <div className="CharacterPageTemplate">
       <hr />
-      {/* <form onSubmit={handleUpload}> */}
+      <form id="CharacterForm" onSubmit={handleUpload}>
       <h1>Character Info Page</h1>
       <div>
         <h2>Character Name</h2>
@@ -187,9 +223,9 @@ function CharacterPageTemplate({ doSomethingMethod }) {
         isManualOfStyle={false}
         section={relationships}
       />
-      {/* <button type="submit">Submit</button> */}
-      <button onClick={handleUpload}>Submit</button>
-      {/* </form> */}
+      <button type="submit">Submit</button>
+      {/* <button onClick={handleUpload}>Submit</button> */}
+      </form>
       <hr />
     </div>
   );
