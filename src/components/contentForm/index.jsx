@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from "react";
 
-function ContentForm({ handleFormContents, isManualOfStyle, section }) {
+function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
   const [sections, setSections] = useState(section);
+  const [isReset, setIsReset] = useState(reset);
+  const [confirm, setConfirm] = useState(false);
 
   const [showSections, setShowSections] = useState(false);
+
+  function removeAllObjects(arr) {
+    arr.splice(0, arr.length);
+  }
 
   useEffect(() => {
     handleFormContents(sections);
   }, [sections]);
+
+  useEffect(() => {
+    setIsReset(reset);
+  }, [reset]);
+
+  useEffect(() => {
+    // console.log(isReset);
+    if (isReset == true) {
+      removeAllObjects(sections);
+    } else {
+      removeAllObjects(sections);
+    }
+  }, [isReset]);
+
+  function handleReset() {
+    removeAllObjects(sections);
+  }
 
   const addSection = () => {
     setSections([
@@ -170,7 +193,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section }) {
             </button>
           </div>
         ))}
-        <br />
+        {/* <br /> */}
         {isManualOfStyle === true ? (
           <button type="button" onClick={() => addContent(index)}>
             Add Content
@@ -215,12 +238,12 @@ function ContentForm({ handleFormContents, isManualOfStyle, section }) {
   }
 
   return (
-    <div className="App">
+    <div className="contentForm">
       {/* <h1>React JS Form</h1> */}
       {/* <form onSubmit={handleSubmit}> */}
       <div>
         {renderSections(sections)}
-        {/* <br /> */}
+        <br />
         <button type="button" onClick={addSection}>
           Add Section
         </button>
@@ -231,7 +254,32 @@ function ContentForm({ handleFormContents, isManualOfStyle, section }) {
       {/* <button onClick={handleReset}>Reset</button> */}
       {/* <br /> */}
       <br />
-      {/* {showSections && displaySections(sections)} */}
+      {sections.length === 0 ? (
+        <div />
+      ) : (
+        <div>
+          <button
+            type="button"
+            onClick={() => {
+              setConfirm(true);
+            }}
+          >
+            Reset
+          </button>
+          {confirm === true ? (
+            <button
+              type="button"
+              onClick={() => {
+                setConfirm(false), handleReset();
+              }}
+            >
+              Confirm reset
+            </button>
+          ) : (
+            <div />
+          )}
+        </div>
+      )}
     </div>
   );
 }

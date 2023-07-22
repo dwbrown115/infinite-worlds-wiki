@@ -12,7 +12,7 @@
   // Configure tool-specific properties.
   "customizations": {
     "codespaces": {
-      "openFiles": ["src/App.tsx"]
+      "openFiles": ["src/App.jsx"]
     },
     "vscode": {
       "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
