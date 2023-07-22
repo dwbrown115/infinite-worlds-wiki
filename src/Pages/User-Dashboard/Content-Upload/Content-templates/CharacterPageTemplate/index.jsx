@@ -124,7 +124,7 @@ function CharacterPageTemplate() {
 
   function seperateImage(array, ContentType, StorageRef) {
     {
-      array.content.map((item) => {
+      array.content.map(async (item) => {
         // const image = item.sectionImage;
         if (item.sectionImage != null) {
           // console.log(image);
@@ -133,15 +133,26 @@ function CharacterPageTemplate() {
           const storageRef = StorageRef;
           // const section = "Section" + item.sectionName;
           const section = `Section_${item.sectionName}_${item.sectionImage.name}`;
-          item.sectionImage = replaceImage(
+          const image = await replaceImage(
             item.sectionImage,
             contentName,
             contentType,
             storageRef,
             section
           );
+          console.log(image);
+          // console.log(
+          //   replaceImage(
+          //     item.sectionImage,
+          //     contentName,
+          //     contentType,
+          //     storageRef,
+          //     section
+          //   )
+          // );
           // return item.sectionImage;
-          console.log(item.sectionImage);
+          // return item.sectionImage;
+          // console.log(item.sectionImage);
         }
       });
     }
@@ -149,7 +160,8 @@ function CharacterPageTemplate() {
 
   async function handleCharacterInfoSubmit() {
     await seperateImage(manualOfStyle, "characterInfo", "manualOfStyle");
-
+    // console.log(manualOfStyle[0]);
+    // console.log(manualOfStyle);
     // if (manualOfStyle[0].sectionImage =! null)
     // const allCharInfoArr = [];
     // allCharInfoArr.push(...allInfoArr, manualOfStyle, blurb, info);
@@ -188,7 +200,7 @@ function CharacterPageTemplate() {
     e.preventDefault();
     const time = Date().toLocaleString();
 
-    console.log("Character Info", manualOfStyle, blurb, info);
+    // console.log("Character Info", manualOfStyle, blurb, info);
     // console.log("Character Synopsis", synopsis);
     // console.log("Character Relationships", relationships);
 
