@@ -164,7 +164,9 @@ function CharacterPageTemplate() {
     {
       content.map(async (item) => {
         // console.log(item)
+        await uploadBytes();
         console.log(item.sectionImage);
+
         // const id = item.sectionName;
         // try {
         //   const result = await setDoc(doc(db, collection, `${id}`, data));

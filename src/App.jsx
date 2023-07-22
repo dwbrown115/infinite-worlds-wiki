@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -19,8 +19,7 @@ import {
 import { Searchbar } from "./components";
 import "./App.scss";
 
-function App() {
-  const test = "test";
+function App() {  
   return (
     <>
       <Router>
