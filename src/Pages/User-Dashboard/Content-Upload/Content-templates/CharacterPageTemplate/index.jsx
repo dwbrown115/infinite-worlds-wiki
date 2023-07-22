@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
@@ -12,6 +13,8 @@ function CharacterPageTemplate() {
   const db = getFirestore(firebase_app);
   const auth = getAuth(firebase_app);
   const user = auth.currentUser;
+  const storage = getStorage(firebase_app);
+  const collection = "content";
   const router = useNavigate();
 
   const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -122,7 +125,7 @@ function CharacterPageTemplate() {
     setRelationships(inputArray);
   };
 
-  function seperateImage(array, ContentType, StorageRef) {
+  async function seperateImage(array, ContentType, StorageRef) {
     {
       array.content.map(async (item) => {
         // const image = item.sectionImage;
@@ -131,28 +134,23 @@ function CharacterPageTemplate() {
           const contentName = character;
           const contentType = ContentType;
           const storageRef = StorageRef;
-          // const section = "Section" + item.sectionName;
           const section = `Section_${item.sectionName}_${item.sectionImage.name}`;
-          const image = await replaceImage(
-            item.sectionImage,
-            contentName,
-            contentType,
-            storageRef,
-            section
+          const contentRef = ref(
+            storage,
+            `${collection}/${contentName}/${contentType}/${storageRef}/${section}`
           );
-          console.log(image);
-          // console.log(
-          //   replaceImage(
-          //     item.sectionImage,
-          //     contentName,
-          //     contentType,
-          //     storageRef,
-          //     section
-          //   )
-          // );
-          // return item.sectionImage;
-          // return item.sectionImage;
-          // console.log(item.sectionImage);
+          try {
+            await uploadBytes(contentRef, item.sectionImage).then(
+              (snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                  item.sectionImage = url;
+                  return item.sectionImage;
+                });
+              }
+            );
+          } catch (e) {
+            console.log(e);
+          }
         }
       });
     }
@@ -160,19 +158,22 @@ function CharacterPageTemplate() {
 
   async function handleCharacterInfoSubmit() {
     await seperateImage(manualOfStyle, "characterInfo", "manualOfStyle");
-    // console.log(manualOfStyle[0]);
-    // console.log(manualOfStyle);
-    // if (manualOfStyle[0].sectionImage =! null)
-    // const allCharInfoArr = [];
-    // allCharInfoArr.push(...allInfoArr, manualOfStyle, blurb, info);
-    // allArr.push({
-    //   pageType: "CharacterInfoPage",
-    //   content: allCharInfoArr,
-    // });
-    // setManualOfStyle([]);
-    // setBlurb([]);
-    // setInfo([]);
-    // console.log(allArr.map((item) => console.log(item.PageType)));
+    const collection = `Characters/${character.split(" ")}/${manualOfStyle}`;
+    // console.log(manualOfStyle.content);
+    const content = manualOfStyle.content;
+    {
+      content.map(async (item) => {
+        // console.log(item)
+        console.log(item.sectionImage);
+        // const id = item.sectionName;
+        // try {
+        //   const result = await setDoc(doc(db, collection, `${id}`, data));
+        //   console.log(result);
+        // } catch (e) {
+        //   console.log(e);
+        // }
+      });
+    }
   }
 
   function handleCharacterSynopsisSubmit() {

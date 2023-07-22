@@ -17,29 +17,8 @@ async function replaceImage(
     `${collection}/${contentName}/${contentType}/${storageRef}/${section}`
   );
   try {
-    // await uploadBytes(contentRef, image).then((snapshot) => {
-    //   getDownloadURL(snapshot.ref).then((url) => {
-    //     // image = url;
-    //     image = url
-    //     // return url;
-    //     // console.log(image)
-    //     return image
-    //   });
-    // });
     await uploadBytes(contentRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(async (url) => {
-        // console.log(url);
-        // let imageUrl = "";
-        // imageUrl = url;
-        // image = imageUrl;
-        // console.log(image);
-        image = await url;
-        // return await image
-        // console.log(await image);
-        return image
-        // console.log(imageUrl);
-        // image = await url;
-        // return image;
+      getDownloadURL(snapshot.ref).then((url) => {
       });
     });
   } catch (e) {
