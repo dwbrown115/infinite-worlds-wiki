@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -15,11 +15,18 @@ import {
   ForgotPassword,
   ContentSynopsis,
   ContentRelationships,
+  BookPageTemplate,
+  CharacterPageTemplate,
+  EventPageTemplate,
+  ItemPageTemplate,
+  LocationPageTemplate,
+  PowerSystemPageTemplate,
+  RacePageTemplate,
 } from "./Pages";
 import { Searchbar } from "./components";
 import "./App.scss";
 
-function App() {  
+function App() {
   return (
     <>
       <Router>
@@ -30,6 +37,34 @@ function App() {
           <Route path="/user/authentication" Component={IsAuth} />
           <Route path="/content" Component={ContentDashboard} />
           <Route path="/user/upload" Component={ContentUpload} />
+          <Route
+            path="/user/upload/BookPageTemplate"
+            Component={BookPageTemplate}
+          />
+          <Route
+            path="/user/upload/CharacterPageTemplate"
+            Component={CharacterPageTemplate}
+          />
+          <Route
+            path="/user/upload/EventPageTemplate"
+            Component={EventPageTemplate}
+          />
+          <Route
+            path="/user/upload/ItemPageTemplate"
+            Component={ItemPageTemplate}
+          />
+          <Route
+            path="/user/upload/LocationPageTemplate"
+            Component={LocationPageTemplate}
+          />
+          <Route
+            path="/user/upload/PowerSystemPageTemplate"
+            Component={PowerSystemPageTemplate}
+          />
+          <Route
+            path="/user/upload/RacePageTemplate"
+            Component={RacePageTemplate}
+          />
           <Route path="/auth/reset-password" Component={NewPassword} />
           <Route path="/user/edit/:id" Component={ContentEdit} />
           <Route path="/content/:id" Component={ContentId} />

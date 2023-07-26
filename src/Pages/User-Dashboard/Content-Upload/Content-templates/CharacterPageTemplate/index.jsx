@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
@@ -234,6 +234,7 @@ function CharacterPageTemplate() {
           section={synopsis}
           reset={reset}
         />
+        <hr />
         <h1>Character Relationships Page</h1>
         <ContentForm
           handleFormContents={handleRelationships}
@@ -257,6 +258,7 @@ function CharacterPageTemplate() {
       ) : (
         <div />
       )}
+      <Link to={"/user/upload"}>Go Back</Link>
     </div>
   );
 }

@@ -176,57 +176,19 @@ function ContentUpload() {
   const handlePageContent = () => {
     return (
       <>
-        {/* <div>
-          <h3>Create Content</h3>
-          <form id="contentForm" onSubmit={handleForm}>
-            <label>
-              Title:
-              <input
-                type="text"
-                placeholder="Title:"
-                value={title}9
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </label>
-            <br />
-            <br />
-            <label>
-              Text:
-              <textarea
-                type="text"
-                placeholder="Text:"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                required
-              />
-            </label>
-            <br />
-            <br />
-            <div className="image">
-              <label htmlFor={`image`}>Image:</label>
-              <input
-                id={`image`}
-                type="file"
-                name="myImage"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e)}
-              />
-              {image && (
-                <img src={URL.createObjectURL(image)} alt="Section Image" />
-              )}
-            </div>
-            <br />
-            <br />
-            <div>
-              <button type="submit">Submit</button>
-              <button type="button" onClick={handleReset}>
-                Reset
-              </button>
-            </div>
-          </form>
-        </div> */}
-        <CharacterPageTemplate doSomethingMethod={doSomething} />
+        <Link to={"/user/upload/BookPageTemplate"}>Book Page Template</Link>
+        <Link to={"/user/upload/CharacterPageTemplate"}>
+          Character Page Template
+        </Link>
+        <Link to={"/user/upload/EventPageTemplate"}>Event Page Template</Link>
+        <Link to={"/user/upload/ItemPageTemplate"}>Item Page Template</Link>
+        <Link to={"/user/upload/LocationPageTemplate"}>
+          Location Page Template
+        </Link>
+        <Link to={"/user/upload/PowerSystemPageTemplate"}>
+          Power System Page Template
+        </Link>
+        <Link to={"/user/upload/RacePageTemplate"}>Race Page Template</Link>
         {/* <button onClick={handleTest}>test</button> */}
         <Link to={"/user"}>Go Back</Link>
       </>
