@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
-import { ContentForm } from "../../../../../components"; 
+import { ContentForm } from "../../../../../components";
 import { replaceImage } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
@@ -12,7 +12,7 @@ function CharacterPageTemplate() {
   const db = getFirestore(firebase_app);
   const auth = getAuth(firebase_app);
   const user = auth.currentUser;
-  const collection = "Characters"
+  const collection = "Characters";
   const router = useNavigate();
 
   const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -20,7 +20,7 @@ function CharacterPageTemplate() {
   const [info, setInfo] = useState([]);
   const [synopsis, setSynopsis] = useState([]);
   const [relationships, setRelationships] = useState([]);
-  const [character, setCharacter] = useState("uhbhuhbhuhbhuijn");
+  const [character, setCharacter] = useState("");
   const [email, setEmail] = useState("");
   const [reset, setReset] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -34,14 +34,12 @@ function CharacterPageTemplate() {
     setConfirm(false);
     if (reset == false) {
       setReset(true);
-      // console.log(reset);
     } else {
       setReset(false);
-      // console.log(reset);
     }
   }
 
-  const grabUser = async () => {
+  async function grabUser() {
     const collection = "users";
     const userId = auth.currentUser;
     const id = userId.uid;
@@ -54,7 +52,7 @@ function CharacterPageTemplate() {
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
@@ -72,129 +70,116 @@ function CharacterPageTemplate() {
     });
   }, [user]);
 
-  // useEffect(() => {
-  //   console.log(Url)
-  // }, [Url])
-
   const handleManualOfStyle = (inputArray) => {
-    // Do something with your array of strings in here
     setManualOfStyle({
       contentType: "CharacterManualofsyle",
       content: inputArray,
     });
-    // console.log(arr);
     // setManualOfStyle(inputArray);
   };
 
   const handleBlurb = (inputArray) => {
-    // Do something with your array of strings in here
     setBlurb({
       contentType: "CharacterBlurb",
       content: inputArray,
     });
-    // console.log(arr);
-    // setBlurb(inputArray);
   };
 
   const handleInfo = (inputArray) => {
-    // Do something with your array of strings in here
     setInfo({
       contentType: "CharacterInfo",
       content: inputArray,
     });
-    // console.log(arr);
-    setInfo(inputArray);
   };
 
   const handleSynopsis = (inputArray) => {
-    // Do something with your array of strings in here
     setSynopsis({
       contentType: "CharacterSynopsis",
       content: inputArray,
     });
-    // console.log(arr);
-    setSynopsis(inputArray);
   };
 
   const handleRelationships = (inputArray) => {
-    // Do something with your array of strings in here
     setRelationships({
       contentType: "CharacterRelationships",
       content: inputArray,
     });
-    // setRelationships(inputArrayR);
-    // console.log(arr);
-    setRelationships(inputArray);
   };
 
   async function handleCharacterInfoSubmit() {
-    await replaceImage(manualOfStyle, "characterInfo", "manualOfStyle", character);
-    const path = `${collection}/${character}/characterInfo/`
-    await addData(path, "manualOfStyle", manualOfStyle)
-    await replaceImage(blurb, "characterInfo", "burb", character)
-    await addData(path, "blurb", blurb)
-    await replaceImage(blurb, "characterInfo", "info", character)
-    await addData(path, "info")
-      }
-
-  function handleCharacterSynopsisSubmit() {
+    const path = `${collection}/${character.split(" ")}/CharacterInfo/`;
+    await replaceImage(
+      manualOfStyle,
+      "CharacterInfo",
+      "ManualOfStyle",
+      `${character.split(" ")}`
+    );
+    // console.log(JSON.parse(JSON.stringify(manualOfStyle)));
+    await addData(path, "ManualOfSyle", manualOfStyle);
+    await replaceImage(
+      blurb,
+      "CharacterInfo",
+      "Burb",
+      `${character.split(" ")}`
+    );
+    await addData(path, "Blurb", blurb);
+    await replaceImage(
+      blurb,
+      "CharacterInfo",
+      "Info",
+      `${character.split(" ")}`
+    );
+    await addData(path, "Info", info);
   }
-  function handleCharacterRelationshipSubmit() {
+
+  async function handleCharacterSynopsisSubmit() {
+    const path = `${collection}/${character.split(" ")}/CharacterSynopsis/`;
+    await replaceImage(
+      synopsis,
+      "CharacterSynopsis",
+      "Synopsis",
+      `${character.split(" ")}`
+    );
+    await addData(path, "Synopsis", synopsis);
+    console.log(synopsis);
+  }
+  async function handleCharacterRelationshipSubmit() {
+    const path = `${collection}/${character.split(" ")}/CharacterRelationship/`;
+    await replaceImage(
+      relationships,
+      "CharacterRelationship",
+      "Relationships",
+      `${character.split(" ")}`
+    );
+    await addData(path, "Relationships", relationships);
+    console.log(relationships);
   }
 
   async function handleUpload(e) {
     e.preventDefault();
     const time = Date().toLocaleString();
-
-
-    const docRef = doc(db, "Characters", character)
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      console.log("doc already exists")
-    } else {
-      console.log("doc doesn't exist")
-    }
-
     const data = {
       characterName: character,
       createdBy: email,
       createdAt: time,
+    };
+
+    const docRef = doc(db, "Characters", `${character.split(" ")}`);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Doc already exists. Please edit intended page insead.");
+    } else {
+      console.log("doc doesn't exist");
+      await setDoc(doc(db, "Characters", `${character.split(" ")}`), data).then(
+        async () => {
+          await handleCharacterInfoSubmit();
+          await handleCharacterSynopsisSubmit();
+          await handleCharacterRelationshipSubmit();
+          await handleResetConfirm();
+          await setCharacter("");
+        }
+      );
     }
-
-    // await addData(collection, character, data)
-    await setDoc(doc(db, "Characters", character), data).then(async () => {
-      await handleCharacterInfoSubmit()
-      await handleCharacterSynopsisSubmit()
-      await handleCharacterRelationshipSubmit()
-    })
-    // await handleCharacterInfoSubmit();
-    // await handleCharacterSynopsisSubmit();
-    // await handleCharacterRelationshipSubmit();
-    
-    // console.log(allArr);
-    // await replaceImage(allArr, character);
-    // try {
-    //   finalArr = {
-    //     contentType: "Character",
-    //     character: character,
-    //     content: allArr,
-    //     createdBy: email,
-    //     createdAt: time,
-    //   };
-    //   console.log(finalArr);
-    //   await setDoc(doc(db, "Characters", character), finalArr).then(() => {
-    //     handleResetConfirm();
-    //   });
-    //   // console.log(finalArr).then(() => {
-    //   //   handleResetConfirm();
-    //   // });
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    // await replaceImage(allArr, character);
-
-    // setAllArr([]);
-    // await handleResetConfirm();
   }
 
   return (
@@ -241,7 +226,6 @@ function CharacterPageTemplate() {
             reset={reset}
           />
         </div>
-        {/* <button onClick={handleSubmit}>Submit</button> */}
         <hr />
         <h1>Character Synopsis Page</h1>
         <ContentForm
@@ -257,12 +241,9 @@ function CharacterPageTemplate() {
           section={relationships}
           reset={reset}
         />
-        {/* <br /> */}
         <hr />
         <button type="submit">Submit</button>
-        {/* <button onClick={handleUpload}>Submit</button> */}
       </form>
-      {/* <hr /> */}
       <br />
       <button
         onClick={() => {
