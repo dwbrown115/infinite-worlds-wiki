@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditLocationHistory() {
+function EditPowerSystemPage() {
   return (
     <>
-      <div>Edit Location History</div>
+      <div>Edit Power System Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditLocationHistory;
+export default EditPowerSystemPage;

@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditEventImpact() {
+function EditBookPage() {
   return (
     <>
-      <div>Edit Event Impact</div>
+      <div>Edit Book Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditEventImpact;
+export default EditBookPage;

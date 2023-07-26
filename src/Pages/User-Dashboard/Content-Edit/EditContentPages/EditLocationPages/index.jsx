@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditCharacterManualOfStyle() {
+function EditLocationPage() {
   return (
     <>
-      <div>Edit Character Manual Of Style</div>
+      <div>Edit Location Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditCharacterManualOfStyle;
+export default EditLocationPage;

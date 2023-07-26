@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditItemDescription() {
+function EditEventPage() {
   return (
     <>
-      <div>Edit Item Description</div>
+      <div>Edit Event Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditItemDescription;
+export default EditEventPage;

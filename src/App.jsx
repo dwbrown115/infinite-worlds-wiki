@@ -4,17 +4,13 @@ import {
   Home,
   UserDashboard,
   ContentDashboard,
-  ContentId,
   ContentUpload,
-  ContentEdit,
   SignIn,
   SignUp,
   SearchResults,
   IsAuth,
   NewPassword,
   ForgotPassword,
-  ContentSynopsis,
-  ContentRelationships,
   BookPageTemplate,
   CharacterPageTemplate,
   EventPageTemplate,
@@ -22,36 +18,15 @@ import {
   LocationPageTemplate,
   PowerSystemPageTemplate,
   RacePageTemplate,
-  EditBookBlurb,
-  EditBookChapters,
-  EditBookManualOfStyle,
-  EditBookSynopsis,
-  EditCharacterBlurb,
+  EditBookPage,
   EditCharacterInfo,
-  EditCharacterManualOfStyle,
   EditCharacterRelationships,
   EditCharacterSynopsis,
-  EditEventBlurb,
-  EditEventImpact,
-  EditEventManualOfStyle,
-  EditEventSynopsis,
-  EditItemBlurb,
-  EditItemDescription,
-  EditItemManualOfStyle,
-  EditItemUses,
-  EditLocationBlurb,
-  EditLocationCulture,
-  EditLocationGeographyAndEcology,
-  EditLocationHistory,
-  EditLocationManualOfStyle,
-  EditPowerSystemBlurb,
-  EditPowerSystemInfo,
-  EditPowerSystemManualOfStyle,
-  EditRaceBlurb,
-  EditRaceCharacteristics,
-  EditRaceCulture,
-  EditRaceHistory,
-  EditRaceManualOfStyle,
+  EditEventPage,
+  EditItemPage,
+  EditLocationPage,
+  EditPowerSystemPage,
+  EditRacePage,
   BookPage,
   CharacterInfo,
   CharacterRelationships,
@@ -60,7 +35,7 @@ import {
   ItemPage,
   LocationPage,
   PowerSystemPage,
-  RacePage
+  RacePage,
 } from "./Pages";
 import { Searchbar } from "./components";
 import "./App.scss";
@@ -105,34 +80,10 @@ function App() {
             Component={RacePageTemplate}
           />
           <Route path="/auth/reset-password" Component={NewPassword} />
-          <Route path="/user/edit/:id" Component={ContentEdit} />
-          <Route
-            path="/user/edit/:id?/EditBookBlurb"
-            Component={EditBookBlurb}
-          />
-          <Route
-            path="/user/edit/:id?/EditBookChapters"
-            Component={EditBookChapters}
-          />
-          <Route
-            path="/user/edit/:id?/EditBookManualOfStyle"
-            Component={EditBookManualOfStyle}
-          />
-          <Route
-            path="/user/edit/:id?/EditBookSynopsis"
-            Component={EditBookSynopsis}
-          />
-          <Route
-            path="/user/edit/:id?/EditCharacterBlurb"
-            Component={EditCharacterBlurb}
-          />
+          <Route path="/user/edit/EditBookPage/:id" Component={EditBookPage} />
           <Route
             path="/user/edit/:id?/EditCharacterInfo"
             Component={EditCharacterInfo}
-          />
-          <Route
-            path="/user/edit/:id?/EditCharacterManualOfStyle"
-            Component={EditCharacterManualOfStyle}
           />
           <Route
             path="/user/edit/:id?/EditCharacterRelationships"
@@ -143,86 +94,20 @@ function App() {
             Component={EditCharacterSynopsis}
           />
           <Route
-            path="/user/edit/:id?/EditEventBlurb"
-            Component={EditEventBlurb}
+            path="/user/edit/EditEventPage/:id"
+            Component={EditEventPage}
+          />
+          <Route path="/user/edit/EditItemPage/:id" Component={EditItemPage} />
+          <Route
+            path="/user/edit/EditLocationPage/:id"
+            Component={EditLocationPage}
           />
           <Route
-            path="/user/edit/:id?/EditEventImpact"
-            Component={EditEventImpact}
+            path="/user/edit/EditPowerSystemPage/:id"
+            Component={EditPowerSystemPage}
           />
-          <Route
-            path="/user/edit/:id?/EditEventManualOfStyle"
-            Component={EditEventManualOfStyle}
-          />
-          <Route
-            path="/user/edit/:id?/EditEventSynopsis"
-            Component={EditEventSynopsis}
-          />
-          <Route
-            path="/user/edit/:id?/EditItemBlurb"
-            Component={EditItemBlurb}
-          />
-          <Route
-            path="/user/edit/:id?/EditItemDescription"
-            Component={EditItemDescription}
-          />
-          <Route
-            path="/user/edit/:id?/EditItemManualOfStyle"
-            Component={EditItemManualOfStyle}
-          />
-          <Route path="/user/edit/:id?/EditItemUses" Component={EditItemUses} />
-          <Route
-            path="/user/edit/:id?/EditLocationBlurb"
-            Component={EditLocationBlurb}
-          />
-          <Route
-            path="/user/edit/:id?/EditLocationCulture"
-            Component={EditLocationCulture}
-          />
-          <Route
-            path="/user/edit/:id?/EditLocationGeographyAndEcology"
-            Component={EditLocationGeographyAndEcology}
-          />
-          <Route
-            path="/user/edit/:id?/EditLocationHistory"
-            Component={EditLocationHistory}
-          />
-          <Route
-            path="/user/edit/:id?/EditLocationManualOfStyle"
-            Component={EditLocationManualOfStyle}
-          />
-          <Route
-            path="/user/edit/:id?/EditPowerSystemInfo"
-            Component={EditPowerSystemInfo}
-          />
-          <Route
-            path="/user/edit/:id?/EditPowerSystemManualOfStyle"
-            Component={EditPowerSystemManualOfStyle}
-          />
-          <Route
-            path="/user/edit/:id?/EditPowerSystemBlurb"
-            Component={EditPowerSystemBlurb}
-          />
-          <Route
-            path="/user/edit/:id?/EditRaceBlurb"
-            Component={EditRaceBlurb}
-          />
-          <Route
-            path="/user/edit/:id?/EditRaceCharacteristics"
-            Component={EditRaceCharacteristics}
-          />
-          <Route
-            path="/user/edit/:id?/EditRaceCulture"
-            Component={EditRaceCulture}
-          />
-          <Route
-            path="/user/edit/:id?/EditRaceHistory"
-            Component={EditRaceHistory}
-          />
-          <Route
-            path="/user/edit/:id?/EditRaceManualOfStyle"
-            Component={EditRaceManualOfStyle}
-          />
+          <Route path="/user/edit/EditRacePage/:id" Component={EditRacePage} />
+
           <Route path="/Book/:id" Component={BookPage} />
           <Route path="/Character/:id" Component={CharacterInfo} />
           <Route

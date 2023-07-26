@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditBookBlurb() {
+function EditItemPage() {
   return (
     <>
-      <div>Edit Book Blurb</div>
+      <div>Edit Item Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditBookBlurb;
+export default EditItemPage;

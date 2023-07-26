@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function EditBookManualOfStyle() {
+function EditRacePage() {
   return (
     <>
-      <div>Edit Book Manual Of Style</div>
+      <div>Edit Race Page</div>
       <Link to={`/user`}>Back</Link>
     </>
   );
 }
 
-export default EditBookManualOfStyle;
+export default EditRacePage;
