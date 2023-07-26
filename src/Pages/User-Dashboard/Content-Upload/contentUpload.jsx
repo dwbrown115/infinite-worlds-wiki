@@ -176,19 +176,34 @@ function ContentUpload() {
   const handlePageContent = () => {
     return (
       <>
+        <br />
         <Link to={"/user/upload/BookPageTemplate"}>Book Page Template</Link>
+        <br />
+        <br />
         <Link to={"/user/upload/CharacterPageTemplate"}>
           Character Page Template
         </Link>
+        <br />
+        <br />
         <Link to={"/user/upload/EventPageTemplate"}>Event Page Template</Link>
+        <br />
+        <br />
         <Link to={"/user/upload/ItemPageTemplate"}>Item Page Template</Link>
+        <br />
+        <br />
         <Link to={"/user/upload/LocationPageTemplate"}>
           Location Page Template
         </Link>
+        <br />
+        <br />
         <Link to={"/user/upload/PowerSystemPageTemplate"}>
           Power System Page Template
         </Link>
+        <br />
+        <br />
         <Link to={"/user/upload/RacePageTemplate"}>Race Page Template</Link>
+        <br />
+        <br />
         {/* <button onClick={handleTest}>test</button> */}
         <Link to={"/user"}>Go Back</Link>
       </>
@@ -197,7 +212,8 @@ function ContentUpload() {
 
   return (
     <>
-      <Loading isLoading={isLoading} component={handlePageContent()} />
+      {/* <Loading isLoading={isLoading} component={handlePageContent()} /> */}
+      {handlePageContent()}
     </>
   );
 }
