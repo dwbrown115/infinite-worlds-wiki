@@ -184,7 +184,7 @@ function ContentUpload() {
               <input
                 type="text"
                 placeholder="Title:"
-                value={title}
+                value={title}9
                 onChange={(e) => setTitle(e.target.value)}
                 required
               />

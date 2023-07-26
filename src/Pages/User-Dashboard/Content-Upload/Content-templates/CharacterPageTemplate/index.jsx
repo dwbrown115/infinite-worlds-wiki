@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
-import { ContentForm } from "../../../../../components";
+import { ContentForm } from "../../../../../components"; 
 import { replaceImage } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
@@ -13,8 +12,7 @@ function CharacterPageTemplate() {
   const db = getFirestore(firebase_app);
   const auth = getAuth(firebase_app);
   const user = auth.currentUser;
-  const storage = getStorage(firebase_app);
-  const collection = "content";
+  const collection = "Characters"
   const router = useNavigate();
 
   const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -74,6 +72,10 @@ function CharacterPageTemplate() {
     });
   }, [user]);
 
+  // useEffect(() => {
+  //   console.log(Url)
+  // }, [Url])
+
   const handleManualOfStyle = (inputArray) => {
     // Do something with your array of strings in here
     setManualOfStyle({
@@ -125,92 +127,50 @@ function CharacterPageTemplate() {
     setRelationships(inputArray);
   };
 
-  async function seperateImage(array, ContentType, StorageRef) {
-    {
-      array.content.map(async (item) => {
-        // const image = item.sectionImage;
-        if (item.sectionImage != null) {
-          // console.log(image);
-          const contentName = character;
-          const contentType = ContentType;
-          const storageRef = StorageRef;
-          const section = `Section_${item.sectionName}_${item.sectionImage.name}`;
-          const contentRef = ref(
-            storage,
-            `${collection}/${contentName}/${contentType}/${storageRef}/${section}`
-          );
-          try {
-            await uploadBytes(contentRef, item.sectionImage).then(
-              (snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
-                  item.sectionImage = url;
-                  return item.sectionImage;
-                });
-              }
-            );
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
-    }
-  }
-
   async function handleCharacterInfoSubmit() {
-    await seperateImage(manualOfStyle, "characterInfo", "manualOfStyle");
-    const collection = `Characters/${character.split(" ")}/${manualOfStyle}`;
-    // console.log(manualOfStyle.content);
-    const content = manualOfStyle.content;
-    {
-      content.map(async (item) => {
-        // console.log(item)
-        await uploadBytes();
-        console.log(item.sectionImage);
-
-        // const id = item.sectionName;
-        // try {
-        //   const result = await setDoc(doc(db, collection, `${id}`, data));
-        //   console.log(result);
-        // } catch (e) {
-        //   console.log(e);
-        // }
-      });
-    }
-  }
+    await replaceImage(manualOfStyle, "characterInfo", "manualOfStyle", character);
+    const path = `${collection}/${character}/characterInfo/`
+    await addData(path, "manualOfStyle", manualOfStyle)
+    await replaceImage(blurb, "characterInfo", "burb", character)
+    await addData(path, "blurb", blurb)
+    await replaceImage(blurb, "characterInfo", "info", character)
+    await addData(path, "info")
+      }
 
   function handleCharacterSynopsisSubmit() {
-    // const allCharSynopsisArr = [];
-    // allCharSynopsisArr.push(...allInfoArr, synopsis);
-    // allArr.push({
-    //   pageType: "CharacterSynopsisPage",
-    //   content: allCharSynopsisArr,
-    // });
-    // setSynopsis([]);
-    // console.log(allArr);
   }
   function handleCharacterRelationshipSubmit() {
-    // const allCharRelationshipArr = [];
-    // allCharRelationshipArr.push(...allInfoArr, relationships);
-    // allArr.push({
-    //   pageType: "CharacterRelationshipPage",
-    //   content: allCharRelationshipArr,
-    // });
-    // setRelationships([]);
-    // console.log(allArr);
   }
 
   async function handleUpload(e) {
     e.preventDefault();
     const time = Date().toLocaleString();
 
-    // console.log("Character Info", manualOfStyle, blurb, info);
-    // console.log("Character Synopsis", synopsis);
-    // console.log("Character Relationships", relationships);
 
-    await handleCharacterInfoSubmit();
+    const docRef = doc(db, "Characters", character)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      console.log("doc already exists")
+    } else {
+      console.log("doc doesn't exist")
+    }
+
+    const data = {
+      characterName: character,
+      createdBy: email,
+      createdAt: time,
+    }
+
+    // await addData(collection, character, data)
+    await setDoc(doc(db, "Characters", character), data).then(async () => {
+      await handleCharacterInfoSubmit()
+      await handleCharacterSynopsisSubmit()
+      await handleCharacterRelationshipSubmit()
+    })
+    // await handleCharacterInfoSubmit();
     // await handleCharacterSynopsisSubmit();
     // await handleCharacterRelationshipSubmit();
-
+    
     // console.log(allArr);
     // await replaceImage(allArr, character);
     // try {
