@@ -1,13 +1,11 @@
-import React from "react";
-
-import { deletePartOfString } from "../../../../helpers"
+import { deletePartOfString } from "../../../../helpers";
 
 function EventPage() {
-  return (
-    <>
-      <div>Event Page</div>
-    </>
-  );
+    return (
+        <>
+            <div>Event Page</div>
+        </>
+    );
 }
 
 export default EventPage;

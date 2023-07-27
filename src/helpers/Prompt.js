@@ -1,10 +1,10 @@
 import { useBlocker } from "react-router-dom";
 
-function Prompt(props) {
-  const block = props.when;
+function Prompt(when, message) {
+  const block = when;
   useBlocker(() => {
     if (block) {
-      return !window.confirm(props.message);
+      return !window.confirm(message);
     }
     return false;
   });
