@@ -176,6 +176,8 @@ function ContentUpload() {
   const handlePageContent = () => {
     return (
       <>
+      <h1>Upload Content Templates</h1>
+      <hr />
         <br />
         <Link to={"/user/upload/BookPageTemplate"}>Book Page Template</Link>
         <br />
@@ -198,12 +200,14 @@ function ContentUpload() {
         <br />
         <Link to={"/user/upload/PowerSystemPageTemplate"}>
           Power System Page Template
+
         </Link>
         <br />
         <br />
         <Link to={"/user/upload/RacePageTemplate"}>Race Page Template</Link>
         <br />
         <br />
+        <hr />
         {/* <button onClick={handleTest}>test</button> */}
         <Link to={"/user"}>Go Back</Link>
       </>
