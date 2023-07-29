@@ -16,7 +16,7 @@ function ForgotPassword() {
             await sendPasswordResetEmail(auth, email);
             console.log("Email sent");
             setEmail("");
-            router("/signin");
+            router("/login");
         } catch (e) {
             console.log(e);
         }

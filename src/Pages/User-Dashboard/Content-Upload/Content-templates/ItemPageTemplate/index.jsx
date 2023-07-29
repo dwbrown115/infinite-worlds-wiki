@@ -14,12 +14,12 @@ function ItemPageTemplate() {
     const user = auth.currentUser;
     const collection = "Content/ContentType/Items";
     const router = useNavigate();
-
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    
+    const [item, setItem] = useState("");
+    const [itemManualOfStyle, setitemManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [history, setHistory] = useState([]);
     const [itemUses, setItemUses] = useState([]);
-    const [item, setItem] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -27,16 +27,29 @@ function ItemPageTemplate() {
     const path = `${collection}/${item.split(" ")}/ItemInfo/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedItem = localStorage.getItem("item");
+        if (storedItem) {
+            setItem(storedItem);
+        } else if (!storedItem) {
+            // console.log("No item");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("item", item);
+        localStorage.setItem("itemManualOfStyle", JSON.stringify(itemManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("history", JSON.stringify(history));
+        localStorage.setItem("itemUses", JSON.stringify(itemUses));
+    }, [item, itemManualOfStyle, blurb, history, itemUses]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -64,14 +77,14 @@ function ItemPageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "ItemManualOfStyle",
+    function handleitemManualOfStyle(inputArray) {
+        setitemManualOfStyle({
+            contentType: "ItemitemManualOfStyle",
             content: inputArray,
         });
     }
@@ -97,14 +110,14 @@ function ItemPageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handleitemManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            itemManualOfStyle,
             "ItemInfo",
-            "ManualOfStyle",
+            "itemManualOfStyle",
             `${item.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "itemManualOfStyle", itemManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -153,7 +166,7 @@ function ItemPageTemplate() {
                 doc(db, "Characters", `${item.split(" ")}`),
                 data
             ).then(async () => {
-                await handleManualOfStyleSubmit();
+                await handleitemManualOfStyleSubmit();
                 await handleBlurbSubmit();
                 await handleHistorySubmit();
                 await handleItemUsesSubmit();
@@ -183,10 +196,10 @@ function ItemPageTemplate() {
                         <div>
                             <h2>Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handleitemManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
-                                reset={reset}
+                                section={"itemManualOfStyle"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -195,8 +208,8 @@ function ItemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -207,8 +220,8 @@ function ItemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleHistory}
                                 isManualOfStyle={false}
-                                section={history}
-                                reset={reset}
+                                section={"history"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -217,8 +230,8 @@ function ItemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleItemUses}
                                 isManualOfStyle={false}
-                                section={itemUses}
-                                reset={reset}
+                                section={"itemUses"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -228,16 +241,17 @@ function ItemPageTemplate() {
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

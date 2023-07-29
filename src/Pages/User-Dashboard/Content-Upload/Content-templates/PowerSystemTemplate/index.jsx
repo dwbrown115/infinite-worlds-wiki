@@ -15,29 +15,43 @@ function PowerSystemPageTemplate() {
     const collection = "Content/ContentType/PowerSystems";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [powerSystem, setPowerSystem] = useState("");
+    const [powerSystemManualOfStyle, setpowerSystemManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [info, setInfo] = useState([]);
     const [uses, setUses] = useState([]);
     const [notableUsers, setNotableUsers] = useState([]);
-    const [powerSystem, setPowerSystem] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
- 
+
     const path = `${collection}/${powerSystem.split(" ")}/PowerSystemInfo/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedPowerSystem = localStorage.getItem("powerSystem");
+        if (storedPowerSystem) {
+            setpowerSystem(storedPowerSystem);
+        } else if (!storedPowerSystem) {
+            // console.log("No powerSystem");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("powerSystem", powerSystem);
+        localStorage.setItem("powerSystemManualOfStyle", JSON.stringify(powerSystemManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("info", JSON.stringify(info));
+        localStorage.setItem("uses", JSON.stringify(uses));
+        localStorage.setItem("notableUsers", JSON.stringify(notableUsers));
+    }, [powerSystem, powerSystemManualOfStyle, blurb, info, uses, notableUsers]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -65,14 +79,14 @@ function PowerSystemPageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "PowerSystemManualOfStyle",
+    function handlepowerSystemManualOfStyle(inputArray) {
+        setpowerSystemManualOfStyle({
+            contentType: "PowerSystempowerSystemManualOfStyle",
             content: inputArray,
         });
     }
@@ -105,14 +119,14 @@ function PowerSystemPageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handlepowerSystemManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            powerSystemManualOfStyle,
             "PowerSystemInfo",
-            "ManualOfStyle",
+            "powerSystemManualOfStyle",
             `${powerSystem.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "powerSystemManualOfStyle", powerSystemManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -176,7 +190,7 @@ function PowerSystemPageTemplate() {
                 doc(db, "Characters", `${powerSystem.split(" ")}`),
                 data
             ).then(async () => {
-                await handleManualOfStyleSubmit();
+                await handlepowerSystemManualOfStyleSubmit();
                 await handleBlurbSubmit();
                 await handleInfoSubmit();
                 await handleUsesSubmit();
@@ -206,10 +220,11 @@ function PowerSystemPageTemplate() {
                         <div>
                             <h2>Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handlepowerSystemManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
-                                reset={reset}k
+                                section={"powerSystemManualOfStyle"}
+                                reset={confirm}
+                                k
                             />
                         </div>
                         <hr />
@@ -218,8 +233,8 @@ function PowerSystemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -230,8 +245,8 @@ function PowerSystemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleInfo}
                                 isManualOfStyle={false}
-                                section={info}
-                                reset={reset}
+                                section={"info"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -240,18 +255,18 @@ function PowerSystemPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleUses}
                                 isManualOfStyle={false}
-                                section={uses}
-                                reset={reset}
+                                section={"uses"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
                         <div>
                             <h2>Notable Users</h2>
                             <ContentForm
-                            handleFormContents={handleNotableUsers}
-                            isManualOfStyle={false}
-                            section={notableUsers}
-                            reset={reset}
+                                handleFormContents={handleNotableUsers}
+                                isManualOfStyle={false}
+                                section={"notableUsers"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -261,16 +276,17 @@ function PowerSystemPageTemplate() {
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

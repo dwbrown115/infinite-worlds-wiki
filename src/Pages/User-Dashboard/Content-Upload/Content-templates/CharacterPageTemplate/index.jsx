@@ -15,12 +15,12 @@ function CharacterPageTemplate() {
     const collection = "Content/ContentType/Characters";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [character, setCharacter] = useState("");
+    const [characterManualOfStyle, setcharacterManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [info, setInfo] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
     const [relationships, setRelationships] = useState([]);
-    const [character, setCharacter] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -28,18 +28,30 @@ function CharacterPageTemplate() {
     const path = `${collection}/${character.split(" ")}/CharacterRelationship/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedCharacter = localStorage.getItem("character");
+        if (storedCharacter != null) {
+            setCharacter(storedCharacter);
+        } else if (!storedCharacter) {
+            // console.log("No character");
+        }
+    }, []);
 
-    useEffect
+    useEffect(() => {
+        localStorage.setItem("character", character);
+        localStorage.setItem("characterManualOfStyle", JSON.stringify(characterManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("info", JSON.stringify(info));
+        localStorage.setItem("synopsis", JSON.stringify(synopsis));
+        localStorage.setItem("relationships", JSON.stringify(relationships));
+    }, [character, characterManualOfStyle, blurb, info, synopsis, relationships]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -74,12 +86,12 @@ function CharacterPageTemplate() {
         });
     }, [user]);
 
-    const handleManualOfStyle = (inputArray) => {
-        setManualOfStyle({
+    const handlecharacterManualOfStyle = (inputArray) => {
+        setcharacterManualOfStyle({
             contentType: "CharacterManualofsyle",
             content: inputArray,
         });
-        // setManualOfStyle(inputArray);
+        // setcharacterManualOfStyle(inputArray);
     };
 
     const handleBlurb = (inputArray) => {
@@ -112,13 +124,13 @@ function CharacterPageTemplate() {
 
     async function handleCharacterInfoSubmit() {
         await replaceImage(
-            manualOfStyle,
+            characterManualOfStyle,
             "CharacterInfo",
-            "ManualOfStyle",
+            "characterManualOfStyle",
             `${character.split(" ")}`
         );
-        // console.log(JSON.parse(JSON.stringify(manualOfStyle)));
-        await addData(path, "ManualOfSyle", manualOfStyle);
+        // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
+        await addData(path, "ManualOfSyle", characterManualOfStyle);
 
         await replaceImage(
             blurb,
@@ -208,10 +220,10 @@ function CharacterPageTemplate() {
                         <div>
                             <h2>Manual of syle</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handlecharacterManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
-                                reset={reset}
+                                section={"characterManualOfStyle"}
+                                reset={confirm}
                             />
                         </div>
                         <div>
@@ -219,8 +231,8 @@ function CharacterPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -230,8 +242,8 @@ function CharacterPageTemplate() {
                     <ContentForm
                         handleFormContents={handleInfo}
                         isManualOfStyle={false}
-                        section={info}
-                        reset={reset}
+                        section={"info"}
+                        reset={confirm}
                     />
                 </div>
                 <hr />
@@ -240,8 +252,8 @@ function CharacterPageTemplate() {
                     <ContentForm
                         handleFormContents={handleSynopsis}
                         isManualOfStyle={false}
-                        section={synopsis}
-                        reset={reset}
+                        section={"synopsis"}
+                        reset={confirm}
                     />
                 </div>
                 <hr />
@@ -250,8 +262,8 @@ function CharacterPageTemplate() {
                     <ContentForm
                         handleFormContents={handleRelationships}
                         isManualOfStyle={false}
-                        section={relationships}
-                        reset={reset}
+                        section={"relationships"}
+                        reset={confirm}
                     />
                 </div>
                 <hr />
@@ -260,16 +272,17 @@ function CharacterPageTemplate() {
             <br />
             <button
                 onClick={() => {
-                    setConfirm(true);
+                    setReset(true);
                 }}
             >
-                Reset
+                Reset All
             </button>
-            {confirm === true ? (
+            {reset === true ? (
                 <button onClick={handleResetConfirm}>Confirm reset</button>
             ) : (
                 <div />
             )}
+            <br />
             <Link to={"/user/upload"}>Go Back</Link>
         </div>
     );

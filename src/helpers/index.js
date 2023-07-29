@@ -6,3 +6,4 @@ export { default as searchAndBold } from "./searchAndBold";
 export { default as deletePartOfString } from "./deletePartOfAString";
 export { default as replaceImage } from "./replaceImage";
 export { default as checkForImage } from "./checkForImage";
+export { default as jsonParser } from "./jsonParser";

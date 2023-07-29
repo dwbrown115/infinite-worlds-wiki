@@ -15,13 +15,13 @@ function RacePageTemplate() {
     const collection = "Content/ContentType/Race";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [race, setRace] = useState("");
+    const [raceManualOfStyle, setraceManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
     const [culture, setCulture] = useState([]);
     const [history, setHistory] = useState([]);
     const [notableMembers, setNotableMembers] = useState([]);
-    const [race, setRace] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -29,16 +29,31 @@ function RacePageTemplate() {
     const path = `${collection}/${race.split(" ")}/RaceInfo/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedRace = localStorage.getItem("race");
+        if (storedRace) {
+            setrace(storedRace);
+        } else if (!storedRace) {
+            // console.log("No race");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("race", race);
+        localStorage.setItem("raceManualOfStyle", JSON.stringify(raceManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("characteristics", JSON.stringify(characteristics));
+        localStorage.setItem("culture", JSON.stringify(culture));
+        localStorage.setItem("history", JSON.stringify(history));
+        localStorage.setItem("notableMembers", JSON.stringify(notableMembers));
+    }, [race, raceManualOfStyle, blurb, characteristics, culture, history, notableMembers]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -66,14 +81,14 @@ function RacePageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "RaceManualOfStyle",
+    function handleraceManualOfStyle(inputArray) {
+        setraceManualOfStyle({
+            contentType: "RaceraceManualOfStyle",
             content: inputArray,
         });
     }
@@ -113,14 +128,14 @@ function RacePageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handleraceManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            raceManualOfStyle,
             "RaceInfo",
-            "ManualOfStyle",
+            "raceManualOfStyle",
             `${race.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "raceManualOfStyle", raceManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -189,7 +204,7 @@ function RacePageTemplate() {
                 doc(db, "Characters", `${race.split(" ")}`),
                 data
             ).then(async () => {
-                await handleManualOfStyleSubmit();
+                await handleraceManualOfStyleSubmit();
                 await handleBlurbSubmit();
                 await handleCharacteristicsSubmit();
                 await handleCultureSubmit();
@@ -220,10 +235,10 @@ function RacePageTemplate() {
                         <div>
                             <h2>Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handleraceManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
-                                reset={reset}
+                                section={"raceManualOfStyle"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -232,8 +247,8 @@ function RacePageTemplate() {
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -244,8 +259,8 @@ function RacePageTemplate() {
                             <ContentForm
                                 handleFormContents={handleCharacteristics}
                                 isManualOfStyle={false}
-                                section={characteristics}
-                                reset={reset}
+                                section={"characteristics"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -254,8 +269,8 @@ function RacePageTemplate() {
                             <ContentForm
                                 handleFormContents={handleCulture}
                                 isManualOfStyle={false}
-                                section={culture}
-                                reset={reset}
+                                section={"culture"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -264,8 +279,8 @@ function RacePageTemplate() {
                             <ContentForm
                                 handleFormContents={handleHistory}
                                 isManualOfStyle={false}
-                                section={history}
-                                reset={reset}
+                                section={"history"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -274,8 +289,8 @@ function RacePageTemplate() {
                             <ContentForm
                                 handleFormContents={handleNotableMembers}
                                 isManualOfStyle={false}
-                                section={notableMembers}
-                                reset={reset}
+                                section={"notableMembers"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -285,16 +300,17 @@ function RacePageTemplate() {
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

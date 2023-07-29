@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
@@ -15,77 +15,41 @@ function BookPageTemplate() {
     const collection = "Content/ContentType/Books";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
-    const [childManualOfStyle, setChildManualOfStyle] = useState(
-        JSON.parse(localStorage.getItem("manualOfStyle"))
-    );
+    const [book, setBook] = useState("");
+    const [bookManualOfStyle, setbookManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
-    const [book, setBook] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
     const path = `${collection}/${book.split(" ")}/BookInfo/`;
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const storedBook = localStorage.getItem("book");
         if (storedBook) {
             setBook(storedBook);
+        } else if (!storedBook) {
+            // console.log("No book");
         }
-
-        const storedManualOfStyle = JSON.parse(
-            localStorage.getItem("manualOfStyle")
-        );
-        if (storedManualOfStyle) {
-            setChildManualOfStyle(storedManualOfStyle);
-            console.log(storedManualOfStyle.content);
-        }
-
-        //         const storedManualOfStyle = JSON.parse(
-        //             localStorage.getItem("manualOfStyle")
-        //         ).content;
-        //         if (storedManualOfStyle) {
-        //             setManualOfStyle(storedManualOfStyle);
-        //             console.log(storedManualOfStyle);
-        //         }
-
-        //         const storedBlurb = JSON.parse(localStorage.getItem("blurb"));
-        //         if (storedBlurb) {
-        //             setBlurb(storedBlurb);
-        //         }
-
-        //         const storedChapters = JSON.parse(localStorage.getItem("chapters"));
-        //         if (storedChapters) {
-        //             setChapters(storedChapters);
-        //         }
-
-        //         const storedSynopsis = JSON.parse(localStorage.getItem("synopsis"));
-        //         if (storedSynopsis) {
-        //             setSynopsis(storedSynopsis);
-        //         }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("book", book);
-        localStorage.setItem("manualOfStyle", JSON.stringify(manualOfStyle));
-        // localStorage.setItem("blurb", JSON.stringify(blurb));
-        // localStorage.setItem("chapters", JSON.stringify(chapters));
-        // localStorage.setItem("synopsis", JSON.stringify(synopsis));
-    }, [book, manualOfStyle]);
-
-    useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        localStorage.setItem("bookManualOfStyle", JSON.stringify(bookManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("chapters", JSON.stringify(chapters));
+        localStorage.setItem("synopsis", JSON.stringify(synopsis));
+    }, [book, bookManualOfStyle, blurb, chapters, synopsis]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -113,14 +77,14 @@ function BookPageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "BookManualOfStyle",
+    function handlebookManualOfStyle(inputArray) {
+        setbookManualOfStyle({
+            contentType: "BookbookManualOfStyle",
             content: inputArray,
         });
     }
@@ -146,14 +110,14 @@ function BookPageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handlebookManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            bookManualOfStyle,
             "BookInfo",
-            "ManualOfStyle",
+            "bookManualOfStyle",
             `${book.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "bookManualOfStyle", bookManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -196,7 +160,7 @@ function BookPageTemplate() {
         } else {
             await setDoc(doc(db, "Books", `${book.split(" ")}`), data)
                 .then(async () => {
-                    await handleManualOfStyleSubmit();
+                    await handlebookManualOfStyleSubmit();
                     await handleBlurbSubmit();
                     await handleChaptersSubmit();
                     await handleSynopsisSubmit();
@@ -209,8 +173,8 @@ function BookPageTemplate() {
         }
     }
 
-    return (
-        <>
+    function handlePageContent() {
+        return (
             <div>
                 <h1>Book Page Template</h1>
                 <form onSubmit={handleUpload}>
@@ -229,31 +193,31 @@ function BookPageTemplate() {
                         <div>
                             <h2>Manual Of Style</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handlebookManualOfStyle}
                                 isManualOfStyle={true}
-                                section={childManualOfStyle}
-                                reset={reset}
+                                section={"bookManualOfStyle"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
-                        {/* <div>
+                        <div>
                             <h2>Blurb</h2>
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
-                        </div> */}
+                        </div>
                     </div>
                     <hr />
-                    {/* <div>
+                    <div>
                         <h2>Chapters</h2>
                         <ContentForm
                             handleFormContents={handleChapters}
                             isManualOfStyle={true}
-                            section={chapters}
-                            reset={reset}
+                            section={"chapters"}
+                            reset={confirm}
                         />
                     </div>
                     <hr />
@@ -262,10 +226,10 @@ function BookPageTemplate() {
                         <ContentForm
                             handleFormContents={handleSynopsis}
                             isManualOfStyle={false}
-                            section={synopsis}
-                            reset={reset}
+                            section={"synopsis"}
+                            reset={confirm}
                         />
-                    </div> */}
+                    </div>
                     <hr />
                     <div>
                         <button type="submit">Submit</button>
@@ -274,20 +238,23 @@ function BookPageTemplate() {
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
-        </>
-    );
+        );
+    }
+
+    return <>{handlePageContent()}</>;
 }
 
 export default BookPageTemplate;

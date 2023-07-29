@@ -15,11 +15,11 @@ function EventPageTemplate() {
     const collection = "Content/ContentType/Events";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [event, setEvent] = useState("");
+    const [eventManualOfStyle, seteventManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
     const [impact, setImpact] = useState([]);
-    const [event, setEvent] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -27,16 +27,29 @@ function EventPageTemplate() {
     const path = `${collection}/${event.split(" ")}/EventInfo/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedEvent = localStorage.getItem("event");
+        if (storedEvent != null) {
+            setEvent(storedEvent);
+        } else if (!storedEvent) {
+            // console.log("No event");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("event", event);
+        localStorage.setItem("eventManualOfStyle", JSON.stringify(eventManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("synopsis", JSON.stringify(synopsis));
+        localStorage.setItem("impact", JSON.stringify(impact));
+    }, [event, eventManualOfStyle, blurb, synopsis, impact]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -64,14 +77,14 @@ function EventPageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "EventManualOfStyle",
+    function handleeventManualOfStyle(inputArray) {
+        seteventManualOfStyle({
+            contentType: "EventeventManualOfStyle",
             content: inputArray,
         });
     }
@@ -97,14 +110,14 @@ function EventPageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handleeventManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            eventManualOfStyle,
             "EventInfo",
-            "ManualOfStyle",
+            "eventManualOfStyle",
             `${event.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "eventManualOfStyle", eventManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -126,10 +139,10 @@ function EventPageTemplate() {
         await replaceImage(
             impact,
             "EventInfo",
-            "ManualOfStyle",
+            "eventManualOfStyle",
             `${event.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", impact);
+        await addData(path, "eventManualOfStyle", impact);
     }
 
     async function handleUpload(e) {
@@ -148,7 +161,7 @@ function EventPageTemplate() {
         } else {
             await setDoc(doc(db, "Events", `${event.split(" ")}`), data)
                 .then(async () => {
-                    await handleManualOfStyleSubmit();
+                    await handleeventManualOfStyleSubmit();
                     await handleBlurbSubmit();
                     await handleSynopsisSubmit();
                     await handleImpactSubmit();
@@ -183,10 +196,10 @@ function EventPageTemplate() {
                             <div>
                                 <h2>Manual Of Style</h2>
                                 <ContentForm
-                                    handleFormContents={handleManualOfStyle}
+                                    handleFormContents={handleeventManualOfStyle}
                                     isManualOfStyle={true}
-                                    section={manualOfStyle}
-                                    reset={reset}
+                                    section={"eventManualOfStyle"}
+                                    reset={confirm}
                                 />
                             </div>
                             <hr />
@@ -195,8 +208,8 @@ function EventPageTemplate() {
                                 <ContentForm
                                     handleFormContents={handleBlurb}
                                     isManualOfStyle={false}
-                                    section={blurb}
-                                    reset={reset}
+                                    section={"blurb"}
+                                    reset={confirm}
                                 />
                             </div>
                         </div>
@@ -206,8 +219,8 @@ function EventPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleSynopsis}
                                 isManualOfStyle={false}
-                                section={synopsis}
-                                reset={reset}
+                                section={"synopsis"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -216,25 +229,27 @@ function EventPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleImpact}
                                 isManualOfStyle={false}
-                                section={impact}
-                                reset={reset}
+                                section={"impact"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
                 </form>
+                <hr />
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

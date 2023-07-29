@@ -137,9 +137,9 @@ function App() {
                         Component={PowerSystemPage}
                     />
                     <Route path="/Race/:id" Component={RacePage} />
-                    <Route path="/signin" Component={SignIn} />
+                    <Route path="/login" Component={SignIn} />
                     <Route
-                        path="/signin/forgot-password"
+                        path="/login/forgot-password"
                         Component={ForgotPassword}
                     />
                     <Route path="/signup" Component={SignUp} />

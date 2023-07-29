@@ -36,7 +36,7 @@ function SignIn() {
     };
 
     function handleClick() {
-        router("/signin/forgot-password");
+        router("/login/forgot-password");
     }
     return (
         <>

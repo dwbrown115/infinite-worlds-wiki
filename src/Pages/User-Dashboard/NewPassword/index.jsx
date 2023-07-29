@@ -38,7 +38,7 @@ function NewPassword() {
                                             "Password successfully updated"
                                         );
                                         await logOut(user);
-                                        router("/signin");
+                                        router("/login");
                                     } catch (e) {
                                         console.log(e);
                                     }

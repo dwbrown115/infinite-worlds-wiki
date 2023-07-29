@@ -22,7 +22,7 @@ function Home() {
     return (
         <>
             <div>Home</div>
-            <Link to={"/signin"}>Sign in</Link>
+            <Link to={"/login"}>Sign in</Link>
             <Link to={"/signup"}>Sign up</Link>
             <Link to={"/content"}>Content Dashboard</Link>
         </>

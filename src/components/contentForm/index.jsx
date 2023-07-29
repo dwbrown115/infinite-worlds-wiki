@@ -1,26 +1,24 @@
 import { useState, useEffect } from "react";
 
+import { jsonParser } from "../../helpers";
+
 // eslint-disable-next-line react/prop-types
 function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
     const [sections, setSections] = useState([]);
-    const [isReset, setIsReset] = useState(reset);
-    const [confirm, setConfirm] = useState(false);
-
-    // const [showSections, setShowSections] = useState(false);
+    const [isReset, setIsReset] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line react/prop-types
-        // console.log(section.content);
-        // eslint-disable-next-line react/prop-types
-        // setSections(section.content);
-        // console.log(section.content);
-        if (section.content !== undefined) {
-            // setSections(section.content);
-            console.log(section.content);
+        const storedArray = jsonParser(localStorage.getItem(section));
+        // console.log(storedArray);
+        // const array = storedArray.content;
+        if (storedArray) {
+            if (storedArray.content != null) {
+                // console.log("Defined");
+                if (storedArray.content != undefined) {
+                    setSections(storedArray.content);
+                }
+            }
         }
-        console.log(sections);
-        // console.log(sections);
-        // console.log(reset);
     }, []);
 
     useEffect(() => {
@@ -29,17 +27,13 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
     }, [sections]);
 
     useEffect(() => {
-        setIsReset(reset);
-    }, [reset]);
-
-    useEffect(() => {
-        // console.log(isReset);
-        if (isReset == true) {
+        if (reset == true) {
+            // console.log(reset);
             removeAllObjects(sections);
-        } else {
-            removeAllObjects(sections);
+        } else if (reset == false) {
+            // console.log(reset);
         }
-    }, [isReset]);
+    }, [reset]);
 
     function removeAllObjects(arr) {
         arr.splice(0, arr.length);
@@ -121,7 +115,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
 
     // This is the function that renders the sections
     const renderSections = (sections) => {
-        return sections.map((section, index) => (
+        return sections?.map((section, index) => (
             <div key={index} className="section">
                 <br />
                 <label htmlFor={`sectionName${index}`}>Section Name:</label>
@@ -234,49 +228,47 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
         ));
     };
 
-    // This is the function that maps the sections array and displays it as a list
-
-    // function handleReset() {
-    //     setSections([]);
-    // }
-
-    return (
-        <div className="contentForm">
-            <div>
-                {renderSections(sections)}
-                <br />
-                <button type="button" onClick={addSection}>
-                    Add Section
-                </button>
-            </div>
-            <br />
-            {sections.length === 0 ? (
-                <div />
-            ) : (
+    function handleContent() {
+        return (
+            <div className="contentForm">
                 <div>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setConfirm(true);
-                        }}
-                    >
-                        Reset
+                    {renderSections(sections)}
+                    <br />
+                    <button type="button" onClick={addSection}>
+                        Add Section
                     </button>
-                    {confirm === true ? (
+                </div>
+                <br />
+                {sections?.length === 0 ? (
+                    <div />
+                ) : (
+                    <div>
                         <button
                             type="button"
                             onClick={() => {
-                                setConfirm(false), handleReset();
+                                setIsReset(true);
                             }}
                         >
-                            Confirm reset
+                            Reset
                         </button>
-                    ) : (
-                        <div />
-                    )}
-                </div>
-            )}
-        </div>
-    );
+                        {isReset === true ? (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setIsReset(false), handleReset();
+                                }}
+                            >
+                                Confirm reset
+                            </button>
+                        ) : (
+                            <div />
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    return <>{handleContent()}</>;
 }
 export default ContentForm;

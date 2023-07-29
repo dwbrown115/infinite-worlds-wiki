@@ -15,12 +15,12 @@ function LocationPageTemplate() {
     const collection = "Content/ContentType/Locations";
     const router = useNavigate();
 
-    const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [location, setLocation] = useState("");
+    const [locationManualOfStyle, setlocationManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [geographyAndEcology, setGeographyAndEcology] = useState([]);
     const [history, setHistory] = useState([]);
     const [culture, setCulture] = useState([]);
-    const [location, setLocation] = useState("");
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -28,16 +28,33 @@ function LocationPageTemplate() {
     const path = `${collection}/${location.split(" ")}/LocationInfo/`;
 
     useEffect(() => {
-        // console.log(reset)
-        setReset(true);
-    }, [reset]);
+        const storedLocation = localStorage.getItem("location");
+        if (storedLocation) {
+            setlocation(storedLocation);
+        } else if (!storedLocation) {
+            // console.log("No location");
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("location", location);
+        localStorage.setItem("locationManualOfStyle", JSON.stringify(locationManualOfStyle));
+        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem(
+            "geographyAndEcology",
+            JSON.stringify(geographyAndEcology)
+        );
+        localStorage.setItem("history", JSON.stringify(history));
+        localStorage.setItem("culture", JSON.stringify(culture));
+    }, [location, locationManualOfStyle, blurb, geographyAndEcology, history, culture]);
 
     function handleResetConfirm() {
-        setConfirm(false);
-        if (reset == false) {
-            setReset(true);
-        } else {
-            setReset(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 10);
         }
     }
 
@@ -65,14 +82,14 @@ function LocationPageTemplate() {
                     router("/user/verify");
                 }
             } else {
-                router("/user/login");
+                router("/login");
             }
         });
     }, [user]);
 
-    function handleManualOfStyle(inputArray) {
-        setManualOfStyle({
-            contentType: "LocationManualOfStyle",
+    function handlelocationManualOfStyle(inputArray) {
+        setlocationManualOfStyle({
+            contentType: "LocationlocationManualOfStyle",
             content: inputArray,
         });
     }
@@ -105,14 +122,14 @@ function LocationPageTemplate() {
         });
     }
 
-    async function handleManualOfStyleSubmit() {
+    async function handlelocationManualOfStyleSubmit() {
         await replaceImage(
-            manualOfStyle,
+            locationManualOfStyle,
             "ItemInfo",
-            "ManualOfStyle",
+            "locationManualOfStyle",
             `${location.split(" ")}`
         );
-        await addData(path, "ManualOfStyle", manualOfStyle);
+        await addData(path, "locationManualOfStyle", locationManualOfStyle);
     }
 
     async function handleBlurbSubmit() {
@@ -176,7 +193,7 @@ function LocationPageTemplate() {
                 doc(db, "Characters", `${location.split(" ")}`),
                 data
             ).then(async () => {
-                await handleManualOfStyleSubmit();
+                await handlelocationManualOfStyleSubmit();
                 await handleBlurbSubmit();
                 await handleGeographyAndEcologySubmit();
                 await handleHistorySubmit();
@@ -207,10 +224,10 @@ function LocationPageTemplate() {
                         <div>
                             <h2>Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleManualOfStyle}
+                                handleFormContents={handlelocationManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
-                                reset={reset}
+                                section={"locationManualOfStyle"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -219,19 +236,20 @@ function LocationPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleBlurb}
                                 isManualOfStyle={false}
-                                section={blurb}
-                                reset={reset}
+                                section={"blurb"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
+                    <hr />
                     <div>
                         <div>
                             <h2>Location Geography And Ecology</h2>
                             <ContentForm
                                 handleFormContents={handleGeographyAndEcology}
                                 isManualOfStyle={false}
-                                section={geographyAndEcology}
-                                reset={reset}
+                                section={"geographyAndEcology"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -240,8 +258,8 @@ function LocationPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleCulture}
                                 isManualOfStyle={false}
-                                section={history}
-                                reset={reset}
+                                section={"history"}
+                                reset={confirm}
                             />
                         </div>
                         <hr />
@@ -250,8 +268,8 @@ function LocationPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleHistory}
                                 isManualOfStyle={false}
-                                section={culture}
-                                reset={reset}
+                                section={"culture"}
+                                reset={confirm}
                             />
                         </div>
                     </div>
@@ -261,16 +279,17 @@ function LocationPageTemplate() {
                 <br />
                 <button
                     onClick={() => {
-                        setConfirm(true);
+                        setReset(true);
                     }}
                 >
-                    Reset
+                    Reset All
                 </button>
-                {confirm === true ? (
+                {reset === true ? (
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 ) : (
                     <div />
                 )}
+                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>
