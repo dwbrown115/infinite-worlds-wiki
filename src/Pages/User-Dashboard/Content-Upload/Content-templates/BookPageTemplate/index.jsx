@@ -12,7 +12,7 @@ function BookPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Books";
+    const collection = "Content/Books";
     const router = useNavigate();
 
     const [book, setBook] = useState("");
@@ -25,7 +25,7 @@ function BookPageTemplate() {
     const [confirm, setConfirm] = useState(false);
     const [optional, setOptional] = useState(false);
 
-    const path = `${collection}/${book.split(" ")}/BookInfo/`;
+    const path = `${collection}/${book.split(" ")}/`;
 
     useEffect(() => {
         const storedBook = localStorage.getItem("book");

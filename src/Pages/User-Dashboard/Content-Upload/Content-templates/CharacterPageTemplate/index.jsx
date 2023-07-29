@@ -12,7 +12,7 @@ function CharacterPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Characters";
+    const collection = "Content/Characters";
     const router = useNavigate();
 
     const [character, setCharacter] = useState("");
@@ -27,7 +27,7 @@ function CharacterPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${character.split(" ")}/CharacterRelationship/`;
+    const path = `${collection}/${character.split(" ")}/`;
 
     useEffect(() => {
         const storedCharacter = localStorage.getItem("character");
@@ -152,7 +152,7 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
-        await addData(path, "characterManualOfStyle", characterManualOfStyle);
+        await addData(path, "CharacterManualOfStyle", characterManualOfStyle);
 
         await replaceImage(
             characterBlurb,
@@ -160,7 +160,7 @@ function CharacterPageTemplate() {
             "Burb",
             `${character.split(" ")}`
         );
-        await addData(path, "characterBlurb", characterBlurb);
+        await addData(path, "CharacterBlurb", characterBlurb);
 
         await replaceImage(
             info,
@@ -168,7 +168,7 @@ function CharacterPageTemplate() {
             "Info",
             `${character.split(" ")}`
         );
-        await addData(path, "Info", info);
+        await addData(path, "CharacterInfo", info);
 
         await replaceImage(
             characterPowersAndAbilities,
@@ -178,7 +178,7 @@ function CharacterPageTemplate() {
         );
         await addData(
             path,
-            "characterPowersAndAbilities",
+            "CharacterPowersAndAbilities",
             characterPowersAndAbilities
         );
     }
@@ -190,7 +190,7 @@ function CharacterPageTemplate() {
             "Synopsis",
             `${character.split(" ")}`
         );
-        await addData(path, "characterSynopsis", characterSynopsis);
+        await addData(path, "CharacterSynopsis", characterSynopsis);
     }
     async function handleCharacterRelationshipSubmit() {
         await replaceImage(
@@ -199,7 +199,7 @@ function CharacterPageTemplate() {
             "Relationships",
             `${character.split(" ")}`
         );
-        await addData(path, "Relationships", relationships);
+        await addData(path, "CharacterRelationships", relationships);
         console.log(relationships);
     }
 

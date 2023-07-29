@@ -12,7 +12,7 @@ function EventPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Events";
+    const collection = "Content/Events";
     const router = useNavigate();
 
     const [event, setEvent] = useState("");
@@ -24,7 +24,7 @@ function EventPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${event.split(" ")}/EventInfo/`;
+    const path = `${collection}/${event.split(" ")}/`;
 
     useEffect(() => {
         const storedEvent = localStorage.getItem("event");

@@ -12,7 +12,7 @@ function ItemPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Items";
+    const collection = "Content/Items";
     const router = useNavigate();
 
     const [item, setItem] = useState("");
@@ -24,7 +24,7 @@ function ItemPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${item.split(" ")}/ItemInfo/`;
+    const path = `${collection}/${item.split(" ")}/`;
 
     useEffect(() => {
         const storedItem = localStorage.getItem("item");

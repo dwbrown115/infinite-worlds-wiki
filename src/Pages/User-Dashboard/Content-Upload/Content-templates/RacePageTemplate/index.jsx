@@ -12,7 +12,7 @@ function RacePageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Race";
+    const collection = "Content/Race";
     const router = useNavigate();
 
     const [race, setRace] = useState("");
@@ -26,7 +26,7 @@ function RacePageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${race.split(" ")}/RaceInfo/`;
+    const path = `${collection}/${race.split(" ")}/`;
 
     useEffect(() => {
         const storedRace = localStorage.getItem("race");

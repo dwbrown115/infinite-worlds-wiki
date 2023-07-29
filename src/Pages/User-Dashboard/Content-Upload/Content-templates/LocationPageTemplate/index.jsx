@@ -12,7 +12,7 @@ function LocationPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/Locations";
+    const collection = "Content/Locations";
     const router = useNavigate();
 
     const [location, setLocation] = useState("");
@@ -25,7 +25,7 @@ function LocationPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${location.split(" ")}/LocationInfo/`;
+    const path = `${collection}/${location.split(" ")}/`;
 
     useEffect(() => {
         const storedLocation = localStorage.getItem("location");

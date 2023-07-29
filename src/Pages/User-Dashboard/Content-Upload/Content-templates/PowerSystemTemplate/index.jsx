@@ -12,7 +12,7 @@ function PowerSystemPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Content/ContentType/PowerSystems";
+    const collection = "Content/PowerSystems";
     const router = useNavigate();
 
     const [powerSystem, setPowerSystem] = useState("");
@@ -27,7 +27,7 @@ function PowerSystemPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const path = `${collection}/${powerSystem.split(" ")}/PowerSystemInfo/`;
+    const path = `${collection}/${powerSystem.split(" ")}/`;
 
     useEffect(() => {
         const storedPowerSystem = localStorage.getItem("powerSystem");
