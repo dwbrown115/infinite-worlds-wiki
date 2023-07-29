@@ -85,23 +85,23 @@ function EventPageTemplate() {
         });
     }, [user]);
 
-    function handleeventManualOfStyle(inputArray) {
+    function handleEventManualOfStyle(inputArray) {
         setEventManualOfStyle({
-            contentType: "EventeventManualOfStyle",
+            contentType: "EventManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleeventBlurb(inputArray) {
+    function handleEventBlurb(inputArray) {
         seteventBlurb({
-            contentType: "EventeventBlurb",
+            contentType: "EventBlurb",
             content: inputArray,
         });
     }
 
-    function handleeventSynopsis(inputArray) {
+    function handleEventSynopsis(inputArray) {
         setEventSynopsis({
-            contentType: "EventeventSynopsis",
+            contentType: "EventSynopsis",
             content: inputArray,
         });
     }
@@ -113,7 +113,7 @@ function EventPageTemplate() {
         });
     }
 
-    async function handleeventManualOfStyleSubmit() {
+    async function handleEventManualOfStyleSubmit() {
         await replaceImage(
             eventManualOfStyle,
             "EventInfo",
@@ -123,7 +123,7 @@ function EventPageTemplate() {
         await addData(path, "eventManualOfStyle", eventManualOfStyle);
     }
 
-    async function handleeventBlurbSubmit() {
+    async function handleEventBlurbSubmit() {
         await replaceImage(
             eventBlurb,
             "EventInfo",
@@ -133,7 +133,7 @@ function EventPageTemplate() {
         await addData(path, "eventBlurb", eventBlurb);
     }
 
-    async function handleeventSynopsisSubmit() {
+    async function handleEventSynopsisSubmit() {
         await replaceImage(
             eventSynopsis,
             "EventInfo",
@@ -147,10 +147,10 @@ function EventPageTemplate() {
         await replaceImage(
             impact,
             "EventInfo",
-            "eventManualOfStyle",
+            "eventImpact",
             `${event.split(" ")}`
         );
-        await addData(path, "eventManualOfStyle", impact);
+        await addData(path, "eventImpact", impact);
     }
 
     async function handleUpload(e) {
@@ -170,9 +170,9 @@ function EventPageTemplate() {
         } else {
             await setDoc(doc(db, "ContentRef", `${event.split(" ")}`), data)
                 .then(async () => {
-                    await handleeventManualOfStyleSubmit();
-                    await handleeventBlurbSubmit();
-                    await handleeventSynopsisSubmit();
+                    await handleEventManualOfStyleSubmit();
+                    await handleEventBlurbSubmit();
+                    await handleEventSynopsisSubmit();
                     await handleImpactSubmit();
                     await handleResetConfirm();
                     await handleResetConfirm();
@@ -207,7 +207,7 @@ function EventPageTemplate() {
                                 <h2>Event Manual Of Style</h2>
                                 <ContentForm
                                     handleFormContents={
-                                        handleeventManualOfStyle
+                                        handleEventManualOfStyle
                                     }
                                     isManualOfStyle={true}
                                     section={"eventManualOfStyle"}
@@ -218,7 +218,7 @@ function EventPageTemplate() {
                             <div>
                                 <h2>Event Blurb</h2>
                                 <ContentForm
-                                    handleFormContents={handleeventBlurb}
+                                    handleFormContents={handleEventBlurb}
                                     isManualOfStyle={false}
                                     section={"eventBlurb"}
                                     reset={confirm}
@@ -229,7 +229,7 @@ function EventPageTemplate() {
                         <div>
                             <h2>Event Synopsis</h2>
                             <ContentForm
-                                handleFormContents={handleeventSynopsis}
+                                handleFormContents={handleEventSynopsis}
                                 isManualOfStyle={false}
                                 section={"eventSynopsis"}
                                 reset={confirm}

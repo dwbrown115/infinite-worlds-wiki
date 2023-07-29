@@ -85,16 +85,16 @@ function BookPageTemplate() {
         });
     }, [user]);
 
-    function handlebookManualOfStyle(inputArray) {
+    function handleBookManualOfStyle(inputArray) {
         setBookManualOfStyle({
-            contentType: "BookbookManualOfStyle",
+            contentType: "BookManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handlebookBlurb(inputArray) {
+    function handleBookBlurb(inputArray) {
         setBookBlurb({
-            contentType: "BookbookBlurb",
+            contentType: "BookBlurb",
             content: inputArray,
         });
     }
@@ -106,14 +106,14 @@ function BookPageTemplate() {
         });
     }
 
-    function handlebookSynopsis(inputArray) {
+    function handleBookSynopsis(inputArray) {
         setBookSynopsis({
             contentType: "BookbookSynopsis",
             content: inputArray,
         });
     }
 
-    async function handlebookManualOfStyleSubmit() {
+    async function handleBookManualOfStyleSubmit() {
         await replaceImage(
             bookManualOfStyle,
             "BookInfo",
@@ -123,7 +123,7 @@ function BookPageTemplate() {
         await addData(path, "bookManualOfStyle", bookManualOfStyle);
     }
 
-    async function handlebookBlurbSubmit() {
+    async function handleBookBlurbSubmit() {
         await replaceImage(
             bookBlurb,
             "BookInfo",
@@ -143,7 +143,7 @@ function BookPageTemplate() {
         await addData(path, "Chapters", chapters);
     }
 
-    async function handlebookSynopsisSubmit() {
+    async function handleBookSynopsisSubmit() {
         await replaceImage(
             bookSynopsis,
             "BookInfo",
@@ -169,10 +169,10 @@ function BookPageTemplate() {
         } else {
             await setDoc(doc(db, "ContentRef", `${book.split(" ")}`), data)
                 .then(async () => {
-                    await handlebookManualOfStyleSubmit();
-                    await handlebookBlurbSubmit();
+                    await handleBookManualOfStyleSubmit();
+                    await handleBookBlurbSubmit();
                     await handleChaptersSubmit();
-                    await handlebookSynopsisSubmit();
+                    await handleBookSynopsisSubmit();
                     await handleResetConfirm();
                     await handleResetConfirm();
                     await setBook("");
@@ -203,7 +203,7 @@ function BookPageTemplate() {
                         <div>
                             <h2>Book Manual Of Style</h2>
                             <ContentForm
-                                handleFormContents={handlebookManualOfStyle}
+                                handleFormContents={handleBookManualOfStyle}
                                 isManualOfStyle={true}
                                 section={"bookManualOfStyle"}
                                 reset={confirm}
@@ -213,7 +213,7 @@ function BookPageTemplate() {
                         <div>
                             <h2>Book Blurb</h2>
                             <ContentForm
-                                handleFormContents={handlebookBlurb}
+                                handleFormContents={handleBookBlurb}
                                 isManualOfStyle={false}
                                 section={"bookBlurb"}
                                 reset={confirm}
@@ -234,7 +234,7 @@ function BookPageTemplate() {
                     <div>
                         <h2>Book Synopsis</h2>
                         <ContentForm
-                            handleFormContents={handlebookSynopsis}
+                            handleFormContents={handleBookSynopsis}
                             isManualOfStyle={false}
                             section={"bookSynopsis"}
                             reset={confirm}

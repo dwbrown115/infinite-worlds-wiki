@@ -100,16 +100,16 @@ function RacePageTemplate() {
         });
     }, [user]);
 
-    function handleraceManualOfStyle(inputArray) {
+    function handleRaceManualOfStyle(inputArray) {
         setRaceManualOfStyle({
-            contentType: "RaceraceManualOfStyle",
+            contentType: "RaceManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleraceBlurb(inputArray) {
+    function handleRaceBlurb(inputArray) {
         setRaceBlurb({
-            contentType: "RaceraceBlurb",
+            contentType: "RaceBlurb",
             content: inputArray,
         });
     }
@@ -128,9 +128,9 @@ function RacePageTemplate() {
         });
     }
 
-    function handleraceHistory(inputArray) {
+    function handleRaceHistory(inputArray) {
         setRaceHistory({
-            contentType: "RaceraceHistory",
+            contentType: "RaceHistory",
             content: inputArray,
         });
     }
@@ -142,7 +142,7 @@ function RacePageTemplate() {
         });
     }
 
-    async function handleraceManualOfStyleSubmit() {
+    async function handleRaceManualOfStyleSubmit() {
         await replaceImage(
             raceManualOfStyle,
             "RaceInfo",
@@ -152,7 +152,7 @@ function RacePageTemplate() {
         await addData(path, "raceManualOfStyle", raceManualOfStyle);
     }
 
-    async function handleraceBlurbSubmit() {
+    async function handleRaceBlurbSubmit() {
         await replaceImage(
             raceBlurb,
             "RaceInfo",
@@ -182,7 +182,7 @@ function RacePageTemplate() {
         await addData(path, "Culture", culture);
     }
 
-    async function handleraceHistorySubmit() {
+    async function handleRaceHistorySubmit() {
         await replaceImage(
             raceHistory,
             "RaceInfo",
@@ -224,11 +224,11 @@ function RacePageTemplate() {
                 doc(db, "ContentRef", `${race.split(" ")}`),
                 data
             ).then(async () => {
-                await handleraceManualOfStyleSubmit();
-                await handleraceBlurbSubmit();
+                await handleRaceManualOfStyleSubmit();
+                await handleRaceBlurbSubmit();
                 await handleCharacteristicsSubmit();
                 await handleCultureSubmit();
-                await handleraceHistorySubmit();
+                await handleRaceHistorySubmit();
                 await handleNotableMembersSubmit();
                 await handleResetConfirm();
                 await setRace("");
@@ -255,7 +255,7 @@ function RacePageTemplate() {
                         <div>
                             <h2>Race Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleraceManualOfStyle}
+                                handleFormContents={handleRaceManualOfStyle}
                                 isManualOfStyle={true}
                                 section={"raceManualOfStyle"}
                                 reset={confirm}
@@ -265,7 +265,7 @@ function RacePageTemplate() {
                         <div>
                             <h2>Race Blurb</h2>
                             <ContentForm
-                                handleFormContents={handleraceBlurb}
+                                handleFormContents={handleRaceBlurb}
                                 isManualOfStyle={false}
                                 section={"raceBlurb"}
                                 reset={confirm}
@@ -297,7 +297,7 @@ function RacePageTemplate() {
                         <div>
                             <h2>Race History</h2>
                             <ContentForm
-                                handleFormContents={handleraceHistory}
+                                handleFormContents={handleRaceHistory}
                                 isManualOfStyle={false}
                                 section={"raceHistory"}
                                 reset={confirm}

@@ -99,16 +99,16 @@ function PowerSystemPageTemplate() {
         });
     }, [user]);
 
-    function handlepowerSystemManualOfStyle(inputArray) {
+    function handlePowerSystemManualOfStyle(inputArray) {
         setPowerSystemManualOfStyle({
-            contentType: "PowerSystempowerSystemManualOfStyle",
+            contentType: "PowerSystemManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handlepowerSystemBlurb(inputArray) {
+    function handlePowerSystemBlurb(inputArray) {
         setPowerSystemBlurb({
-            contentType: "PowerSystempowerSystemBlurb",
+            contentType: "PowerSystemBlurb",
             content: inputArray,
         });
     }
@@ -134,7 +134,7 @@ function PowerSystemPageTemplate() {
         });
     }
 
-    async function handlepowerSystemManualOfStyleSubmit() {
+    async function handlePowerSystemManualOfStyleSubmit() {
         await replaceImage(
             powerSystemManualOfStyle,
             "PowerSystemInfo",
@@ -148,7 +148,7 @@ function PowerSystemPageTemplate() {
         );
     }
 
-    async function handlepowerSystemBlurbSubmit() {
+    async function handlePowerSystemBlurbSubmit() {
         await replaceImage(
             powerSystemBlurb,
             "PowerSystemInfo",
@@ -210,8 +210,8 @@ function PowerSystemPageTemplate() {
                 doc(db, "ContentRef", `${powerSystem.split(" ")}`),
                 data
             ).then(async () => {
-                await handlepowerSystemManualOfStyleSubmit();
-                await handlepowerSystemBlurbSubmit();
+                await handlePowerSystemManualOfStyleSubmit();
+                await handlePowerSystemBlurbSubmit();
                 await handleInfoSubmit();
                 await handleUsesSubmit();
                 await handleNotableUsersSubmit();
@@ -241,7 +241,7 @@ function PowerSystemPageTemplate() {
                             <h2>Power System Manual of Style</h2>
                             <ContentForm
                                 handleFormContents={
-                                    handlepowerSystemManualOfStyle
+                                    handlePowerSystemManualOfStyle
                                 }
                                 isManualOfStyle={true}
                                 section={"powerSystemManualOfStyle"}
@@ -253,7 +253,7 @@ function PowerSystemPageTemplate() {
                         <div>
                             <h2>Power System Blurb</h2>
                             <ContentForm
-                                handleFormContents={handlepowerSystemBlurb}
+                                handleFormContents={handlePowerSystemBlurb}
                                 isManualOfStyle={false}
                                 section={"powerSystemBlurb"}
                                 reset={confirm}

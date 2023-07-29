@@ -85,23 +85,23 @@ function ItemPageTemplate() {
         });
     }, [user]);
 
-    function handleitemManualOfStyle(inputArray) {
+    function handleItemManualOfStyle(inputArray) {
         setItemManualOfStyle({
-            contentType: "ItemitemManualOfStyle",
+            contentType: "ItemManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleitemBlurb(inputArray) {
+    function handleItemBlurb(inputArray) {
         setItemBlurb({
-            contentType: "ItemitemBlurb",
+            contentType: "ItemBlurb",
             content: inputArray,
         });
     }
 
-    function handleitemHistory(inputArray) {
+    function handleItemHistory(inputArray) {
         setItemHistory({
-            contentType: "ItemitemHistory",
+            contentType: "ItemHistory",
             content: inputArray,
         });
     }
@@ -113,7 +113,7 @@ function ItemPageTemplate() {
         });
     }
 
-    async function handleitemManualOfStyleSubmit() {
+    async function handleItemManualOfStyleSubmit() {
         await replaceImage(
             itemManualOfStyle,
             "ItemInfo",
@@ -123,7 +123,7 @@ function ItemPageTemplate() {
         await addData(path, "itemManualOfStyle", itemManualOfStyle);
     }
 
-    async function handleitemBlurbSubmit() {
+    async function handleItemBlurbSubmit() {
         await replaceImage(
             itemBlurb,
             "ItemInfo",
@@ -133,7 +133,7 @@ function ItemPageTemplate() {
         await addData(path, "itemBlurb", itemBlurb);
     }
 
-    async function handleitemHistorySubmit() {
+    async function handleItemHistorySubmit() {
         await replaceImage(
             itemHistory,
             "ItemInfo",
@@ -175,9 +175,9 @@ function ItemPageTemplate() {
                 doc(db, "ContentRef", `${item.split(" ")}`),
                 data
             ).then(async () => {
-                await handleitemManualOfStyleSubmit();
-                await handleitemBlurbSubmit();
-                await handleitemHistorySubmit();
+                await handleItemManualOfStyleSubmit();
+                await handleItemBlurbSubmit();
+                await handleItemHistorySubmit();
                 await handleItemUsesSubmit();
                 await handleResetConfirm();
                 await setItem("");
@@ -205,7 +205,7 @@ function ItemPageTemplate() {
                         <div>
                             <h2>Item Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handleitemManualOfStyle}
+                                handleFormContents={handleItemManualOfStyle}
                                 isManualOfStyle={true}
                                 section={"itemManualOfStyle"}
                                 reset={confirm}
@@ -215,7 +215,7 @@ function ItemPageTemplate() {
                         <div>
                             <h2>Item Blurb</h2>
                             <ContentForm
-                                handleFormContents={handleitemBlurb}
+                                handleFormContents={handleItemBlurb}
                                 isManualOfStyle={false}
                                 section={"itemBlurb"}
                                 reset={confirm}
@@ -227,7 +227,7 @@ function ItemPageTemplate() {
                         <div>
                             <h2>Item History</h2>
                             <ContentForm
-                                handleFormContents={handleitemHistory}
+                                handleFormContents={handleItemHistory}
                                 isManualOfStyle={false}
                                 section={"itemHistory"}
                                 reset={confirm}

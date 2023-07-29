@@ -99,7 +99,7 @@ function CharacterPageTemplate() {
         });
     }, [user]);
 
-    const handlecharacterManualOfStyle = (inputArray) => {
+    const handleCharacterManualOfStyle = (inputArray) => {
         setCharacterManualOfStyle({
             contentType: "CharacterManualofsyle",
             content: inputArray,
@@ -107,9 +107,9 @@ function CharacterPageTemplate() {
         // setCharacterManualOfStyle(inputArray);
     };
 
-    const handlecharacterBlurb = (inputArray) => {
+    const handleCharacterBlurb = (inputArray) => {
         setCharacterBlurb({
-            contentType: "CharactercharacterBlurb",
+            contentType: "CharacterBlurb",
             content: inputArray,
         });
     };
@@ -121,9 +121,9 @@ function CharacterPageTemplate() {
         });
     };
 
-    const handlecharacterSynopsis = (inputArray) => {
+    const handleCharacterSynopsis = (inputArray) => {
         setCharacterSynopsis({
-            contentType: "CharactercharacterSynopsis",
+            contentType: "CharacterSynopsis",
             content: inputArray,
         });
     };
@@ -143,7 +143,7 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
-        await addData(path, "ManualOfSyle", characterManualOfStyle);
+        await addData(path, "characterManualOfStyle", characterManualOfStyle);
 
         await replaceImage(
             characterBlurb,
@@ -162,11 +162,11 @@ function CharacterPageTemplate() {
         await addData(path, "Info", info);
     }
 
-    async function handleCharactercharacterSynopsisSubmit() {
+    async function handleCharacterSynopsisSubmit() {
         await replaceImage(
             characterSynopsis,
-            "CharactercharacterSynopsis",
-            "characterSynopsis",
+            "CharacterSynopsis",
+            "Synopsis",
             `${character.split(" ")}`
         );
         await addData(path, "characterSynopsis", characterSynopsis);
@@ -203,7 +203,7 @@ function CharacterPageTemplate() {
             await setDoc(doc(db, "ContentRef", `${character.split(" ")}`), data)
                 .then(async () => {
                     await handleCharacterInfoSubmit();
-                    await handleCharactercharacterSynopsisSubmit();
+                    await handleCharacterSynopsisSubmit();
                     await handleCharacterRelationshipSubmit();
                     await handleResetConfirm();
                     await handleResetConfirm();
@@ -237,7 +237,7 @@ function CharacterPageTemplate() {
                             <h2>Character Manual of syle</h2>
                             <ContentForm
                                 handleFormContents={
-                                    handlecharacterManualOfStyle
+                                    handleCharacterManualOfStyle
                                 }
                                 isManualOfStyle={true}
                                 section={"characterManualOfStyle"}
@@ -247,7 +247,7 @@ function CharacterPageTemplate() {
                         <div>
                             <h2>Character Blurb</h2>
                             <ContentForm
-                                handleFormContents={handlecharacterBlurb}
+                                handleFormContents={handleCharacterBlurb}
                                 isManualOfStyle={false}
                                 section={"characterBlurb"}
                                 reset={confirm}
@@ -268,7 +268,7 @@ function CharacterPageTemplate() {
                 <div>
                     <h1>Character Synopsis Page</h1>
                     <ContentForm
-                        handleFormContents={handlecharacterSynopsis}
+                        handleFormContents={handleCharacterSynopsis}
                         isManualOfStyle={false}
                         section={"characterSynopsis"}
                         reset={confirm}
