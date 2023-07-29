@@ -186,12 +186,12 @@ function CharacterPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            characterName: character,
+            Name: character,
             createdBy: email,
             createdAt: time,
         };
 
-        const docRef = doc(db, "Characters", `${character.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${character.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -200,7 +200,7 @@ function CharacterPageTemplate() {
         } else {
             console.log("doc doesn't exist");
             await setDoc(
-                doc(db, "Characters", `${character.split(" ")}`),
+                doc(db, "ContentRef", `${character.split(" ")}`),
                 data
             ).then(async () => {
                 await handleCharacterInfoSubmit();

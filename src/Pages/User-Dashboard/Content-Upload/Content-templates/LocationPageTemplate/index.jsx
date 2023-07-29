@@ -189,12 +189,12 @@ function LocationPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            LocationName: location,
+            Name: location,
             createdBy: email,
             createdAt: time,
         };
 
-        const docRef = doc(db, "Items", `${location.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${location.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -203,7 +203,7 @@ function LocationPageTemplate() {
         } else {
             console.log("doc doesn't exist");
             await setDoc(
-                doc(db, "Characters", `${location.split(" ")}`),
+                doc(db, "ContentRef", `${location.split(" ")}`),
                 data
             ).then(async () => {
                 await handlelocationManualOfStyleSubmit();

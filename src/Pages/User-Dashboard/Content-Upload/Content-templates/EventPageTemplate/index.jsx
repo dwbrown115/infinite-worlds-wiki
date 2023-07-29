@@ -157,17 +157,17 @@ function EventPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            contentType: "Event",
+            Name: event,
             createdAt: time,
             createdBy: email,
         };
-        const docRef = doc(db, "Events", `${event.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${event.split(" ")}`);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             return alert("This event already exists!");
         } else {
-            await setDoc(doc(db, "Events", `${event.split(" ")}`), data)
+            await setDoc(doc(db, "ContentRef", `${event.split(" ")}`), data)
                 .then(async () => {
                     await handleeventManualOfStyleSubmit();
                     await handleeventBlurbSubmit();

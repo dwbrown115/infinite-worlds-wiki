@@ -206,12 +206,12 @@ function RacePageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            RaceName: race,
+            Name: race,
             createdBy: email,
             createdAt: time,
         };
 
-        const docRef = doc(db, "races", `${race.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${race.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -220,7 +220,7 @@ function RacePageTemplate() {
         } else {
             console.log("doc doesn't exist");
             await setDoc(
-                doc(db, "Characters", `${race.split(" ")}`),
+                doc(db, "ContentRef", `${race.split(" ")}`),
                 data
             ).then(async () => {
                 await handleraceManualOfStyleSubmit();

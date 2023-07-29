@@ -157,16 +157,16 @@ function BookPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            bookName: book,
+            Name: book,
             createdAt: time,
             createdBy: email,
         };
-        const docRef = doc(db, "Books", `${book.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${book.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             return alert("This book already exists!");
         } else {
-            await setDoc(doc(db, "Books", `${book.split(" ")}`), data)
+            await setDoc(doc(db, "ContentRef", `${book.split(" ")}`), data)
                 .then(async () => {
                     await handlebookManualOfStyleSubmit();
                     await handlebookBlurbSubmit();

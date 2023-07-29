@@ -192,12 +192,12 @@ function PowerSystemPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            PowerSystemName: powerSystem,
+            Name: powerSystem,
             createdBy: email,
             createdAt: time,
         };
 
-        const docRef = doc(db, "PowerSystems", `${powerSystem.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${powerSystem.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -206,7 +206,7 @@ function PowerSystemPageTemplate() {
         } else {
             console.log("doc doesn't exist");
             await setDoc(
-                doc(db, "Characters", `${powerSystem.split(" ")}`),
+                doc(db, "ContentRef", `${powerSystem.split(" ")}`),
                 data
             ).then(async () => {
                 await handlepowerSystemManualOfStyleSubmit();

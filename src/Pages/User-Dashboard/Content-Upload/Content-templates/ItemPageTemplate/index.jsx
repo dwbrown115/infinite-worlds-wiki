@@ -157,12 +157,12 @@ function ItemPageTemplate() {
         e.preventDefault();
         const time = Date().toLocaleString();
         const data = {
-            ItemName: item,
+            Name: item,
             createdBy: email,
             createdAt: time,
         };
 
-        const docRef = doc(db, "Items", `${item.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${item.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -171,7 +171,7 @@ function ItemPageTemplate() {
         } else {
             console.log("doc doesn't exist");
             await setDoc(
-                doc(db, "Characters", `${item.split(" ")}`),
+                doc(db, "ContentRef", `${item.split(" ")}`),
                 data
             ).then(async () => {
                 await handleitemManualOfStyleSubmit();

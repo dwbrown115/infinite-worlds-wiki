@@ -18,6 +18,8 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                     setSections(storedArray.content);
                 }
             }
+        } else {
+            console.log("Not Defined");
         }
     }, []);
 
