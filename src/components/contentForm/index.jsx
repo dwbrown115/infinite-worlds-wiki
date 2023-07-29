@@ -19,7 +19,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                 }
             }
         } else {
-            console.log("Not Defined");
+            // console.log("Not Defined");
         }
     }, []);
 
@@ -32,6 +32,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
         if (reset == true) {
             // console.log(reset);
             removeAllObjects(sections);
+            localStorage.removeItem(section);
         } else if (reset == false) {
             // console.log(reset);
         }

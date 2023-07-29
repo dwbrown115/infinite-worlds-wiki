@@ -19,6 +19,8 @@ function CharacterPageTemplate() {
     const [characterManualOfStyle, setCharacterManualOfStyle] = useState([]);
     const [characterBlurb, setCharacterBlurb] = useState([]);
     const [info, setInfo] = useState([]);
+    const [characterPowersAndAbilities, setCharacterPowersAndAbilities] =
+        useState([]);
     const [characterSynopsis, setCharacterSynopsis] = useState([]);
     const [relationships, setRelationships] = useState([]);
     const [email, setEmail] = useState("");
@@ -121,6 +123,13 @@ function CharacterPageTemplate() {
         });
     };
 
+    const handleCharacterPowersAndAbilities = (inputArray) => {
+        setCharacterPowersAndAbilities({
+            contentType: "CharacterPowersAndAbilities",
+            content: inputArray,
+        });
+    };
+
     const handleCharacterSynopsis = (inputArray) => {
         setCharacterSynopsis({
             contentType: "CharacterSynopsis",
@@ -154,12 +163,24 @@ function CharacterPageTemplate() {
         await addData(path, "characterBlurb", characterBlurb);
 
         await replaceImage(
-            characterBlurb,
+            info,
             "CharacterInfo",
             "Info",
             `${character.split(" ")}`
         );
         await addData(path, "Info", info);
+
+        await replaceImage(
+            characterPowersAndAbilities,
+            "CharacterInfo",
+            "PowersAndAbilities",
+            `${character.split(" ")}`
+        );
+        await addData(
+            path,
+            "characterPowersAndAbilities",
+            characterPowersAndAbilities
+        );
     }
 
     async function handleCharacterSynopsisSubmit() {
@@ -256,13 +277,24 @@ function CharacterPageTemplate() {
                     </div>
                 </div>
                 <div>
-                    <h2>Character Info</h2>
-                    <ContentForm
-                        handleFormContents={handleInfo}
-                        isManualOfStyle={false}
-                        section={"info"}
-                        reset={confirm}
-                    />
+                    <div>
+                        <h2>Character Info</h2>
+                        <ContentForm
+                            handleFormContents={handleInfo}
+                            isManualOfStyle={false}
+                            section={"info"}
+                            reset={confirm}
+                        />
+                    </div>
+                    <div>
+                        <h2>Character Powers and Abilities</h2>
+                        <ContentForm
+                            handleFormContents={handleInfo}
+                            isManualOfStyle={true}
+                            section={"info"}
+                            reset={confirm}
+                        />
+                    </div>
                 </div>
                 <hr />
                 <div>
@@ -288,18 +320,24 @@ function CharacterPageTemplate() {
                 <button type="submit">Submit</button>
             </form>
             <br />
-            <button
-                onClick={() => {
-                    setReset(true);
-                }}
-            >
-                Reset All
-            </button>
+            {reset === false ? (
+                <button
+                    onClick={() => {
+                        setReset(true);
+                    }}
+                >
+                    Reset All
+                </button>
+            ) : (
+                <div />
+            )}
             {reset === true ? (
-                <>
-                    <button onClick={setReset(false)}>Cancel reset</button>
+                <div>
+                    <button onClick={() => setReset(false)}>
+                        Cancel reset
+                    </button>
                     <button onClick={handleResetConfirm}>Confirm reset</button>
-                </>
+                </div>
             ) : (
                 <div />
             )}

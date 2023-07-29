@@ -23,6 +23,7 @@ function BookPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [optional, setOptional] = useState(false);
 
     const path = `${collection}/${book.split(" ")}/BookInfo/`;
 
@@ -221,15 +222,24 @@ function BookPageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <div>
-                        <h2>Book Chapters</h2>
-                        <ContentForm
-                            handleFormContents={handleChapters}
-                            isManualOfStyle={true}
-                            section={"chapters"}
-                            reset={confirm}
-                        />
-                    </div>
+                    <h2>Book Chapters Section</h2>
+                    {optional === true ? (
+                        <div>
+                            <ContentForm
+                                handleFormContents={handleChapters}
+                                isManualOfStyle={true}
+                                section={"chapters"}
+                                reset={confirm}
+                            />
+                            <button onClick={() => setOptional(false)}>
+                                Remove Chapters Section
+                            </button>
+                        </div>
+                    ) : (
+                        <button onClick={() => setOptional(true)}>
+                            Add Chapters
+                        </button>
+                    )}
                     <hr />
                     <div>
                         <h2>Book Synopsis</h2>
