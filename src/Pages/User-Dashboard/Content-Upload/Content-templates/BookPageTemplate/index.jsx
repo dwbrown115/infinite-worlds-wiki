@@ -158,6 +158,7 @@ function BookPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: book,
+            Type: "Book",
             createdAt: time,
             createdBy: email,
         };

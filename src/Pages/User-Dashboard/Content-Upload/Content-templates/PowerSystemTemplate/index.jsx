@@ -193,6 +193,7 @@ function PowerSystemPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: powerSystem,
+            Type: "Power System",
             createdBy: email,
             createdAt: time,
         };

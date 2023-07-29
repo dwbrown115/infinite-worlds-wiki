@@ -5,7 +5,7 @@ import { jsonParser } from "../../helpers";
 // eslint-disable-next-line react/prop-types
 function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
     const [sections, setSections] = useState([]);
-    const [isReset, setIsReset] = useState(false);
+    const [confirm, setConfirm] = useState(false);
 
     useEffect(() => {
         const storedArray = jsonParser(localStorage.getItem(section));
@@ -43,6 +43,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
 
     function handleReset() {
         removeAllObjects(sections);
+        setConfirm(false);
     }
 
     const addSection = () => {
@@ -245,20 +246,28 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                     <div />
                 ) : (
                     <div>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setIsReset(true);
-                            }}
-                        >
-                            Reset
-                        </button>
-                        {isReset === true ? (
+                        {confirm === false ? (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setConfirm(true);
+                                }}
+                            >
+                                Reset
+                            </button>
+                        ) : (
+                            <div />
+                        )}
+                        {confirm === true ? (
                             <>
-                                <button onClick={setIsReset(false)}>
+                                <button
+                                    onClick={() => {
+                                        setConfirm(false);
+                                    }}
+                                >
                                     Cancel reset
                                 </button>
-                                <button onClick={handleResetConfirm}>
+                                <button onClick={handleReset}>
                                     Confirm reset
                                 </button>
                             </>
