@@ -16,9 +16,9 @@ function EventPageTemplate() {
     const router = useNavigate();
 
     const [event, setEvent] = useState("");
-    const [eventManualOfStyle, seteventManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
-    const [synopsis, setSynopsis] = useState([]);
+    const [eventManualOfStyle, setEventManualOfStyle] = useState([]);
+    const [eventBlurb, seteventBlurb] = useState([]);
+    const [eventSynopsis, setEventSynopsis] = useState([]);
     const [impact, setImpact] = useState([]);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
@@ -38,10 +38,10 @@ function EventPageTemplate() {
     useEffect(() => {
         localStorage.setItem("event", event);
         localStorage.setItem("eventManualOfStyle", JSON.stringify(eventManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
-        localStorage.setItem("synopsis", JSON.stringify(synopsis));
+        localStorage.setItem("eventBlurb", JSON.stringify(eventBlurb));
+        localStorage.setItem("eventSynopsis", JSON.stringify(eventSynopsis));
         localStorage.setItem("impact", JSON.stringify(impact));
-    }, [event, eventManualOfStyle, blurb, synopsis, impact]);
+    }, [event, eventManualOfStyle, eventBlurb, eventSynopsis, impact]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -83,22 +83,22 @@ function EventPageTemplate() {
     }, [user]);
 
     function handleeventManualOfStyle(inputArray) {
-        seteventManualOfStyle({
+        setEventManualOfStyle({
             contentType: "EventeventManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleBlurb(inputArray) {
-        setBlurb({
-            contentType: "EventBlurb",
+    function handleeventBlurb(inputArray) {
+        seteventBlurb({
+            contentType: "EventeventBlurb",
             content: inputArray,
         });
     }
 
-    function handleSynopsis(inputArray) {
-        setSynopsis({
-            contentType: "EventSynopsis",
+    function handleeventSynopsis(inputArray) {
+        setEventSynopsis({
+            contentType: "EventeventSynopsis",
             content: inputArray,
         });
     }
@@ -120,19 +120,19 @@ function EventPageTemplate() {
         await addData(path, "eventManualOfStyle", eventManualOfStyle);
     }
 
-    async function handleBlurbSubmit() {
-        await replaceImage(blurb, "EventInfo", "Blurb", `${event.split(" ")}`);
-        await addData(path, "Blurb", blurb);
+    async function handleeventBlurbSubmit() {
+        await replaceImage(eventBlurb, "EventInfo", "eventBlurb", `${event.split(" ")}`);
+        await addData(path, "eventBlurb", eventBlurb);
     }
 
-    async function handleSynopsisSubmit() {
+    async function handleeventSynopsisSubmit() {
         await replaceImage(
-            synopsis,
+            eventSynopsis,
             "EventInfo",
-            "Synopsis",
+            "eventSynopsis",
             `${event.split(" ")}`
         );
-        await addData(path, "Synopsis", synopsis);
+        await addData(path, "eventSynopsis", eventSynopsis);
     }
 
     async function handleImpactSubmit() {
@@ -162,8 +162,8 @@ function EventPageTemplate() {
             await setDoc(doc(db, "Events", `${event.split(" ")}`), data)
                 .then(async () => {
                     await handleeventManualOfStyleSubmit();
-                    await handleBlurbSubmit();
-                    await handleSynopsisSubmit();
+                    await handleeventBlurbSubmit();
+                    await handleeventSynopsisSubmit();
                     await handleImpactSubmit();
                     await handleResetConfirm();
                     setEvent("");
@@ -204,22 +204,22 @@ function EventPageTemplate() {
                             </div>
                             <hr />
                             <div>
-                                <h2>Blurb</h2>
+                                <h2>eventBlurb</h2>
                                 <ContentForm
-                                    handleFormContents={handleBlurb}
+                                    handleFormContents={handleeventBlurb}
                                     isManualOfStyle={false}
-                                    section={"blurb"}
+                                    section={"eventBlurb"}
                                     reset={confirm}
                                 />
                             </div>
                         </div>
                         <hr />
                         <div>
-                            <h2>Synopsis</h2>
+                            <h2>eventSynopsis</h2>
                             <ContentForm
-                                handleFormContents={handleSynopsis}
+                                handleFormContents={handleeventSynopsis}
                                 isManualOfStyle={false}
-                                section={"synopsis"}
+                                section={"eventSynopsis"}
                                 reset={confirm}
                             />
                         </div>

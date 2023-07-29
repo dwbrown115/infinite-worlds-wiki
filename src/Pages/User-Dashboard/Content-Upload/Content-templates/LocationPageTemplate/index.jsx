@@ -16,10 +16,10 @@ function LocationPageTemplate() {
     const router = useNavigate();
 
     const [location, setLocation] = useState("");
-    const [locationManualOfStyle, setlocationManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
+    const [locationManualOfStyle, setLocationManualOfStyle] = useState([]);
+    const [locationBlurb, setLocationBlurb] = useState([]);
     const [geographyAndEcology, setGeographyAndEcology] = useState([]);
-    const [history, setHistory] = useState([]);
+    const [locationHistory, setLocationHistory] = useState([]);
     const [culture, setCulture] = useState([]);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
@@ -39,14 +39,14 @@ function LocationPageTemplate() {
     useEffect(() => {
         localStorage.setItem("location", location);
         localStorage.setItem("locationManualOfStyle", JSON.stringify(locationManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("locationBlurb", JSON.stringify(locationBlurb));
         localStorage.setItem(
             "geographyAndEcology",
             JSON.stringify(geographyAndEcology)
         );
-        localStorage.setItem("history", JSON.stringify(history));
+        localStorage.setItem("locationHistory", JSON.stringify(locationHistory));
         localStorage.setItem("culture", JSON.stringify(culture));
-    }, [location, locationManualOfStyle, blurb, geographyAndEcology, history, culture]);
+    }, [location, locationManualOfStyle, locationBlurb, geographyAndEcology, locationHistory, culture]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -88,15 +88,15 @@ function LocationPageTemplate() {
     }, [user]);
 
     function handlelocationManualOfStyle(inputArray) {
-        setlocationManualOfStyle({
+        setLocationManualOfStyle({
             contentType: "LocationlocationManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleBlurb(inputArray) {
-        setBlurb({
-            contentType: "LocationBlurb",
+    function handlelocationBlurb(inputArray) {
+        setLocationBlurb({
+            contentType: "LocationlocationBlurb",
             content: inputArray,
         });
     }
@@ -108,9 +108,9 @@ function LocationPageTemplate() {
         });
     }
 
-    function handleHistory(inputArray) {
-        setHistory({
-            contentType: "LocationHistory",
+    function handlelocationHistory(inputArray) {
+        setLocationHistory({
+            contentType: "LocationlocationHistory",
             content: inputArray,
         });
     }
@@ -132,14 +132,14 @@ function LocationPageTemplate() {
         await addData(path, "locationManualOfStyle", locationManualOfStyle);
     }
 
-    async function handleBlurbSubmit() {
+    async function handlelocationBlurbSubmit() {
         await replaceImage(
-            blurb,
+            locationBlurb,
             "ItemInfo",
-            "Blurb",
+            "locationBlurb",
             `${location.split(" ")}`
         );
-        await addData(path, "Blurb", blurb);
+        await addData(path, "locationBlurb", locationBlurb);
     }
 
     async function handleGeographyAndEcologySubmit() {
@@ -152,14 +152,14 @@ function LocationPageTemplate() {
         await addData(path, "GeographyAndEcology", geographyAndEcology);
     }
 
-    async function handleHistorySubmit() {
+    async function handlelocationHistorySubmit() {
         await replaceImage(
-            history,
+            locationHistory,
             "ItemInfo",
-            "History",
+            "locationHistory",
             `${location.split(" ")}`
         );
-        await addData(path, "History", history);
+        await addData(path, "locationHistory", locationHistory);
     }
 
     async function handleCultureSubmit() {
@@ -194,9 +194,9 @@ function LocationPageTemplate() {
                 data
             ).then(async () => {
                 await handlelocationManualOfStyleSubmit();
-                await handleBlurbSubmit();
+                await handlelocationBlurbSubmit();
                 await handleGeographyAndEcologySubmit();
-                await handleHistorySubmit();
+                await handlelocationHistorySubmit();
                 await handleCultureSubmit();
                 await handleResetConfirm();
                 await setLocation("");
@@ -232,11 +232,11 @@ function LocationPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Blurb</h2>
+                            <h2>locationBlurb</h2>
                             <ContentForm
-                                handleFormContents={handleBlurb}
+                                handleFormContents={handlelocationBlurb}
                                 isManualOfStyle={false}
-                                section={"blurb"}
+                                section={"locationBlurb"}
                                 reset={confirm}
                             />
                         </div>
@@ -254,11 +254,11 @@ function LocationPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Location History</h2>
+                            <h2>Location locationHistory</h2>
                             <ContentForm
                                 handleFormContents={handleCulture}
                                 isManualOfStyle={false}
-                                section={"history"}
+                                section={"locationHistory"}
                                 reset={confirm}
                             />
                         </div>
@@ -266,7 +266,7 @@ function LocationPageTemplate() {
                         <div>
                             <h2>Location Culture</h2>
                             <ContentForm
-                                handleFormContents={handleHistory}
+                                handleFormContents={handlelocationHistory}
                                 isManualOfStyle={false}
                                 section={"culture"}
                                 reset={confirm}

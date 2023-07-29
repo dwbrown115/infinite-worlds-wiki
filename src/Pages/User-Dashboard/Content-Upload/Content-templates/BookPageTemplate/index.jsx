@@ -16,10 +16,10 @@ function BookPageTemplate() {
     const router = useNavigate();
 
     const [book, setBook] = useState("");
-    const [bookManualOfStyle, setbookManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
+    const [bookManualOfStyle, setBookManualOfStyle] = useState([]);
+    const [bookBlurb, setBookBlurb] = useState([]);
     const [chapters, setChapters] = useState([]);
-    const [synopsis, setSynopsis] = useState([]);
+    const [bookSynopsis, setBookSynopsis] = useState([]);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
@@ -38,10 +38,10 @@ function BookPageTemplate() {
     useEffect(() => {
         localStorage.setItem("book", book);
         localStorage.setItem("bookManualOfStyle", JSON.stringify(bookManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
         localStorage.setItem("chapters", JSON.stringify(chapters));
-        localStorage.setItem("synopsis", JSON.stringify(synopsis));
-    }, [book, bookManualOfStyle, blurb, chapters, synopsis]);
+        localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
+    }, [book, bookManualOfStyle, bookBlurb, chapters, bookSynopsis]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -83,15 +83,15 @@ function BookPageTemplate() {
     }, [user]);
 
     function handlebookManualOfStyle(inputArray) {
-        setbookManualOfStyle({
+        setBookManualOfStyle({
             contentType: "BookbookManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleBlurb(inputArray) {
-        setBlurb({
-            contentType: "BookBlurb",
+    function handlebookBlurb(inputArray) {
+        setBookBlurb({
+            contentType: "BookbookBlurb",
             content: inputArray,
         });
     }
@@ -103,9 +103,9 @@ function BookPageTemplate() {
         });
     }
 
-    function handleSynopsis(inputArray) {
-        setSynopsis({
-            contentType: "BookSynopsis",
+    function handlebookSynopsis(inputArray) {
+        setBookSynopsis({
+            contentType: "BookbookSynopsis",
             content: inputArray,
         });
     }
@@ -120,9 +120,9 @@ function BookPageTemplate() {
         await addData(path, "bookManualOfStyle", bookManualOfStyle);
     }
 
-    async function handleBlurbSubmit() {
-        await replaceImage(blurb, "BookInfo", "Blurb", `${book.split(" ")}`);
-        await addData(path, "Blurb", blurb);
+    async function handlebookBlurbSubmit() {
+        await replaceImage(bookBlurb, "BookInfo", "bookBlurb", `${book.split(" ")}`);
+        await addData(path, "bookBlurb", bookBlurb);
     }
 
     async function handleChaptersSubmit() {
@@ -135,14 +135,14 @@ function BookPageTemplate() {
         await addData(path, "Chapters", chapters);
     }
 
-    async function handleSynopsisSubmit() {
+    async function handlebookSynopsisSubmit() {
         await replaceImage(
-            synopsis,
+            bookSynopsis,
             "BookInfo",
-            "Synopsis",
+            "bookSynopsis",
             `${book.split(" ")}`
         );
-        await addData(path, "Synopsis", synopsis);
+        await addData(path, "bookSynopsis", bookSynopsis);
     }
 
     async function handleUpload(e) {
@@ -161,9 +161,9 @@ function BookPageTemplate() {
             await setDoc(doc(db, "Books", `${book.split(" ")}`), data)
                 .then(async () => {
                     await handlebookManualOfStyleSubmit();
-                    await handleBlurbSubmit();
+                    await handlebookBlurbSubmit();
                     await handleChaptersSubmit();
-                    await handleSynopsisSubmit();
+                    await handlebookSynopsisSubmit();
                     await handleResetConfirm();
                     setBook("");
                 })
@@ -201,11 +201,11 @@ function BookPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Blurb</h2>
+                            <h2>bookBlurb</h2>
                             <ContentForm
-                                handleFormContents={handleBlurb}
+                                handleFormContents={handlebookBlurb}
                                 isManualOfStyle={false}
-                                section={"blurb"}
+                                section={"bookBlurb"}
                                 reset={confirm}
                             />
                         </div>
@@ -222,11 +222,11 @@ function BookPageTemplate() {
                     </div>
                     <hr />
                     <div>
-                        <h2>Synopsis</h2>
+                        <h2>bookSynopsis</h2>
                         <ContentForm
-                            handleFormContents={handleSynopsis}
+                            handleFormContents={handlebookSynopsis}
                             isManualOfStyle={false}
-                            section={"synopsis"}
+                            section={"bookSynopsis"}
                             reset={confirm}
                         />
                     </div>

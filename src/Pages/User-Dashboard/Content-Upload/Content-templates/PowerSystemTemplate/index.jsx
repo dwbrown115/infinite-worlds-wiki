@@ -16,8 +16,8 @@ function PowerSystemPageTemplate() {
     const router = useNavigate();
 
     const [powerSystem, setPowerSystem] = useState("");
-    const [powerSystemManualOfStyle, setpowerSystemManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
+    const [powerSystemManualOfStyle, setPowerSystemManualOfStyle] = useState([]);
+    const [powerSystemBlurb, setPowerSystemBlurb] = useState([]);
     const [info, setInfo] = useState([]);
     const [uses, setUses] = useState([]);
     const [notableUsers, setNotableUsers] = useState([]);
@@ -39,11 +39,11 @@ function PowerSystemPageTemplate() {
     useEffect(() => {
         localStorage.setItem("powerSystem", powerSystem);
         localStorage.setItem("powerSystemManualOfStyle", JSON.stringify(powerSystemManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("powerSystemBlurb", JSON.stringify(powerSystemBlurb));
         localStorage.setItem("info", JSON.stringify(info));
         localStorage.setItem("uses", JSON.stringify(uses));
         localStorage.setItem("notableUsers", JSON.stringify(notableUsers));
-    }, [powerSystem, powerSystemManualOfStyle, blurb, info, uses, notableUsers]);
+    }, [powerSystem, powerSystemManualOfStyle, powerSystemBlurb, info, uses, notableUsers]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -85,15 +85,15 @@ function PowerSystemPageTemplate() {
     }, [user]);
 
     function handlepowerSystemManualOfStyle(inputArray) {
-        setpowerSystemManualOfStyle({
+        setPowerSystemManualOfStyle({
             contentType: "PowerSystempowerSystemManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleBlurb(inputArray) {
-        setBlurb({
-            contentType: "PowerSystemBlurb",
+    function handlepowerSystemBlurb(inputArray) {
+        setPowerSystemBlurb({
+            contentType: "PowerSystempowerSystemBlurb",
             content: inputArray,
         });
     }
@@ -129,14 +129,14 @@ function PowerSystemPageTemplate() {
         await addData(path, "powerSystemManualOfStyle", powerSystemManualOfStyle);
     }
 
-    async function handleBlurbSubmit() {
+    async function handlepowerSystemBlurbSubmit() {
         await replaceImage(
-            blurb,
+            powerSystemBlurb,
             "PowerSystemInfo",
-            "Blurb",
+            "powerSystemBlurb",
             `${powerSystem.split(" ")}`
         );
-        await addData(path, "Blurb", blurb);
+        await addData(path, "powerSystemBlurb", powerSystemBlurb);
     }
 
     async function handleInfoSubmit() {
@@ -191,7 +191,7 @@ function PowerSystemPageTemplate() {
                 data
             ).then(async () => {
                 await handlepowerSystemManualOfStyleSubmit();
-                await handleBlurbSubmit();
+                await handlepowerSystemBlurbSubmit();
                 await handleInfoSubmit();
                 await handleUsesSubmit();
                 await handleNotableUsersSubmit();
@@ -229,11 +229,11 @@ function PowerSystemPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Blurb</h2>
+                            <h2>powerSystemBlurb</h2>
                             <ContentForm
-                                handleFormContents={handleBlurb}
+                                handleFormContents={handlepowerSystemBlurb}
                                 isManualOfStyle={false}
-                                section={"blurb"}
+                                section={"powerSystemBlurb"}
                                 reset={confirm}
                             />
                         </div>

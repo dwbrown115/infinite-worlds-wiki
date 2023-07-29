@@ -16,10 +16,10 @@ function CharacterPageTemplate() {
     const router = useNavigate();
 
     const [character, setCharacter] = useState("");
-    const [characterManualOfStyle, setcharacterManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
+    const [characterManualOfStyle, setCharacterManualOfStyle] = useState([]);
+    const [characterBlurb, setCharacterBlurb] = useState([]);
     const [info, setInfo] = useState([]);
-    const [synopsis, setSynopsis] = useState([]);
+    const [characterSynopsis, setCharacterSynopsis] = useState([]);
     const [relationships, setRelationships] = useState([]);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
@@ -39,11 +39,11 @@ function CharacterPageTemplate() {
     useEffect(() => {
         localStorage.setItem("character", character);
         localStorage.setItem("characterManualOfStyle", JSON.stringify(characterManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
+        localStorage.setItem("characterBlurb", JSON.stringify(characterBlurb));
         localStorage.setItem("info", JSON.stringify(info));
-        localStorage.setItem("synopsis", JSON.stringify(synopsis));
+        localStorage.setItem("characterSynopsis", JSON.stringify(characterSynopsis));
         localStorage.setItem("relationships", JSON.stringify(relationships));
-    }, [character, characterManualOfStyle, blurb, info, synopsis, relationships]);
+    }, [character, characterManualOfStyle, characterBlurb, info, characterSynopsis, relationships]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -87,16 +87,16 @@ function CharacterPageTemplate() {
     }, [user]);
 
     const handlecharacterManualOfStyle = (inputArray) => {
-        setcharacterManualOfStyle({
+        setCharacterManualOfStyle({
             contentType: "CharacterManualofsyle",
             content: inputArray,
         });
-        // setcharacterManualOfStyle(inputArray);
+        // setCharacterManualOfStyle(inputArray);
     };
 
-    const handleBlurb = (inputArray) => {
-        setBlurb({
-            contentType: "CharacterBlurb",
+    const handlecharacterBlurb = (inputArray) => {
+        setCharacterBlurb({
+            contentType: "CharactercharacterBlurb",
             content: inputArray,
         });
     };
@@ -108,9 +108,9 @@ function CharacterPageTemplate() {
         });
     };
 
-    const handleSynopsis = (inputArray) => {
-        setSynopsis({
-            contentType: "CharacterSynopsis",
+    const handlecharacterSynopsis = (inputArray) => {
+        setCharacterSynopsis({
+            contentType: "CharactercharacterSynopsis",
             content: inputArray,
         });
     };
@@ -133,15 +133,15 @@ function CharacterPageTemplate() {
         await addData(path, "ManualOfSyle", characterManualOfStyle);
 
         await replaceImage(
-            blurb,
+            characterBlurb,
             "CharacterInfo",
             "Burb",
             `${character.split(" ")}`
         );
-        await addData(path, "Blurb", blurb);
+        await addData(path, "characterBlurb", characterBlurb);
 
         await replaceImage(
-            blurb,
+            characterBlurb,
             "CharacterInfo",
             "Info",
             `${character.split(" ")}`
@@ -149,14 +149,14 @@ function CharacterPageTemplate() {
         await addData(path, "Info", info);
     }
 
-    async function handleCharacterSynopsisSubmit() {
+    async function handleCharactercharacterSynopsisSubmit() {
         await replaceImage(
-            synopsis,
-            "CharacterSynopsis",
-            "Synopsis",
+            characterSynopsis,
+            "CharactercharacterSynopsis",
+            "characterSynopsis",
             `${character.split(" ")}`
         );
-        await addData(path, "Synopsis", synopsis);
+        await addData(path, "characterSynopsis", characterSynopsis);
     }
     async function handleCharacterRelationshipSubmit() {
         await replaceImage(
@@ -191,7 +191,7 @@ function CharacterPageTemplate() {
                 data
             ).then(async () => {
                 await handleCharacterInfoSubmit();
-                await handleCharacterSynopsisSubmit();
+                await handleCharactercharacterSynopsisSubmit();
                 await handleCharacterRelationshipSubmit();
                 await handleResetConfirm();
                 await setCharacter("");
@@ -227,11 +227,11 @@ function CharacterPageTemplate() {
                             />
                         </div>
                         <div>
-                            <h2>Quick Blurb</h2>
+                            <h2>Quick characterBlurb</h2>
                             <ContentForm
-                                handleFormContents={handleBlurb}
+                                handleFormContents={handlecharacterBlurb}
                                 isManualOfStyle={false}
-                                section={"blurb"}
+                                section={"characterBlurb"}
                                 reset={confirm}
                             />
                         </div>
@@ -248,11 +248,11 @@ function CharacterPageTemplate() {
                 </div>
                 <hr />
                 <div>
-                    <h1>Character Synopsis Page</h1>
+                    <h1>Character characterSynopsis Page</h1>
                     <ContentForm
-                        handleFormContents={handleSynopsis}
+                        handleFormContents={handlecharacterSynopsis}
                         isManualOfStyle={false}
-                        section={"synopsis"}
+                        section={"characterSynopsis"}
                         reset={confirm}
                     />
                 </div>

@@ -16,9 +16,9 @@ function ItemPageTemplate() {
     const router = useNavigate();
     
     const [item, setItem] = useState("");
-    const [itemManualOfStyle, setitemManualOfStyle] = useState([]);
-    const [blurb, setBlurb] = useState([]);
-    const [history, setHistory] = useState([]);
+    const [itemManualOfStyle, setItemManualOfStyle] = useState([]);
+    const [itemBlurb, setItemBlurb] = useState([]);
+    const [itemHistory, setItemHistory] = useState([]);
     const [itemUses, setItemUses] = useState([]);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
@@ -38,10 +38,10 @@ function ItemPageTemplate() {
     useEffect(() => {
         localStorage.setItem("item", item);
         localStorage.setItem("itemManualOfStyle", JSON.stringify(itemManualOfStyle));
-        localStorage.setItem("blurb", JSON.stringify(blurb));
-        localStorage.setItem("history", JSON.stringify(history));
+        localStorage.setItem("itemBlurb", JSON.stringify(itemBlurb));
+        localStorage.setItem("itemHistory", JSON.stringify(itemHistory));
         localStorage.setItem("itemUses", JSON.stringify(itemUses));
-    }, [item, itemManualOfStyle, blurb, history, itemUses]);
+    }, [item, itemManualOfStyle, itemBlurb, itemHistory, itemUses]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -83,22 +83,22 @@ function ItemPageTemplate() {
     }, [user]);
 
     function handleitemManualOfStyle(inputArray) {
-        setitemManualOfStyle({
+        setItemManualOfStyle({
             contentType: "ItemitemManualOfStyle",
             content: inputArray,
         });
     }
 
-    function handleBlurb(inputArray) {
-        setBlurb({
-            contentType: "ItemBlurb",
+    function handleitemBlurb(inputArray) {
+        setItemBlurb({
+            contentType: "ItemitemBlurb",
             content: inputArray,
         });
     }
 
-    function handleHistory(inputArray) {
-        setHistory({
-            contentType: "ItemHistory",
+    function handleitemHistory(inputArray) {
+        setItemHistory({
+            contentType: "ItemitemHistory",
             content: inputArray,
         });
     }
@@ -120,19 +120,19 @@ function ItemPageTemplate() {
         await addData(path, "itemManualOfStyle", itemManualOfStyle);
     }
 
-    async function handleBlurbSubmit() {
-        await replaceImage(blurb, "ItemInfo", "Blurb", `${item.split(" ")}`);
-        await addData(path, "Blurb", blurb);
+    async function handleitemBlurbSubmit() {
+        await replaceImage(itemBlurb, "ItemInfo", "itemBlurb", `${item.split(" ")}`);
+        await addData(path, "itemBlurb", itemBlurb);
     }
 
-    async function handleHistorySubmit() {
+    async function handleitemHistorySubmit() {
         await replaceImage(
-            history,
+            itemHistory,
             "ItemInfo",
-            "History",
+            "itemHistory",
             `${item.split(" ")}`
         );
-        await addData(path, "History", history);
+        await addData(path, "itemHistory", itemHistory);
     }
 
     async function handleItemUsesSubmit() {
@@ -167,8 +167,8 @@ function ItemPageTemplate() {
                 data
             ).then(async () => {
                 await handleitemManualOfStyleSubmit();
-                await handleBlurbSubmit();
-                await handleHistorySubmit();
+                await handleitemBlurbSubmit();
+                await handleitemHistorySubmit();
                 await handleItemUsesSubmit();
                 await handleResetConfirm();
                 await setItem("");
@@ -204,11 +204,11 @@ function ItemPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Blurb</h2>
+                            <h2>itemBlurb</h2>
                             <ContentForm
-                                handleFormContents={handleBlurb}
+                                handleFormContents={handleitemBlurb}
                                 isManualOfStyle={false}
-                                section={"blurb"}
+                                section={"itemBlurb"}
                                 reset={confirm}
                             />
                         </div>
@@ -216,11 +216,11 @@ function ItemPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Item History</h2>
+                            <h2>Item itemHistory</h2>
                             <ContentForm
-                                handleFormContents={handleHistory}
+                                handleFormContents={handleitemHistory}
                                 isManualOfStyle={false}
-                                section={"history"}
+                                section={"itemHistory"}
                                 reset={confirm}
                             />
                         </div>
