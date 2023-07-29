@@ -163,6 +163,7 @@ function ItemPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: item,
+            Series: series,
             Type: "Item",
             createdBy: email,
             createdAt: time,

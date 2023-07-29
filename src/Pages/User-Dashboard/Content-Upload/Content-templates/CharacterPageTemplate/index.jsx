@@ -214,6 +214,7 @@ function CharacterPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: character,
+            Series: series,
             Type: "Character",
             createdBy: email,
             createdAt: time,

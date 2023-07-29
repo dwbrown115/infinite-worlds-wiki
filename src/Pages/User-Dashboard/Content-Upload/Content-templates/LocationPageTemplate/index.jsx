@@ -200,6 +200,7 @@ function LocationPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: location,
+            Series: series,
             Type: "Location",
             createdBy: email,
             createdAt: time,

@@ -217,6 +217,7 @@ function RacePageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: race,
+            Series: series,
             Type: "Race",
             createdBy: email,
             createdAt: time,

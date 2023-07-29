@@ -168,6 +168,7 @@ function EventPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: event,
+            Series: series,
             Type: "Event",
             createdAt: time,
             createdBy: email,
