@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react";
 
-function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
-    const [sections, setSections] = useState(section);
+// eslint-disable-next-line react/prop-types
+function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
+    const [sections, setSections] = useState([]);
     const [isReset, setIsReset] = useState(reset);
     const [confirm, setConfirm] = useState(false);
 
     // const [showSections, setShowSections] = useState(false);
 
-    function removeAllObjects(arr) {
-        arr.splice(0, arr.length);
-    }
+    useEffect(() => {
+        // eslint-disable-next-line react/prop-types
+        // console.log(section.content);
+        // eslint-disable-next-line react/prop-types
+        // setSections(section.content);
+        // console.log(section.content);
+        if (section.content !== undefined) {
+            // setSections(section.content);
+            console.log(section.content);
+        }
+        console.log(sections);
+        // console.log(sections);
+        // console.log(reset);
+    }, []);
 
     useEffect(() => {
         handleFormContents(sections);
+        // console.log("Sections", sections);
     }, [sections]);
 
     useEffect(() => {
@@ -27,6 +40,10 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
             removeAllObjects(sections);
         }
     }, [isReset]);
+
+    function removeAllObjects(arr) {
+        arr.splice(0, arr.length);
+    }
 
     function handleReset() {
         removeAllObjects(sections);
@@ -111,6 +128,7 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
                 <input
                     id={`sectionName${index}`}
                     type="text"
+                    // eslint-disable-next-line react/prop-types
                     value={section.sectionName}
                     onChange={(e) => handleChange(e, index, "sectionName")}
                     required
@@ -119,7 +137,7 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
                     Remove Section
                 </button>
                 <br />
-                {/* This is the button to add an image */}
+                {/* eslint-disable-next-line react/prop-types */}
                 {section.sectionImage === null ? (
                     <button type="button" onClick={() => addImage(index)}>
                         Add Image
@@ -128,7 +146,7 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
                     <div />
                 )}
                 <br />
-                {/* <br /> */}
+                {/* eslint-disable-next-line react/prop-types */}
                 {section.sectionImage !== null && (
                     <div className="image">
                         <label htmlFor={`image${index}`}>Image:</label>
@@ -140,8 +158,10 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
                             onChange={(e) => handleImageChange(e, index)}
                             required
                         />
+                        {/* eslint-disable-next-line react/prop-types */}
                         {section.sectionImage && (
                             <img
+                                // eslint-disable-next-line react/prop-types
                                 src={URL.createObjectURL(section.sectionImage)}
                                 alt="Section Image"
                             />
@@ -154,6 +174,7 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
                         </button>
                     </div>
                 )}
+                {/* eslint-disable-next-line react/prop-types */}
                 {section.sectionContent.map((content, contentIndex) => (
                     <div key={contentIndex} className="content">
                         {isManualOfStyle === true ? (
@@ -221,20 +242,13 @@ function ContentForm( handleFormContents, isManualOfStyle, section, reset ) {
 
     return (
         <div className="contentForm">
-            {/* <h1>React JS Form</h1> */}
-            {/* <form onSubmit={handleSubmit}> */}
             <div>
                 {renderSections(sections)}
                 <br />
                 <button type="button" onClick={addSection}>
                     Add Section
                 </button>
-                {/* <button type="submit">Submit</button> */}
-                {/* </form> */}
             </div>
-            {/* <br /> */}
-            {/* <button onClick={handleReset}>Reset</button> */}
-            {/* <br /> */}
             <br />
             {sections.length === 0 ? (
                 <div />

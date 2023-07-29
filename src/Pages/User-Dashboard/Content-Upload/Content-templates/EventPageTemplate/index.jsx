@@ -12,7 +12,7 @@ function EventPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Events";
+    const collection = "Content/ContentType/Events";
     const router = useNavigate();
 
     const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -23,6 +23,8 @@ function EventPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+
+    const path = `${collection}/${event.split(" ")}/EventInfo/`;
 
     useEffect(() => {
         // console.log(reset)
@@ -96,7 +98,6 @@ function EventPageTemplate() {
     }
 
     async function handleManualOfStyleSubmit() {
-        const path = `${collection}/${event.split(" ")}/EventInfo/`;
         await replaceImage(
             manualOfStyle,
             "EventInfo",
@@ -107,13 +108,11 @@ function EventPageTemplate() {
     }
 
     async function handleBlurbSubmit() {
-        const path = `${collection}/${event.split(" ")}/EventInfo/`;
         await replaceImage(blurb, "EventInfo", "Blurb", `${event.split(" ")}`);
         await addData(path, "Blurb", blurb);
     }
 
     async function handleSynopsisSubmit() {
-        const path = `${collection}/${event.split(" ")}/EventInfo/`;
         await replaceImage(
             synopsis,
             "EventInfo",
@@ -124,7 +123,6 @@ function EventPageTemplate() {
     }
 
     async function handleImpactSubmit() {
-        const path = `${collection}/${event.split(" ")}/EventInfo/`;
         await replaceImage(
             impact,
             "EventInfo",

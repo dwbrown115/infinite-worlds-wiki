@@ -12,7 +12,7 @@ function CharacterPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Characters";
+    const collection = "Content/ContentType/Characters";
     const router = useNavigate();
 
     const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -25,10 +25,14 @@ function CharacterPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
+    const path = `${collection}/${character.split(" ")}/CharacterRelationship/`;
+
     useEffect(() => {
         // console.log(reset)
         setReset(true);
     }, [reset]);
+
+    useEffect
 
     function handleResetConfirm() {
         setConfirm(false);
@@ -107,8 +111,6 @@ function CharacterPageTemplate() {
     };
 
     async function handleCharacterInfoSubmit() {
-        const path = `${collection}/${character.split(" ")}/CharacterInfo/`;
-
         await replaceImage(
             manualOfStyle,
             "CharacterInfo",
@@ -136,20 +138,15 @@ function CharacterPageTemplate() {
     }
 
     async function handleCharacterSynopsisSubmit() {
-        const path = `${collection}/${character.split(" ")}/CharacterSynopsis/`;
         await replaceImage(
             synopsis,
             "CharacterSynopsis",
             "Synopsis",
             `${character.split(" ")}`
         );
-        await
-         addData(path, "Synopsis", synopsis);
+        await addData(path, "Synopsis", synopsis);
     }
     async function handleCharacterRelationshipSubmit() {
-        const path = `${collection}/${character.split(
-            " "
-        )}/CharacterRelationship/`;
         await replaceImage(
             relationships,
             "CharacterRelationship",
@@ -197,7 +194,13 @@ function CharacterPageTemplate() {
                 <h1>Character Info Page</h1>
                 <div>
                     <h2>Character Name</h2>
-                    <input type="text" placeholder="Character name:" value={character} onChange={(e) => setCharacter(e.target.value)} required />
+                    <input
+                        type="text"
+                        placeholder="Character name:"
+                        value={character}
+                        onChange={(e) => setCharacter(e.target.value)}
+                        required
+                    />
                 </div>
                 <hr />
                 <div>

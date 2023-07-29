@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
@@ -12,10 +12,13 @@ function BookPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Books";
+    const collection = "Content/ContentType/Books";
     const router = useNavigate();
 
     const [manualOfStyle, setManualOfStyle] = useState([]);
+    const [childManualOfStyle, setChildManualOfStyle] = useState(
+        JSON.parse(localStorage.getItem("manualOfStyle"))
+    );
     const [blurb, setBlurb] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
@@ -23,6 +26,54 @@ function BookPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+
+    const path = `${collection}/${book.split(" ")}/BookInfo/`;
+
+    useLayoutEffect(() => {
+        const storedBook = localStorage.getItem("book");
+        if (storedBook) {
+            setBook(storedBook);
+        }
+
+        const storedManualOfStyle = JSON.parse(
+            localStorage.getItem("manualOfStyle")
+        );
+        if (storedManualOfStyle) {
+            setChildManualOfStyle(storedManualOfStyle);
+            console.log(storedManualOfStyle.content);
+        }
+
+        //         const storedManualOfStyle = JSON.parse(
+        //             localStorage.getItem("manualOfStyle")
+        //         ).content;
+        //         if (storedManualOfStyle) {
+        //             setManualOfStyle(storedManualOfStyle);
+        //             console.log(storedManualOfStyle);
+        //         }
+
+        //         const storedBlurb = JSON.parse(localStorage.getItem("blurb"));
+        //         if (storedBlurb) {
+        //             setBlurb(storedBlurb);
+        //         }
+
+        //         const storedChapters = JSON.parse(localStorage.getItem("chapters"));
+        //         if (storedChapters) {
+        //             setChapters(storedChapters);
+        //         }
+
+        //         const storedSynopsis = JSON.parse(localStorage.getItem("synopsis"));
+        //         if (storedSynopsis) {
+        //             setSynopsis(storedSynopsis);
+        //         }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("book", book);
+        localStorage.setItem("manualOfStyle", JSON.stringify(manualOfStyle));
+        // localStorage.setItem("blurb", JSON.stringify(blurb));
+        // localStorage.setItem("chapters", JSON.stringify(chapters));
+        // localStorage.setItem("synopsis", JSON.stringify(synopsis));
+    }, [book, manualOfStyle]);
 
     useEffect(() => {
         // console.log(reset)
@@ -96,7 +147,6 @@ function BookPageTemplate() {
     }
 
     async function handleManualOfStyleSubmit() {
-        const path = `${collection}/${book.split(" ")}/BookInfo/`;
         await replaceImage(
             manualOfStyle,
             "BookInfo",
@@ -107,13 +157,11 @@ function BookPageTemplate() {
     }
 
     async function handleBlurbSubmit() {
-        const path = `${collection}/${book.split(" ")}/BookInfo/`;
         await replaceImage(blurb, "BookInfo", "Blurb", `${book.split(" ")}`);
         await addData(path, "Blurb", blurb);
     }
 
     async function handleChaptersSubmit() {
-        const path = `${collection}/${book.split(" ")}/BookInfo/`;
         await replaceImage(
             chapters,
             "BookInfo",
@@ -124,7 +172,6 @@ function BookPageTemplate() {
     }
 
     async function handleSynopsisSubmit() {
-        const path = `${collection}/${book.split(" ")}/BookInfo/`;
         await replaceImage(
             synopsis,
             "BookInfo",
@@ -171,7 +218,7 @@ function BookPageTemplate() {
                         <h2>Book Name</h2>
                         <input
                             type="text"
-                            placeholder="Character name:"
+                            placeholder="Book name:"
                             value={book}
                             onChange={(e) => setBook(e.target.value)}
                             required
@@ -184,12 +231,12 @@ function BookPageTemplate() {
                             <ContentForm
                                 handleFormContents={handleManualOfStyle}
                                 isManualOfStyle={true}
-                                section={manualOfStyle}
+                                section={childManualOfStyle}
                                 reset={reset}
                             />
                         </div>
                         <hr />
-                        <div>
+                        {/* <div>
                             <h2>Blurb</h2>
                             <ContentForm
                                 handleFormContents={handleBlurb}
@@ -197,10 +244,10 @@ function BookPageTemplate() {
                                 section={blurb}
                                 reset={reset}
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <hr />
-                    <div>
+                    {/* <div>
                         <h2>Chapters</h2>
                         <ContentForm
                             handleFormContents={handleChapters}
@@ -218,7 +265,7 @@ function BookPageTemplate() {
                             section={synopsis}
                             reset={reset}
                         />
-                    </div>
+                    </div> */}
                     <hr />
                     <div>
                         <button type="submit">Submit</button>

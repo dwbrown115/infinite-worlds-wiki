@@ -12,7 +12,7 @@ function RacePageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Race";
+    const collection = "Content/ContentType/Race";
     const router = useNavigate();
 
     const [manualOfStyle, setManualOfStyle] = useState([]);
@@ -27,7 +27,7 @@ function RacePageTemplate() {
     const [confirm, setConfirm] = useState(false);
 
     const path = `${collection}/${race.split(" ")}/RaceInfo/`;
- 
+
     useEffect(() => {
         // console.log(reset)
         setReset(true);
@@ -124,12 +124,7 @@ function RacePageTemplate() {
     }
 
     async function handleBlurbSubmit() {
-        await replaceImage(
-            blurb,
-            "RaceInfo",
-            "Blurb",
-            `${race.split(" ")}`
-        );
+        await replaceImage(blurb, "RaceInfo", "Blurb", `${race.split(" ")}`);
         await addData(path, "Blurb", blurb);
     }
 
@@ -267,20 +262,20 @@ function RacePageTemplate() {
                         <div>
                             <h2>Race History</h2>
                             <ContentForm
-                            handleFormContents={handleHistory}
-                            isManualOfStyle={false}
-                            section={history}
-                            reset={reset}
+                                handleFormContents={handleHistory}
+                                isManualOfStyle={false}
+                                section={history}
+                                reset={reset}
                             />
                         </div>
                         <hr />
                         <div>
                             <h2>Race Notable Members</h2>
                             <ContentForm
-                            handleFormContents={handleNotableMembers}
-                            isManualOfStyle={false}
-                            section={notableMembers}
-                            reset={reset}
+                                handleFormContents={handleNotableMembers}
+                                isManualOfStyle={false}
+                                section={notableMembers}
+                                reset={reset}
                             />
                         </div>
                     </div>

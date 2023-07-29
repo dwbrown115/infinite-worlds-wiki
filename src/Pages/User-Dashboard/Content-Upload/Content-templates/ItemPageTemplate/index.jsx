@@ -12,7 +12,7 @@ function ItemPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
-    const collection = "Items";
+    const collection = "Content/ContentType/Items";
     const router = useNavigate();
 
     const [manualOfStyle, setManualOfStyle] = useState([]);
