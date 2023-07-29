@@ -5,6 +5,7 @@ export { default as ContentUpload } from "./User-Dashboard/Content-Upload/conten
 export { default as BookPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/BookPageTemplate";
 export { default as CharacterPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/CharacterPageTemplate";
 export { default as EventPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/EventPageTemplate";
+export { default as FactionPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/FactionPageTemplate";
 export { default as ItemPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/ItemPageTemplate";
 export { default as LocationPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/LocationPageTemplate";
 export { default as PowerSystemPageTemplate } from "./User-Dashboard/Content-Upload/Content-templates/PowerSystemTemplate";

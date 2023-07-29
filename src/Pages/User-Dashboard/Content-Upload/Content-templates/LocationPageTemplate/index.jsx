@@ -16,6 +16,7 @@ function LocationPageTemplate() {
     const router = useNavigate();
 
     const [location, setLocation] = useState("");
+    const [series, setSeries] = useState("");
     const [locationManualOfStyle, setLocationManualOfStyle] = useState([]);
     const [locationBlurb, setLocationBlurb] = useState([]);
     const [geographyAndEcology, setGeographyAndEcology] = useState([]);
@@ -34,10 +35,18 @@ function LocationPageTemplate() {
         } else if (!storedLocation) {
             // console.log("No location");
         }
+
+        const storedSeries = localStorage.getItem("series-location");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("location", location);
+        localStorage.setItem("series-location", series);
         localStorage.setItem(
             "locationManualOfStyle",
             JSON.stringify(locationManualOfStyle)
@@ -64,6 +73,7 @@ function LocationPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setLocation("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -212,8 +222,12 @@ function LocationPageTemplate() {
                 await handleGeographyAndEcologySubmit();
                 await handleLocationHistorySubmit();
                 await handleCultureSubmit();
-                await handleResetConfirm();
                 await setLocation("");
+                await setSeries("");
+                setConfirm(true);
+                setTimeout(() => {
+                    setConfirm(false);
+                }, 1);
             });
         }
     }
@@ -221,10 +235,11 @@ function LocationPageTemplate() {
     return (
         <>
             <div>
+                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Location Page Template</h1>
                     <div>
-                        <h2>Location Name</h2>
+                        <h3>Location Name</h3>
                         <input
                             type="text"
                             placeholder="Location name:"
@@ -233,6 +248,17 @@ function LocationPageTemplate() {
                             required
                         />
                     </div>
+                    <div>
+                        <h3>Series</h3>
+                        <input
+                            type="text"
+                            placeholder="Series:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <br />
                     <hr />
                     <div>
                         <div>
@@ -292,17 +318,16 @@ function LocationPageTemplate() {
                 </form>
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -311,8 +336,6 @@ function LocationPageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

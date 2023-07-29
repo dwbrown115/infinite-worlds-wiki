@@ -13,6 +13,7 @@ import {
     BookPageTemplate,
     CharacterPageTemplate,
     EventPageTemplate,
+    FactionPageTemplate,
     ItemPageTemplate,
     LocationPageTemplate,
     PowerSystemPageTemplate,
@@ -61,6 +62,10 @@ function App() {
                     <Route
                         path="/user/upload/EventPageTemplate"
                         Component={EventPageTemplate}
+                    />
+                    <Route
+                        path="/user/upload/FactionPageTemplate"
+                        Component={FactionPageTemplate}
                     />
                     <Route
                         path="/user/upload/ItemPageTemplate"

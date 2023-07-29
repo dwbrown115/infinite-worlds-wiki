@@ -16,6 +16,7 @@ function PowerSystemPageTemplate() {
     const router = useNavigate();
 
     const [powerSystem, setPowerSystem] = useState("");
+    const [series, setSeries] = useState("");
     const [powerSystemManualOfStyle, setPowerSystemManualOfStyle] = useState(
         []
     );
@@ -36,10 +37,18 @@ function PowerSystemPageTemplate() {
         } else if (!storedPowerSystem) {
             // console.log("No powerSystem");
         }
+
+        const storedSeries = localStorage.getItem("series-powerSystem");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("powerSystem", powerSystem);
+        localStorage.setItem("series-powerSystem", series);
         localStorage.setItem(
             "powerSystemManualOfStyle",
             JSON.stringify(powerSystemManualOfStyle)
@@ -63,6 +72,7 @@ function PowerSystemPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setPowerSystem("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -215,8 +225,12 @@ function PowerSystemPageTemplate() {
                 await handleInfoSubmit();
                 await handleUsesSubmit();
                 await handleNotableUsersSubmit();
-                await handleResetConfirm();
                 await setPowerSystem("");
+                await setSeries("");
+                setConfirm(true);
+                setTimeout(() => {
+                    setConfirm(false);
+                }, 1);
             });
         }
     }
@@ -224,15 +238,25 @@ function PowerSystemPageTemplate() {
     return (
         <>
             <div>
+                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Power System Page Template</h1>
                     <div>
-                        <h2>Power System Name</h2>
+                        <h3>Power System Name</h3>
                         <input
                             type="text"
                             placeholder="Power system name:"
                             value={powerSystem}
                             onChange={(e) => setPowerSystem(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <h3>Series</h3>
+                        <input
+                            type="text"
+                            placeholder="Series:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
                         />
                     </div>
                     <hr />
@@ -297,17 +321,16 @@ function PowerSystemPageTemplate() {
                 </form>
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -316,8 +339,6 @@ function PowerSystemPageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

@@ -16,6 +16,7 @@ function BookPageTemplate() {
     const router = useNavigate();
 
     const [book, setBook] = useState("");
+    const [series, setSeries] = useState("");
     const [bookManualOfStyle, setBookManualOfStyle] = useState([]);
     const [bookBlurb, setBookBlurb] = useState([]);
     const [chapters, setChapters] = useState([]);
@@ -34,10 +35,18 @@ function BookPageTemplate() {
         } else if (!storedBook) {
             // console.log("No book");
         }
+
+        const storedSeries = localStorage.getItem("series");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("book", book);
+        localStorage.setItem("series", series);
         localStorage.setItem(
             "bookManualOfStyle",
             JSON.stringify(bookManualOfStyle)
@@ -50,10 +59,11 @@ function BookPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setBook("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
-            }, 10);
+            }, 1);
         }
     }
 
@@ -135,13 +145,15 @@ function BookPageTemplate() {
     }
 
     async function handleChaptersSubmit() {
-        await replaceImage(
-            chapters,
-            "BookInfo",
-            "Chapters",
-            `${book.split(" ")}`
-        );
-        await addData(path, "Chapters", chapters);
+        if (optional == true) {
+            await replaceImage(
+                chapters,
+                "BookInfo",
+                "Chapters",
+                `${book.split(" ")}`
+            );
+            await addData(path, "Chapters", chapters);
+        }
     }
 
     async function handleBookSynopsisSubmit() {
@@ -159,6 +171,7 @@ function BookPageTemplate() {
         const time = Date().toLocaleString();
         const data = {
             Name: book,
+            Series: series,
             Type: "Book",
             createdAt: time,
             createdBy: email,
@@ -172,11 +185,14 @@ function BookPageTemplate() {
                 .then(async () => {
                     await handleBookManualOfStyleSubmit();
                     await handleBookBlurbSubmit();
-                    await handleChaptersSubmit();
                     await handleBookSynopsisSubmit();
-                    await handleResetConfirm();
-                    await handleResetConfirm();
+                    await handleChaptersSubmit();
                     await setBook("");
+                    await setSeries("");
+                    setConfirm(true);
+                    setTimeout(() => {
+                        setConfirm(false);
+                    }, 1);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -187,10 +203,11 @@ function BookPageTemplate() {
     function handlePageContent() {
         return (
             <div>
-                <h1>Book Page Template</h1>
+                <hr />
                 <form onSubmit={handleUpload}>
+                    <h1>Book Page Template</h1>
                     <div>
-                        <h2>Book Name</h2>
+                        <h3>Book Name</h3>
                         <input
                             type="text"
                             placeholder="Book name:"
@@ -199,6 +216,17 @@ function BookPageTemplate() {
                             required
                         />
                     </div>
+                    <div>
+                        <h3>Series Name</h3>
+                        <input
+                            type="text"
+                            placeholder="Series name:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <br />
                     <hr />
                     <div>
                         <div>
@@ -222,7 +250,17 @@ function BookPageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <h2>Book Chapters Section</h2>
+                    <div>
+                        <h2>Book Synopsis</h2>
+                        <ContentForm
+                            handleFormContents={handleBookSynopsis}
+                            isManualOfStyle={false}
+                            section={"bookSynopsis"}
+                            reset={confirm}
+                        />
+                    </div>
+                    <hr />
+                    <h2>Book Chapters</h2>
                     {optional === true ? (
                         <div>
                             <ContentForm
@@ -242,32 +280,21 @@ function BookPageTemplate() {
                     )}
                     <hr />
                     <div>
-                        <h2>Book Synopsis</h2>
-                        <ContentForm
-                            handleFormContents={handleBookSynopsis}
-                            isManualOfStyle={false}
-                            section={"bookSynopsis"}
-                            reset={confirm}
-                        />
-                    </div>
-                    <hr />
-                    <div>
                         <button type="submit">Submit</button>
                     </div>
                 </form>
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -276,8 +303,6 @@ function BookPageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

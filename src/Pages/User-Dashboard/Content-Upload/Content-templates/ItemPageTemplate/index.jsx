@@ -16,6 +16,7 @@ function ItemPageTemplate() {
     const router = useNavigate();
 
     const [item, setItem] = useState("");
+    const [series, setSeries] = useState("");
     const [itemManualOfStyle, setItemManualOfStyle] = useState([]);
     const [itemBlurb, setItemBlurb] = useState([]);
     const [itemHistory, setItemHistory] = useState([]);
@@ -33,10 +34,18 @@ function ItemPageTemplate() {
         } else if (!storedItem) {
             // console.log("No item");
         }
+
+        const storedSeries = localStorage.getItem("series-item");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("item", item);
+        localStorage.setItem("series-item", series);
         localStorage.setItem(
             "itemManualOfStyle",
             JSON.stringify(itemManualOfStyle)
@@ -49,6 +58,7 @@ function ItemPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setItem("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -144,12 +154,7 @@ function ItemPageTemplate() {
     }
 
     async function handleItemUsesSubmit() {
-        await replaceImage(
-            itemUses,
-            "ItemInfo",
-            "Uses",
-            `${item.split(" ")}`
-        );
+        await replaceImage(itemUses, "ItemInfo", "Uses", `${item.split(" ")}`);
         await addData(path, "Uses", itemUses);
     }
 
@@ -179,8 +184,12 @@ function ItemPageTemplate() {
                 await handleItemBlurbSubmit();
                 await handleItemHistorySubmit();
                 await handleItemUsesSubmit();
-                await handleResetConfirm();
                 await setItem("");
+                await setSeries("");
+                setConfirm(true);
+                setTimeout(() => {
+                    setConfirm(false);
+                }, 1);
             });
         }
     }
@@ -188,10 +197,11 @@ function ItemPageTemplate() {
     return (
         <>
             <div>
+                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Item Page Template</h1>
                     <div>
-                        <h2>Item Name</h2>
+                        <h3>Item Name</h3>
                         <input
                             type="text"
                             placeholder="Item name:"
@@ -200,6 +210,17 @@ function ItemPageTemplate() {
                             required
                         />
                     </div>
+                    <div>
+                        <h3>Series</h3>
+                        <input
+                            type="text"
+                            placeholder="Series:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <br />
                     <hr />
                     <div>
                         <div>
@@ -249,17 +270,16 @@ function ItemPageTemplate() {
                 </form>
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -268,8 +288,6 @@ function ItemPageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

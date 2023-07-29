@@ -45,6 +45,11 @@ function ContentUpload() {
                 </Link>
                 <br />
                 <br />
+                <Link to={"/user/upload/FactionPageTemplate"}>
+                    Faction Page Template
+                </Link>
+                <br />
+                <br />
                 <Link to={"/user/upload/ItemPageTemplate"}>
                     Item Page Template
                 </Link>
@@ -72,11 +77,7 @@ function ContentUpload() {
         );
     };
 
-    return (
-        <>
-            {handlePageContent()}
-        </>
-    );
+    return <>{handlePageContent()}</>;
 }
 
 export default ContentUpload;

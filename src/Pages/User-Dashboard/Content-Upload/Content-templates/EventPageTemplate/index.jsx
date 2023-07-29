@@ -16,6 +16,7 @@ function EventPageTemplate() {
     const router = useNavigate();
 
     const [event, setEvent] = useState("");
+    const [series, setSeries] = useState("");
     const [eventManualOfStyle, setEventManualOfStyle] = useState([]);
     const [eventBlurb, seteventBlurb] = useState([]);
     const [eventSynopsis, setEventSynopsis] = useState([]);
@@ -33,10 +34,18 @@ function EventPageTemplate() {
         } else if (!storedEvent) {
             // console.log("No event");
         }
+
+        const storedSeries = localStorage.getItem("series-event");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("event", event);
+        localStorage.setItem("series-event", series);
         localStorage.setItem(
             "eventManualOfStyle",
             JSON.stringify(eventManualOfStyle)
@@ -49,6 +58,7 @@ function EventPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setEvent("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -174,9 +184,12 @@ function EventPageTemplate() {
                     await handleEventBlurbSubmit();
                     await handleEventSynopsisSubmit();
                     await handleImpactSubmit();
-                    await handleResetConfirm();
-                    await handleResetConfirm();
                     await setEvent("");
+                    await setSeries("");
+                    setConfirm(true);
+                    setTimeout(() => {
+                        setConfirm(false);
+                    }, 1);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -191,7 +204,7 @@ function EventPageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Event Page Template</h1>
                     <div>
-                        <h2>Event Name</h2>
+                        <h3>Event Name</h3>
                         <input
                             type="text"
                             placeholder="Event name:"
@@ -200,6 +213,17 @@ function EventPageTemplate() {
                             required
                         />
                     </div>
+                    <div>
+                        <h3>Series</h3>
+                        <input
+                            type="text"
+                            placeholder="Series:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <br />
                     <hr />
                     <div>
                         <div>
@@ -246,21 +270,21 @@ function EventPageTemplate() {
                             />
                         </div>
                     </div>
+                    <hr />
+                    <button type="submit">Submit</button>
                 </form>
-                <hr />
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -269,8 +293,6 @@ function EventPageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

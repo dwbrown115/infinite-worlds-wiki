@@ -16,6 +16,7 @@ function RacePageTemplate() {
     const router = useNavigate();
 
     const [race, setRace] = useState("");
+    const [series, setSeries] = useState("");
     const [raceManualOfStyle, setRaceManualOfStyle] = useState([]);
     const [raceBlurb, setRaceBlurb] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
@@ -35,10 +36,18 @@ function RacePageTemplate() {
         } else if (!storedRace) {
             // console.log("No race");
         }
+
+        const storedSeries = localStorage.getItem("series-race");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("race", race);
+        localStorage.setItem("series-rac3", series);
         localStorage.setItem(
             "raceManualOfStyle",
             JSON.stringify(raceManualOfStyle)
@@ -64,6 +73,7 @@ function RacePageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setRace("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -230,8 +240,12 @@ function RacePageTemplate() {
                 await handleCultureSubmit();
                 await handleRaceHistorySubmit();
                 await handleNotableMembersSubmit();
-                await handleResetConfirm();
                 await setRace("");
+                await setSeries("");
+                setConfirm(true);
+                setTimeout(() => {
+                    setConfirm(false);
+                }, 1);
             });
         }
     }
@@ -239,17 +253,30 @@ function RacePageTemplate() {
     return (
         <>
             <div>
+                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Race Page Template</h1>
                     <div>
-                        <h2>Race Name</h2>
+                        <h3>Race Name</h3>
                         <input
                             type="text"
                             placeholder="Race name:"
                             value={race}
                             onChange={(e) => setRace(e.target.value)}
+                            required
                         />
                     </div>
+                    <div>
+                        <h3>Series</h3>
+                        <input
+                            type="text"
+                            placeholder="Series:"
+                            value={series}
+                            onChange={(e) => setSeries(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <br />
                     <hr />
                     <div>
                         <div>
@@ -319,17 +346,16 @@ function RacePageTemplate() {
                 </form>
                 <br />
                 {reset === false ? (
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <div>
+                        <button
+                            onClick={() => {
+                                setReset(true);
+                            }}
+                        >
+                            Reset All
+                        </button>
+                    </div>
                 ) : (
-                    <div />
-                )}
-                {reset === true ? (
                     <div>
                         <button onClick={() => setReset(false)}>
                             Cancel reset
@@ -338,8 +364,6 @@ function RacePageTemplate() {
                             Confirm reset
                         </button>
                     </div>
-                ) : (
-                    <div />
                 )}
                 <br />
                 <Link to={"/user/upload"}>Go Back</Link>

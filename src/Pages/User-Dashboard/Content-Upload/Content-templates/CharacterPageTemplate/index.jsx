@@ -16,6 +16,7 @@ function CharacterPageTemplate() {
     const router = useNavigate();
 
     const [character, setCharacter] = useState("");
+    const [series, setSeries] = useState("");
     const [characterManualOfStyle, setCharacterManualOfStyle] = useState([]);
     const [characterBlurb, setCharacterBlurb] = useState([]);
     const [info, setInfo] = useState([]);
@@ -36,10 +37,18 @@ function CharacterPageTemplate() {
         } else if (!storedCharacter) {
             // console.log("No character");
         }
+
+        const storedSeries = localStorage.getItem("series-character");
+        if (storedSeries) {
+            setSeries(storedSeries);
+        } else if (!storedSeries) {
+            // console.log("No series");
+        }
     }, []);
 
     useEffect(() => {
         localStorage.setItem("character", character);
+        localStorage.setItem("series-character", series);
         localStorage.setItem(
             "characterManualOfStyle",
             JSON.stringify(characterManualOfStyle)
@@ -63,6 +72,7 @@ function CharacterPageTemplate() {
     function handleResetConfirm() {
         if (reset == true) {
             setConfirm(true);
+            setCharacter("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -176,11 +186,7 @@ function CharacterPageTemplate() {
             "PowersAndAbilities",
             `${character.split(" ")}`
         );
-        await addData(
-            path,
-            "PowersAndAbilities",
-            characterPowersAndAbilities
-        );
+        await addData(path, "PowersAndAbilities", characterPowersAndAbilities);
     }
 
     async function handleCharacterSynopsisSubmit() {
@@ -226,9 +232,12 @@ function CharacterPageTemplate() {
                     await handleCharacterInfoSubmit();
                     await handleCharacterSynopsisSubmit();
                     await handleCharacterRelationshipSubmit();
-                    await handleResetConfirm();
-                    await handleResetConfirm();
                     await setCharacter("");
+                    await setSeries("");
+                    setConfirm(true);
+                    setTimeout(() => {
+                        setConfirm(false);
+                    }, 1);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -242,7 +251,7 @@ function CharacterPageTemplate() {
             <form id="CharacterForm" onSubmit={handleUpload}>
                 <h1>Character Info Page</h1>
                 <div>
-                    <h2>Character Name</h2>
+                    <h3>Character Name</h3>
                     <input
                         type="text"
                         placeholder="Character name:"
@@ -251,6 +260,17 @@ function CharacterPageTemplate() {
                         required
                     />
                 </div>
+                <div>
+                    <h3>Series</h3>
+                    <input
+                        type="text"
+                        placeholder="Series:"
+                        value={series}
+                        onChange={(e) => setSeries(e.target.value)}
+                        required
+                    />
+                </div>
+                <br />
                 <hr />
                 <div>
                     <div>
@@ -323,25 +343,22 @@ function CharacterPageTemplate() {
             </form>
             <br />
             {reset === false ? (
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                <div>
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                </div>
             ) : (
-                <div />
-            )}
-            {reset === true ? (
                 <div>
                     <button onClick={() => setReset(false)}>
                         Cancel reset
                     </button>
                     <button onClick={handleResetConfirm}>Confirm reset</button>
                 </div>
-            ) : (
-                <div />
             )}
             <br />
             <Link to={"/user/upload"}>Go Back</Link>
