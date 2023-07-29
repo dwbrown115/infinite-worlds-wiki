@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -25,6 +25,8 @@ function BookPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [optional, setOptional] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${book.split(" ")}/`;
 
@@ -60,6 +62,7 @@ function BookPageTemplate() {
         if (reset == true) {
             setConfirm(true);
             setBook("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -125,6 +128,7 @@ function BookPageTemplate() {
     }
 
     async function handleBookManualOfStyleSubmit() {
+        setProgress(12.5)
         await replaceImage(
             bookManualOfStyle,
             "BookInfo",
@@ -132,9 +136,11 @@ function BookPageTemplate() {
             `${book.split(" ")}`
         );
         await addData(path, "ManualOfStyle", bookManualOfStyle);
+        setProgress(25);
     }
 
     async function handleBookBlurbSubmit() {
+        setProgress(37.5);
         await replaceImage(
             bookBlurb,
             "BookInfo",
@@ -142,9 +148,11 @@ function BookPageTemplate() {
             `${book.split(" ")}`
         );
         await addData(path, "Blurb", bookBlurb);
+        setProgress(50);
     }
 
     async function handleChaptersSubmit() {
+        setProgress(62.5);
         if (optional == true) {
             await replaceImage(
                 chapters,
@@ -154,9 +162,11 @@ function BookPageTemplate() {
             );
             await addData(path, "Chapters", chapters);
         }
+        setProgress(75);
     }
 
     async function handleBookSynopsisSubmit() {
+        setProgress(62.5);
         await replaceImage(
             bookSynopsis,
             "BookInfo",
@@ -164,10 +174,12 @@ function BookPageTemplate() {
             `${book.split(" ")}`
         );
         await addData(path, "Synopsis", bookSynopsis);
+        setProgress(87.5);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: book,
@@ -198,6 +210,11 @@ function BookPageTemplate() {
                     console.log(error);
                 });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     function handlePageContent() {
@@ -279,32 +296,40 @@ function BookPageTemplate() {
                         </button>
                     )}
                     <hr />
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
+                    {loading ? null : <button type="submit">Submit</button>}
                 </form>
                 <br />
-                {reset === false ? (
+                {loading ? (
                     <div>
-                        <button
-                            onClick={() => {
-                                setReset(true);
-                            }}
-                        >
-                            Reset All
-                        </button>
+                        <ProgressBar percentage={progress} />
+                        <h1>Uploading...</h1>
+                        <br />
                     </div>
                 ) : (
-                    <div>
-                        <button onClick={() => setReset(false)}>
-                            Cancel reset
-                        </button>
-                        <button onClick={handleResetConfirm}>
-                            Confirm reset
-                        </button>
-                    </div>
+                    <>
+                        {reset === false ? (
+                            <div>
+                                <button
+                                    onClick={() => {
+                                        setReset(true);
+                                    }}
+                                >
+                                    Reset All
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button onClick={() => setReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </div>
+                        )}
+                        <br />
+                    </>
                 )}
-                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         );

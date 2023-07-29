@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -26,6 +26,8 @@ function RacePageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${race.split(" ")}/`;
 
@@ -153,6 +155,7 @@ function RacePageTemplate() {
     }
 
     async function handleRaceManualOfStyleSubmit() {
+        setProgress(8.333);
         await replaceImage(
             raceManualOfStyle,
             "RaceInfo",
@@ -160,9 +163,11 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "ManualOfStyle", raceManualOfStyle);
+        setProgress(16.666);
     }
 
     async function handleRaceBlurbSubmit() {
+        setProgress(24.999);
         await replaceImage(
             raceBlurb,
             "RaceInfo",
@@ -170,9 +175,11 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "Blurb", raceBlurb);
+        setProgress(33.332);
     }
 
     async function handleCharacteristicsSubmit() {
+        setProgress(41.665);
         await replaceImage(
             characteristics,
             "RaceInfo",
@@ -180,9 +187,11 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "Characteristics", characteristics);
+        setProgress(49.998);
     }
 
     async function handleCultureSubmit() {
+        setProgress(58.331);
         await replaceImage(
             culture,
             "RaceInfo",
@@ -190,9 +199,11 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "Culture", culture);
+        setProgress(66.664);
     }
 
     async function handleRaceHistorySubmit() {
+        setProgress(74.997);
         await replaceImage(
             raceHistory,
             "RaceInfo",
@@ -200,9 +211,11 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "History", raceHistory);
+        setProgress(83.33);
     }
 
     async function handleNotableMembersSubmit() {
+        setProgress(91.663);
         await replaceImage(
             notableMembers,
             "RaceInfo",
@@ -210,10 +223,12 @@ function RacePageTemplate() {
             `${race.split(" ")}`
         );
         await addData(path, "NotableMembers", notableMembers);
+        setProgress(99.996);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: race,
@@ -249,6 +264,11 @@ function RacePageTemplate() {
                 }, 1);
             });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -343,30 +363,40 @@ function RacePageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <button type="submit">Submit</button>
+                    {loading ? null : <button type="submit">Submit</button>}
                 </form>
                 <br />
-                {reset === false ? (
+                {loading ? (
                     <div>
-                        <button
-                            onClick={() => {
-                                setReset(true);
-                            }}
-                        >
-                            Reset All
-                        </button>
+                        <ProgressBar percentage={progress} />
+                        <h1>Uploading...</h1>
+                        <br />
                     </div>
                 ) : (
-                    <div>
-                        <button onClick={() => setReset(false)}>
-                            Cancel reset
-                        </button>
-                        <button onClick={handleResetConfirm}>
-                            Confirm reset
-                        </button>
-                    </div>
+                    <>
+                        {reset === false ? (
+                            <div>
+                                <button
+                                    onClick={() => {
+                                        setReset(true);
+                                    }}
+                                >
+                                    Reset All
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button onClick={() => setReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </div>
+                        )}
+                        <br />
+                    </>
                 )}
-                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

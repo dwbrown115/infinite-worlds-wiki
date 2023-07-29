@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -27,6 +27,8 @@ function PowerSystemPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${powerSystem.split(" ")}/`;
 
@@ -156,9 +158,11 @@ function PowerSystemPageTemplate() {
             "ManualOfStyle",
             powerSystemManualOfStyle
         );
+        setProgress(10);
     }
 
     async function handlePowerSystemBlurbSubmit() {
+        setProgress(20);
         await replaceImage(
             powerSystemBlurb,
             "PowerSystemInfo",
@@ -166,9 +170,11 @@ function PowerSystemPageTemplate() {
             `${powerSystem.split(" ")}`
         );
         await addData(path, "Blurb", powerSystemBlurb);
+        setProgress(30);
     }
 
     async function handleInfoSubmit() {
+        setProgress(40);
         await replaceImage(
             info,
             "PowerSystemInfo",
@@ -176,9 +182,11 @@ function PowerSystemPageTemplate() {
             `${powerSystem.split(" ")}`
         );
         await addData(path, "Info", info);
+        setProgress(50);
     }
 
     async function handleUsesSubmit() {
+        setProgress(60);
         await replaceImage(
             uses,
             "PowerSystemInfo",
@@ -186,9 +194,11 @@ function PowerSystemPageTemplate() {
             `${powerSystem.split(" ")}`
         );
         await addData(path, "Uses", uses);
+        setProgress(70);
     }
 
     async function handleNotableUsersSubmit() {
+        setProgress(80);
         await replaceImage(
             notableUsers,
             "PowerSystemInfo",
@@ -196,10 +206,12 @@ function PowerSystemPageTemplate() {
             `${powerSystem.split(" ")}`
         );
         await addData(path, "NotableUsers", notableUsers);
+        setProgress(90);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: powerSystem,
@@ -234,6 +246,11 @@ function PowerSystemPageTemplate() {
                 }, 1);
             });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -318,30 +335,40 @@ function PowerSystemPageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <button type="submit">Submit</button>
+                    {loading ? null : <button type="submit">Submit</button>}
                 </form>
                 <br />
-                {reset === false ? (
+                {loading ? (
                     <div>
-                        <button
-                            onClick={() => {
-                                setReset(true);
-                            }}
-                        >
-                            Reset All
-                        </button>
+                        <ProgressBar percentage={progress} />
+                        <h1>Uploading...</h1>
+                        <br />
                     </div>
                 ) : (
-                    <div>
-                        <button onClick={() => setReset(false)}>
-                            Cancel reset
-                        </button>
-                        <button onClick={handleResetConfirm}>
-                            Confirm reset
-                        </button>
-                    </div>
+                    <>
+                        {reset === false ? (
+                            <div>
+                                <button
+                                    onClick={() => {
+                                        setReset(true);
+                                    }}
+                                >
+                                    Reset All
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button onClick={() => setReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </div>
+                        )}
+                        <br />
+                    </>
                 )}
-                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

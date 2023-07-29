@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { jsonParser } from "../../helpers";
+import { jsonParser, checkImage } from "../../helpers";
 
 // eslint-disable-next-line react/prop-types
 function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
@@ -19,7 +19,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                 }
             }
         } else {
-            // console.log("Not Defined");
+            console.log("Not Defined");
         }
     }, []);
 
@@ -161,8 +161,8 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                         {section.sectionImage && (
                             <img
                                 // eslint-disable-next-line react/prop-types
-                                src={URL.createObjectURL(section.sectionImage)}
-                                alt="Section Image"
+                                src={checkImage(section.sectionImage)}
+                                alt="re-upload image"
                             />
                         )}
                         <button

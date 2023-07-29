@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -24,6 +24,8 @@ function EventPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${event.split(" ")}/`;
 
@@ -59,6 +61,7 @@ function EventPageTemplate() {
         if (reset == true) {
             setConfirm(true);
             setEvent("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -131,9 +134,11 @@ function EventPageTemplate() {
             `${event.split(" ")}`
         );
         await addData(path, "ManualOfStyle", eventManualOfStyle);
+        setProgress(10);
     }
 
     async function handleEventBlurbSubmit() {
+        setProgress(20);
         await replaceImage(
             eventBlurb,
             "EventInfo",
@@ -141,9 +146,11 @@ function EventPageTemplate() {
             `${event.split(" ")}`
         );
         await addData(path, "Blurb", eventBlurb);
+        setProgress(30);
     }
 
     async function handleEventSynopsisSubmit() {
+        setProgress(40);
         await replaceImage(
             eventSynopsis,
             "EventInfo",
@@ -151,9 +158,11 @@ function EventPageTemplate() {
             `${event.split(" ")}`
         );
         await addData(path, "Synopsis", eventSynopsis);
+        setProgress(50);
     }
 
     async function handleImpactSubmit() {
+        setProgress(60);
         await replaceImage(
             impact,
             "EventInfo",
@@ -161,10 +170,12 @@ function EventPageTemplate() {
             `${event.split(" ")}`
         );
         await addData(path, "Impact", impact);
+        setProgress(70);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: event,
@@ -176,6 +187,7 @@ function EventPageTemplate() {
         const docRef = doc(db, "ContentRef", `${event.split(" ")}`);
         const docSnap = await getDoc(docRef);
 
+        setProgress(80);
         if (docSnap.exists()) {
             return alert("This event already exists!");
         } else {
@@ -196,6 +208,11 @@ function EventPageTemplate() {
                     console.log(error);
                 });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -272,30 +289,40 @@ function EventPageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <button type="submit">Submit</button>
+                    {loading ? null : <button type="submit">Submit</button>}
                 </form>
                 <br />
-                {reset === false ? (
+                {loading ? (
                     <div>
-                        <button
-                            onClick={() => {
-                                setReset(true);
-                            }}
-                        >
-                            Reset All
-                        </button>
+                        <ProgressBar percentage={progress} />
+                        <h1>Uploading...</h1>
+                        <br />
                     </div>
                 ) : (
-                    <div>
-                        <button onClick={() => setReset(false)}>
-                            Cancel reset
-                        </button>
-                        <button onClick={handleResetConfirm}>
-                            Confirm reset
-                        </button>
-                    </div>
+                    <>
+                        {reset === false ? (
+                            <div>
+                                <button
+                                    onClick={() => {
+                                        setReset(true);
+                                    }}
+                                >
+                                    Reset All
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button onClick={() => setReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </div>
+                        )}
+                        <br />
+                    </>
                 )}
-                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

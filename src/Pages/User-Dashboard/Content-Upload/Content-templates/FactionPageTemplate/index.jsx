@@ -4,10 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
-import { func } from "prop-types";
 
 function FactionPageTemplate() {
     const db = getFirestore(firebase_app);
@@ -26,6 +25,8 @@ function FactionPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${faction.split(" ")}/`;
 
@@ -139,33 +140,39 @@ function FactionPageTemplate() {
             manualOfStyle,
             "FactionInfo",
             "ManualOfStyle",
-            `${race.split(" ")}`
+            `${faction.split(" ")}`
         );
         await addData(path, "ManualOfStyle", manualOfStyle);
+        setProgress(0);
     }
 
     async function handleBlurbSubmit() {
         await replaceImage(blurb, "FactionInfo", "Blurb");
         await addData(path, "Blurb", blurb);
+        setProgress(20);
     }
 
     async function handleHistorySubmit() {
         await replaceImage(history, "FactionInfo", "History");
         await addData(path, "History", history);
+        setProgress(40);
     }
 
     async function handleObjectivesSubmit() {
         await replaceImage(objectives, "FactionInfo", "Objectives");
         await addData(path, "Objectives", objectives);
+        setProgress(60);
     }
 
     async function handleMembersSubmit() {
         await replaceImage(members, "FactionInfo", "Members");
         await addData(path, "Members", members);
+        setProgress(80);
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: faction,
@@ -175,7 +182,7 @@ function FactionPageTemplate() {
             createdAt: time,
         };
 
-        const docRef = doc(db, "ContentRef", `${race.split(" ")}`);
+        const docRef = doc(db, "ContentRef", `${faction.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log(
@@ -200,6 +207,11 @@ function FactionPageTemplate() {
                 }, 1);
             });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -282,28 +294,40 @@ function FactionPageTemplate() {
                     </div>
                 </div>
                 <hr />
-                <button type="submit">Submit</button>
+                {loading ? null : <button type="submit">Submit</button>}
             </form>
             <br />
-            {reset === false ? (
+            {loading ? (
                 <div>
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <ProgressBar percentage={progress} />
+                    <h1>Uploading...</h1>
+                    <br />
                 </div>
             ) : (
-                <div>
-                    <button onClick={() => setReset(false)}>
-                        Cancel reset
-                    </button>
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
-                </div>
+                <>
+                    {reset === false ? (
+                        <div>
+                            <button
+                                onClick={() => {
+                                    setReset(true);
+                                }}
+                            >
+                                Reset All
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <button onClick={() => setReset(false)}>
+                                Cancel reset
+                            </button>
+                            <button onClick={handleResetConfirm}>
+                                Confirm reset
+                            </button>
+                        </div>
+                    )}
+                    <br />
+                </>
             )}
-            <br />
             <Link to="/user/upload">Back</Link>
         </>
     );

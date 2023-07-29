@@ -1,0 +1,1 @@
+export { default as defaultImage } from "./pngwing.com.png";

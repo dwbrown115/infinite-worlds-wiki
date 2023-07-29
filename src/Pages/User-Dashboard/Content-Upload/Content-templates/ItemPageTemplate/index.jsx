@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -24,6 +24,8 @@ function ItemPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${item.split(" ")}/`;
 
@@ -131,9 +133,11 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "ManualOfStyle", itemManualOfStyle);
+        setProgress(12.5);
     }
 
     async function handleItemBlurbSubmit() {
+        setProgress(25);
         await replaceImage(
             itemBlurb,
             "ItemInfo",
@@ -141,9 +145,11 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "Blurb", itemBlurb);
+        setProgress(37.5);
     }
 
     async function handleItemHistorySubmit() {
+        setProgress(50);
         await replaceImage(
             itemHistory,
             "ItemInfo",
@@ -151,15 +157,19 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "History", itemHistory);
+        setProgress(62.5);
     }
 
     async function handleItemUsesSubmit() {
+        setProgress(75);
         await replaceImage(itemUses, "ItemInfo", "Uses", `${item.split(" ")}`);
+        setProgress(87.5)
         await addData(path, "Uses", itemUses);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: item,
@@ -193,6 +203,11 @@ function ItemPageTemplate() {
                 }, 1);
             });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -267,30 +282,40 @@ function ItemPageTemplate() {
                         </div>
                     </div>
                     <hr />
-                    <button type="submit">Submit</button>
+                    {loading ? null : <button type="submit">Submit</button>}
                 </form>
                 <br />
-                {reset === false ? (
+                {loading ? (
                     <div>
-                        <button
-                            onClick={() => {
-                                setReset(true);
-                            }}
-                        >
-                            Reset All
-                        </button>
+                        <ProgressBar percentage={progress} />
+                        <h1>Uploading...</h1>
+                        <br />
                     </div>
                 ) : (
-                    <div>
-                        <button onClick={() => setReset(false)}>
-                            Cancel reset
-                        </button>
-                        <button onClick={handleResetConfirm}>
-                            Confirm reset
-                        </button>
-                    </div>
+                    <>
+                        {reset === false ? (
+                            <div>
+                                <button
+                                    onClick={() => {
+                                        setReset(true);
+                                    }}
+                                >
+                                    Reset All
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button onClick={() => setReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </div>
+                        )}
+                        <br />
+                    </>
                 )}
-                <br />
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         </>

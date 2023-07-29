@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { ContentForm } from "../../../../../components";
-import { replaceImage } from "../../../../../helpers";
+import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
 
@@ -27,6 +27,8 @@ function CharacterPageTemplate() {
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${character.split(" ")}/`;
 
@@ -73,6 +75,7 @@ function CharacterPageTemplate() {
         if (reset == true) {
             setConfirm(true);
             setCharacter("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -155,6 +158,7 @@ function CharacterPageTemplate() {
     };
 
     async function handleCharacterInfoSubmit() {
+        setProgress(8.333);
         await replaceImage(
             characterManualOfStyle,
             "CharacterInfo",
@@ -163,7 +167,9 @@ function CharacterPageTemplate() {
         );
         // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
         await addData(path, "ManualOfStyle", characterManualOfStyle);
+        setProgress(16.666);
 
+        setProgress(24.999);
         await replaceImage(
             characterBlurb,
             "CharacterInfo",
@@ -171,7 +177,9 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Blurb", characterBlurb);
+        setProgress(33.332);
 
+        setProgress(41.665);
         await replaceImage(
             info,
             "CharacterInfo",
@@ -179,7 +187,9 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Info", info);
+        setProgress(49.998);
 
+        setProgress(58.331);
         await replaceImage(
             characterPowersAndAbilities,
             "CharacterInfo",
@@ -187,9 +197,11 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "PowersAndAbilities", characterPowersAndAbilities);
+        setProgress(66.664);
     }
 
     async function handleCharacterSynopsisSubmit() {
+        setProgress(74.997);
         await replaceImage(
             characterSynopsis,
             "CharacterSynopsis",
@@ -197,8 +209,10 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Synopsis", characterSynopsis);
+        setProgress(83.33);
     }
     async function handleCharacterRelationshipSubmit() {
+        setProgress(91.663);
         await replaceImage(
             relationships,
             "CharacterRelationship",
@@ -206,11 +220,12 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Relationships", relationships);
-        console.log(relationships);
+        setProgress(99.996);
     }
 
     async function handleUpload(e) {
         e.preventDefault();
+        setLoading(true);
         const time = Date().toLocaleString();
         const data = {
             Name: character,
@@ -244,6 +259,11 @@ function CharacterPageTemplate() {
                     console.log(error);
                 });
         }
+        setProgress(100);
+        setLoading(false);
+        setTimeout(() => {
+            setProgress(0);
+        }, 100);
     }
 
     return (
@@ -313,7 +333,7 @@ function CharacterPageTemplate() {
                             handleFormContents={
                                 handleCharacterPowersAndAbilities
                             }
-                            isManualOfStyle={true}
+                            isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}
                         />
@@ -340,28 +360,40 @@ function CharacterPageTemplate() {
                     />
                 </div>
                 <hr />
-                <button type="submit">Submit</button>
+                {loading ? null : <button type="submit">Submit</button>}
             </form>
             <br />
-            {reset === false ? (
+            {loading ? (
                 <div>
-                    <button
-                        onClick={() => {
-                            setReset(true);
-                        }}
-                    >
-                        Reset All
-                    </button>
+                    <ProgressBar percentage={progress} />
+                    <h1>Uploading...</h1>
+                    <br />
                 </div>
             ) : (
-                <div>
-                    <button onClick={() => setReset(false)}>
-                        Cancel reset
-                    </button>
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
-                </div>
+                <>
+                    {reset === false ? (
+                        <div>
+                            <button
+                                onClick={() => {
+                                    setReset(true);
+                                }}
+                            >
+                                Reset All
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <button onClick={() => setReset(false)}>
+                                Cancel reset
+                            </button>
+                            <button onClick={handleResetConfirm}>
+                                Confirm reset
+                            </button>
+                        </div>
+                    )}
+                    <br />
+                </>
             )}
-            <br />
             <Link to={"/user/upload"}>Go Back</Link>
         </div>
     );

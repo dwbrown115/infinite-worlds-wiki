@@ -7,3 +7,5 @@ export { default as deletePartOfString } from "./deletePartOfAString";
 export { default as replaceImage } from "./replaceImage";
 export { default as checkForImage } from "./checkForImage";
 export { default as jsonParser } from "./jsonParser";
+export { default as ProgressBar } from "./progressBar";
+export { default as checkImage } from "./checkImage";
