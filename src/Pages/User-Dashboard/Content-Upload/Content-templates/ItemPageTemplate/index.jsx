@@ -14,7 +14,7 @@ function ItemPageTemplate() {
     const user = auth.currentUser;
     const collection = "Content/ContentType/Items";
     const router = useNavigate();
-    
+
     const [item, setItem] = useState("");
     const [itemManualOfStyle, setItemManualOfStyle] = useState([]);
     const [itemBlurb, setItemBlurb] = useState([]);
@@ -37,7 +37,10 @@ function ItemPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("item", item);
-        localStorage.setItem("itemManualOfStyle", JSON.stringify(itemManualOfStyle));
+        localStorage.setItem(
+            "itemManualOfStyle",
+            JSON.stringify(itemManualOfStyle)
+        );
         localStorage.setItem("itemBlurb", JSON.stringify(itemBlurb));
         localStorage.setItem("itemHistory", JSON.stringify(itemHistory));
         localStorage.setItem("itemUses", JSON.stringify(itemUses));
@@ -121,7 +124,12 @@ function ItemPageTemplate() {
     }
 
     async function handleitemBlurbSubmit() {
-        await replaceImage(itemBlurb, "ItemInfo", "itemBlurb", `${item.split(" ")}`);
+        await replaceImage(
+            itemBlurb,
+            "ItemInfo",
+            "itemBlurb",
+            `${item.split(" ")}`
+        );
         await addData(path, "itemBlurb", itemBlurb);
     }
 
@@ -182,7 +190,7 @@ function ItemPageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Item Page Template</h1>
                     <div>
-                        <h2>Item name</h2>
+                        <h2>Item Name</h2>
                         <input
                             type="text"
                             placeholder="Item name:"
@@ -194,7 +202,7 @@ function ItemPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Manual of Style</h2>
+                            <h2>Item Manual of Style</h2>
                             <ContentForm
                                 handleFormContents={handleitemManualOfStyle}
                                 isManualOfStyle={true}
@@ -204,7 +212,7 @@ function ItemPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>itemBlurb</h2>
+                            <h2>Item Blurb</h2>
                             <ContentForm
                                 handleFormContents={handleitemBlurb}
                                 isManualOfStyle={false}
@@ -216,7 +224,7 @@ function ItemPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Item itemHistory</h2>
+                            <h2>Item History</h2>
                             <ContentForm
                                 handleFormContents={handleitemHistory}
                                 isManualOfStyle={false}
@@ -239,15 +247,26 @@ function ItemPageTemplate() {
                     <button type="submit">Submit</button>
                 </form>
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}

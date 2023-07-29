@@ -39,13 +39,27 @@ function RacePageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("race", race);
-        localStorage.setItem("raceManualOfStyle", JSON.stringify(raceManualOfStyle));
+        localStorage.setItem(
+            "raceManualOfStyle",
+            JSON.stringify(raceManualOfStyle)
+        );
         localStorage.setItem("raceBlurb", JSON.stringify(raceBlurb));
-        localStorage.setItem("characteristics", JSON.stringify(characteristics));
+        localStorage.setItem(
+            "characteristics",
+            JSON.stringify(characteristics)
+        );
         localStorage.setItem("culture", JSON.stringify(culture));
         localStorage.setItem("raceHistory", JSON.stringify(raceHistory));
         localStorage.setItem("notableMembers", JSON.stringify(notableMembers));
-    }, [race, raceManualOfStyle, raceBlurb, characteristics, culture, raceHistory, notableMembers]);
+    }, [
+        race,
+        raceManualOfStyle,
+        raceBlurb,
+        characteristics,
+        culture,
+        raceHistory,
+        notableMembers,
+    ]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -139,7 +153,12 @@ function RacePageTemplate() {
     }
 
     async function handleraceBlurbSubmit() {
-        await replaceImage(raceBlurb, "RaceInfo", "raceBlurb", `${race.split(" ")}`);
+        await replaceImage(
+            raceBlurb,
+            "RaceInfo",
+            "raceBlurb",
+            `${race.split(" ")}`
+        );
         await addData(path, "raceBlurb", raceBlurb);
     }
 
@@ -222,7 +241,7 @@ function RacePageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Race Page Template</h1>
                     <div>
-                        <h2>Race name</h2>
+                        <h2>Race Name</h2>
                         <input
                             type="text"
                             placeholder="Race name:"
@@ -233,7 +252,7 @@ function RacePageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Manual of Style</h2>
+                            <h2>Race Manual of Style</h2>
                             <ContentForm
                                 handleFormContents={handleraceManualOfStyle}
                                 isManualOfStyle={true}
@@ -243,7 +262,7 @@ function RacePageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>raceBlurb</h2>
+                            <h2>Race Blurb</h2>
                             <ContentForm
                                 handleFormContents={handleraceBlurb}
                                 isManualOfStyle={false}
@@ -275,7 +294,7 @@ function RacePageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Race raceHistory</h2>
+                            <h2>Race History</h2>
                             <ContentForm
                                 handleFormContents={handleraceHistory}
                                 isManualOfStyle={false}
@@ -298,15 +317,26 @@ function RacePageTemplate() {
                     <button type="submit">Submit</button>
                 </form>
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}
@@ -318,3 +348,8 @@ function RacePageTemplate() {
 }
 
 export default RacePageTemplate;
+
+//  <div>
+//      <button onClick={setReset(false)}>Cancel reset</button>
+//      <button onClick={handleResetConfirm}>Confirm reset</button>
+//  <div/>;

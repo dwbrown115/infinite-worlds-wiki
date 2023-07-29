@@ -38,15 +38,28 @@ function LocationPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("location", location);
-        localStorage.setItem("locationManualOfStyle", JSON.stringify(locationManualOfStyle));
+        localStorage.setItem(
+            "locationManualOfStyle",
+            JSON.stringify(locationManualOfStyle)
+        );
         localStorage.setItem("locationBlurb", JSON.stringify(locationBlurb));
         localStorage.setItem(
             "geographyAndEcology",
             JSON.stringify(geographyAndEcology)
         );
-        localStorage.setItem("locationHistory", JSON.stringify(locationHistory));
+        localStorage.setItem(
+            "locationHistory",
+            JSON.stringify(locationHistory)
+        );
         localStorage.setItem("culture", JSON.stringify(culture));
-    }, [location, locationManualOfStyle, locationBlurb, geographyAndEcology, locationHistory, culture]);
+    }, [
+        location,
+        locationManualOfStyle,
+        locationBlurb,
+        geographyAndEcology,
+        locationHistory,
+        culture,
+    ]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -210,7 +223,7 @@ function LocationPageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Location Page Template</h1>
                     <div>
-                        <h2>Location name</h2>
+                        <h2>Location Name</h2>
                         <input
                             type="text"
                             placeholder="Location name:"
@@ -222,7 +235,7 @@ function LocationPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Manual of Style</h2>
+                            <h2>Location Manual of Style</h2>
                             <ContentForm
                                 handleFormContents={handlelocationManualOfStyle}
                                 isManualOfStyle={true}
@@ -232,7 +245,7 @@ function LocationPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>locationBlurb</h2>
+                            <h2>Location Blurb</h2>
                             <ContentForm
                                 handleFormContents={handlelocationBlurb}
                                 isManualOfStyle={false}
@@ -254,7 +267,7 @@ function LocationPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Location locationHistory</h2>
+                            <h2>Location History</h2>
                             <ContentForm
                                 handleFormContents={handleCulture}
                                 isManualOfStyle={false}
@@ -277,15 +290,26 @@ function LocationPageTemplate() {
                     <button type="submit">Submit</button>
                 </form>
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}

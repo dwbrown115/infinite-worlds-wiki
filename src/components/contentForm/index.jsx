@@ -252,14 +252,14 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
                             Reset
                         </button>
                         {isReset === true ? (
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setIsReset(false), handleReset();
-                                }}
-                            >
-                                Confirm reset
-                            </button>
+                            <>
+                                <button onClick={setIsReset(false)}>
+                                    Cancel reset
+                                </button>
+                                <button onClick={handleResetConfirm}>
+                                    Confirm reset
+                                </button>
+                            </>
                         ) : (
                             <div />
                         )}

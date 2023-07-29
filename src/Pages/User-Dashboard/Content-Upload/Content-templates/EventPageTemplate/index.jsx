@@ -37,7 +37,10 @@ function EventPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("event", event);
-        localStorage.setItem("eventManualOfStyle", JSON.stringify(eventManualOfStyle));
+        localStorage.setItem(
+            "eventManualOfStyle",
+            JSON.stringify(eventManualOfStyle)
+        );
         localStorage.setItem("eventBlurb", JSON.stringify(eventBlurb));
         localStorage.setItem("eventSynopsis", JSON.stringify(eventSynopsis));
         localStorage.setItem("impact", JSON.stringify(impact));
@@ -121,7 +124,12 @@ function EventPageTemplate() {
     }
 
     async function handleeventBlurbSubmit() {
-        await replaceImage(eventBlurb, "EventInfo", "eventBlurb", `${event.split(" ")}`);
+        await replaceImage(
+            eventBlurb,
+            "EventInfo",
+            "eventBlurb",
+            `${event.split(" ")}`
+        );
         await addData(path, "eventBlurb", eventBlurb);
     }
 
@@ -181,7 +189,7 @@ function EventPageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Event Page Template</h1>
                     <div>
-                        <h2>Event name</h2>
+                        <h2>Event Name</h2>
                         <input
                             type="text"
                             placeholder="Event name:"
@@ -194,9 +202,11 @@ function EventPageTemplate() {
                     <div>
                         <div>
                             <div>
-                                <h2>Manual Of Style</h2>
+                                <h2>Event Manual Of Style</h2>
                                 <ContentForm
-                                    handleFormContents={handleeventManualOfStyle}
+                                    handleFormContents={
+                                        handleeventManualOfStyle
+                                    }
                                     isManualOfStyle={true}
                                     section={"eventManualOfStyle"}
                                     reset={confirm}
@@ -204,7 +214,7 @@ function EventPageTemplate() {
                             </div>
                             <hr />
                             <div>
-                                <h2>eventBlurb</h2>
+                                <h2>Event Blurb</h2>
                                 <ContentForm
                                     handleFormContents={handleeventBlurb}
                                     isManualOfStyle={false}
@@ -215,7 +225,7 @@ function EventPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>eventSynopsis</h2>
+                            <h2>Event Synopsis</h2>
                             <ContentForm
                                 handleFormContents={handleeventSynopsis}
                                 isManualOfStyle={false}
@@ -225,7 +235,7 @@ function EventPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>Impact</h2>
+                            <h2>Event Impact</h2>
                             <ContentForm
                                 handleFormContents={handleImpact}
                                 isManualOfStyle={false}
@@ -237,15 +247,26 @@ function EventPageTemplate() {
                 </form>
                 <hr />
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}

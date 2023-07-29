@@ -37,7 +37,10 @@ function BookPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("book", book);
-        localStorage.setItem("bookManualOfStyle", JSON.stringify(bookManualOfStyle));
+        localStorage.setItem(
+            "bookManualOfStyle",
+            JSON.stringify(bookManualOfStyle)
+        );
         localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
         localStorage.setItem("chapters", JSON.stringify(chapters));
         localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
@@ -121,7 +124,12 @@ function BookPageTemplate() {
     }
 
     async function handlebookBlurbSubmit() {
-        await replaceImage(bookBlurb, "BookInfo", "bookBlurb", `${book.split(" ")}`);
+        await replaceImage(
+            bookBlurb,
+            "BookInfo",
+            "bookBlurb",
+            `${book.split(" ")}`
+        );
         await addData(path, "bookBlurb", bookBlurb);
     }
 
@@ -191,7 +199,7 @@ function BookPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Manual Of Style</h2>
+                            <h2>Book Manual Of Style</h2>
                             <ContentForm
                                 handleFormContents={handlebookManualOfStyle}
                                 isManualOfStyle={true}
@@ -201,7 +209,7 @@ function BookPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>bookBlurb</h2>
+                            <h2>Book Blurb</h2>
                             <ContentForm
                                 handleFormContents={handlebookBlurb}
                                 isManualOfStyle={false}
@@ -212,7 +220,7 @@ function BookPageTemplate() {
                     </div>
                     <hr />
                     <div>
-                        <h2>Chapters</h2>
+                        <h2>Book Chapters</h2>
                         <ContentForm
                             handleFormContents={handleChapters}
                             isManualOfStyle={true}
@@ -222,7 +230,7 @@ function BookPageTemplate() {
                     </div>
                     <hr />
                     <div>
-                        <h2>bookSynopsis</h2>
+                        <h2>Book Synopsis</h2>
                         <ContentForm
                             handleFormContents={handlebookSynopsis}
                             isManualOfStyle={false}
@@ -236,15 +244,26 @@ function BookPageTemplate() {
                     </div>
                 </form>
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}

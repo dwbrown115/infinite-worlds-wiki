@@ -38,12 +38,25 @@ function CharacterPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("character", character);
-        localStorage.setItem("characterManualOfStyle", JSON.stringify(characterManualOfStyle));
+        localStorage.setItem(
+            "characterManualOfStyle",
+            JSON.stringify(characterManualOfStyle)
+        );
         localStorage.setItem("characterBlurb", JSON.stringify(characterBlurb));
         localStorage.setItem("info", JSON.stringify(info));
-        localStorage.setItem("characterSynopsis", JSON.stringify(characterSynopsis));
+        localStorage.setItem(
+            "characterSynopsis",
+            JSON.stringify(characterSynopsis)
+        );
         localStorage.setItem("relationships", JSON.stringify(relationships));
-    }, [character, characterManualOfStyle, characterBlurb, info, characterSynopsis, relationships]);
+    }, [
+        character,
+        characterManualOfStyle,
+        characterBlurb,
+        info,
+        characterSynopsis,
+        relationships,
+    ]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -218,16 +231,18 @@ function CharacterPageTemplate() {
                 <div>
                     <div>
                         <div>
-                            <h2>Manual of syle</h2>
+                            <h2>Character Manual of syle</h2>
                             <ContentForm
-                                handleFormContents={handlecharacterManualOfStyle}
+                                handleFormContents={
+                                    handlecharacterManualOfStyle
+                                }
                                 isManualOfStyle={true}
                                 section={"characterManualOfStyle"}
                                 reset={confirm}
                             />
                         </div>
                         <div>
-                            <h2>Quick characterBlurb</h2>
+                            <h2>Character Blurb</h2>
                             <ContentForm
                                 handleFormContents={handlecharacterBlurb}
                                 isManualOfStyle={false}
@@ -248,7 +263,7 @@ function CharacterPageTemplate() {
                 </div>
                 <hr />
                 <div>
-                    <h1>Character characterSynopsis Page</h1>
+                    <h1>Character Synopsis Page</h1>
                     <ContentForm
                         handleFormContents={handlecharacterSynopsis}
                         isManualOfStyle={false}
@@ -278,7 +293,10 @@ function CharacterPageTemplate() {
                 Reset All
             </button>
             {reset === true ? (
-                <button onClick={handleResetConfirm}>Confirm reset</button>
+                <>
+                    <button onClick={setReset(false)}>Cancel reset</button>
+                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                </>
             ) : (
                 <div />
             )}

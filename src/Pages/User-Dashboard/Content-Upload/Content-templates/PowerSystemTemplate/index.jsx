@@ -16,7 +16,9 @@ function PowerSystemPageTemplate() {
     const router = useNavigate();
 
     const [powerSystem, setPowerSystem] = useState("");
-    const [powerSystemManualOfStyle, setPowerSystemManualOfStyle] = useState([]);
+    const [powerSystemManualOfStyle, setPowerSystemManualOfStyle] = useState(
+        []
+    );
     const [powerSystemBlurb, setPowerSystemBlurb] = useState([]);
     const [info, setInfo] = useState([]);
     const [uses, setUses] = useState([]);
@@ -38,12 +40,25 @@ function PowerSystemPageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("powerSystem", powerSystem);
-        localStorage.setItem("powerSystemManualOfStyle", JSON.stringify(powerSystemManualOfStyle));
-        localStorage.setItem("powerSystemBlurb", JSON.stringify(powerSystemBlurb));
+        localStorage.setItem(
+            "powerSystemManualOfStyle",
+            JSON.stringify(powerSystemManualOfStyle)
+        );
+        localStorage.setItem(
+            "powerSystemBlurb",
+            JSON.stringify(powerSystemBlurb)
+        );
         localStorage.setItem("info", JSON.stringify(info));
         localStorage.setItem("uses", JSON.stringify(uses));
         localStorage.setItem("notableUsers", JSON.stringify(notableUsers));
-    }, [powerSystem, powerSystemManualOfStyle, powerSystemBlurb, info, uses, notableUsers]);
+    }, [
+        powerSystem,
+        powerSystemManualOfStyle,
+        powerSystemBlurb,
+        info,
+        uses,
+        notableUsers,
+    ]);
 
     function handleResetConfirm() {
         if (reset == true) {
@@ -126,7 +141,11 @@ function PowerSystemPageTemplate() {
             "powerSystemManualOfStyle",
             `${powerSystem.split(" ")}`
         );
-        await addData(path, "powerSystemManualOfStyle", powerSystemManualOfStyle);
+        await addData(
+            path,
+            "powerSystemManualOfStyle",
+            powerSystemManualOfStyle
+        );
     }
 
     async function handlepowerSystemBlurbSubmit() {
@@ -207,7 +226,7 @@ function PowerSystemPageTemplate() {
                 <form onSubmit={handleUpload}>
                     <h1>Power System Page Template</h1>
                     <div>
-                        <h2>Power System name</h2>
+                        <h2>Power System Name</h2>
                         <input
                             type="text"
                             placeholder="Power system name:"
@@ -218,9 +237,11 @@ function PowerSystemPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>Manual of Style</h2>
+                            <h2>Power System Manual of Style</h2>
                             <ContentForm
-                                handleFormContents={handlepowerSystemManualOfStyle}
+                                handleFormContents={
+                                    handlepowerSystemManualOfStyle
+                                }
                                 isManualOfStyle={true}
                                 section={"powerSystemManualOfStyle"}
                                 reset={confirm}
@@ -229,7 +250,7 @@ function PowerSystemPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>powerSystemBlurb</h2>
+                            <h2>Power System Blurb</h2>
                             <ContentForm
                                 handleFormContents={handlepowerSystemBlurb}
                                 isManualOfStyle={false}
@@ -241,7 +262,7 @@ function PowerSystemPageTemplate() {
                     <hr />
                     <div>
                         <div>
-                            <h2>PowerSystem History</h2>
+                            <h2>Power System History</h2>
                             <ContentForm
                                 handleFormContents={handleInfo}
                                 isManualOfStyle={false}
@@ -251,7 +272,7 @@ function PowerSystemPageTemplate() {
                         </div>
                         <hr />
                         <div>
-                            <h2>PowerSystem Uses</h2>
+                            <h2>Power System Uses</h2>
                             <ContentForm
                                 handleFormContents={handleUses}
                                 isManualOfStyle={false}
@@ -274,15 +295,26 @@ function PowerSystemPageTemplate() {
                     <button type="submit">Submit</button>
                 </form>
                 <br />
-                <button
-                    onClick={() => {
-                        setReset(true);
-                    }}
-                >
-                    Reset All
-                </button>
+                {reset === false ? (
+                    <button
+                        onClick={() => {
+                            setReset(true);
+                        }}
+                    >
+                        Reset All
+                    </button>
+                ) : (
+                    <div />
+                )}
                 {reset === true ? (
-                    <button onClick={handleResetConfirm}>Confirm reset</button>
+                    <div>
+                        <button onClick={() => setReset(false)}>
+                            Cancel reset
+                        </button>
+                        <button onClick={handleResetConfirm}>
+                            Confirm reset
+                        </button>
+                    </div>
                 ) : (
                     <div />
                 )}
