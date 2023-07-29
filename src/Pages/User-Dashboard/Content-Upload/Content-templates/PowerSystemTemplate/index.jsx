@@ -101,35 +101,35 @@ function PowerSystemPageTemplate() {
 
     function handlePowerSystemManualOfStyle(inputArray) {
         setPowerSystemManualOfStyle({
-            contentType: "PowerSystemManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handlePowerSystemBlurb(inputArray) {
         setPowerSystemBlurb({
-            contentType: "PowerSystemBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleInfo(inputArray) {
         setInfo({
-            contentType: "PowerSystemInfo",
+            contentType: "Info",
             content: inputArray,
         });
     }
 
     function handleUses(inputArray) {
         setUses({
-            contentType: "PowerSystemUses",
+            contentType: "Uses",
             content: inputArray,
         });
     }
 
     function handleNotableUsers(inputArray) {
         setNotableUsers({
-            contentType: "PowerSystemNotableUsers",
+            contentType: "NotableUsers",
             content: inputArray,
         });
     }
@@ -138,12 +138,12 @@ function PowerSystemPageTemplate() {
         await replaceImage(
             powerSystemManualOfStyle,
             "PowerSystemInfo",
-            "powerSystemManualOfStyle",
+            "ManualOfStyle",
             `${powerSystem.split(" ")}`
         );
         await addData(
             path,
-            "powerSystemManualOfStyle",
+            "ManualOfStyle",
             powerSystemManualOfStyle
         );
     }
@@ -152,10 +152,10 @@ function PowerSystemPageTemplate() {
         await replaceImage(
             powerSystemBlurb,
             "PowerSystemInfo",
-            "powerSystemBlurb",
+            "Blurb",
             `${powerSystem.split(" ")}`
         );
-        await addData(path, "powerSystemBlurb", powerSystemBlurb);
+        await addData(path, "Blurb", powerSystemBlurb);
     }
 
     async function handleInfoSubmit() {

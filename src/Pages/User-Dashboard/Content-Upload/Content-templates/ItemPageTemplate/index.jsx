@@ -87,28 +87,28 @@ function ItemPageTemplate() {
 
     function handleItemManualOfStyle(inputArray) {
         setItemManualOfStyle({
-            contentType: "ItemManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handleItemBlurb(inputArray) {
         setItemBlurb({
-            contentType: "ItemBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleItemHistory(inputArray) {
         setItemHistory({
-            contentType: "ItemHistory",
+            contentType: "History",
             content: inputArray,
         });
     }
 
     function handleItemUses(inputArray) {
         setItemUses({
-            contentType: "ItemUses",
+            contentType: "Uses",
             content: inputArray,
         });
     }
@@ -117,40 +117,40 @@ function ItemPageTemplate() {
         await replaceImage(
             itemManualOfStyle,
             "ItemInfo",
-            "itemManualOfStyle",
+            "ManualOfStyle",
             `${item.split(" ")}`
         );
-        await addData(path, "itemManualOfStyle", itemManualOfStyle);
+        await addData(path, "ManualOfStyle", itemManualOfStyle);
     }
 
     async function handleItemBlurbSubmit() {
         await replaceImage(
             itemBlurb,
             "ItemInfo",
-            "itemBlurb",
+            "Blurb",
             `${item.split(" ")}`
         );
-        await addData(path, "itemBlurb", itemBlurb);
+        await addData(path, "Blurb", itemBlurb);
     }
 
     async function handleItemHistorySubmit() {
         await replaceImage(
             itemHistory,
             "ItemInfo",
-            "itemHistory",
+            "History",
             `${item.split(" ")}`
         );
-        await addData(path, "itemHistory", itemHistory);
+        await addData(path, "History", itemHistory);
     }
 
     async function handleItemUsesSubmit() {
         await replaceImage(
             itemUses,
             "ItemInfo",
-            "ItemUses",
+            "Uses",
             `${item.split(" ")}`
         );
-        await addData(path, "ItemUses", itemUses);
+        await addData(path, "Uses", itemUses);
     }
 
     async function handleUpload(e) {

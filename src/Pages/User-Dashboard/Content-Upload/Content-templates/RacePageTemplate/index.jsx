@@ -102,42 +102,42 @@ function RacePageTemplate() {
 
     function handleRaceManualOfStyle(inputArray) {
         setRaceManualOfStyle({
-            contentType: "RaceManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handleRaceBlurb(inputArray) {
         setRaceBlurb({
-            contentType: "RaceBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleCharacteristics(inputArray) {
         setCharacteristics({
-            contentType: "RaceCharacteristics",
+            contentType: "Characteristics",
             content: inputArray,
         });
     }
 
     function handleCulture(inputArray) {
         setCulture({
-            contentType: "RaceCulture",
+            contentType: "Culture",
             content: inputArray,
         });
     }
 
     function handleRaceHistory(inputArray) {
         setRaceHistory({
-            contentType: "RaceHistory",
+            contentType: "History",
             content: inputArray,
         });
     }
 
     function handleNotableMembers(inputArray) {
         setNotableMembers({
-            contentType: "RaceNotableMembers",
+            contentType: "NotableMembers",
             content: inputArray,
         });
     }
@@ -146,20 +146,20 @@ function RacePageTemplate() {
         await replaceImage(
             raceManualOfStyle,
             "RaceInfo",
-            "raceManualOfStyle",
+            "ManualOfStyle",
             `${race.split(" ")}`
         );
-        await addData(path, "raceManualOfStyle", raceManualOfStyle);
+        await addData(path, "ManualOfStyle", raceManualOfStyle);
     }
 
     async function handleRaceBlurbSubmit() {
         await replaceImage(
             raceBlurb,
             "RaceInfo",
-            "raceBlurb",
+            "Blurb",
             `${race.split(" ")}`
         );
-        await addData(path, "raceBlurb", raceBlurb);
+        await addData(path, "Blurb", raceBlurb);
     }
 
     async function handleCharacteristicsSubmit() {
@@ -186,10 +186,10 @@ function RacePageTemplate() {
         await replaceImage(
             raceHistory,
             "RaceInfo",
-            "raceHistory",
+            "History",
             `${race.split(" ")}`
         );
-        await addData(path, "raceHistory", raceHistory);
+        await addData(path, "History", raceHistory);
     }
 
     async function handleNotableMembersSubmit() {

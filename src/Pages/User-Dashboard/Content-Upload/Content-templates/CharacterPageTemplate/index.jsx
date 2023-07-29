@@ -103,7 +103,7 @@ function CharacterPageTemplate() {
 
     const handleCharacterManualOfStyle = (inputArray) => {
         setCharacterManualOfStyle({
-            contentType: "CharacterManualofsyle",
+            contentType: "Manualofsyle",
             content: inputArray,
         });
         // setCharacterManualOfStyle(inputArray);
@@ -111,35 +111,35 @@ function CharacterPageTemplate() {
 
     const handleCharacterBlurb = (inputArray) => {
         setCharacterBlurb({
-            contentType: "CharacterBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     };
 
     const handleInfo = (inputArray) => {
         setInfo({
-            contentType: "CharacterInfo",
+            contentType: "Info",
             content: inputArray,
         });
     };
 
     const handleCharacterPowersAndAbilities = (inputArray) => {
         setCharacterPowersAndAbilities({
-            contentType: "CharacterPowersAndAbilities",
+            contentType: "PowersAndAbilities",
             content: inputArray,
         });
     };
 
     const handleCharacterSynopsis = (inputArray) => {
         setCharacterSynopsis({
-            contentType: "CharacterSynopsis",
+            contentType: "Synopsis",
             content: inputArray,
         });
     };
 
     const handleRelationships = (inputArray) => {
         setRelationships({
-            contentType: "CharacterRelationships",
+            contentType: "Relationships",
             content: inputArray,
         });
     };
@@ -148,11 +148,11 @@ function CharacterPageTemplate() {
         await replaceImage(
             characterManualOfStyle,
             "CharacterInfo",
-            "characterManualOfStyle",
+            "ManualOfStyle",
             `${character.split(" ")}`
         );
         // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
-        await addData(path, "CharacterManualOfStyle", characterManualOfStyle);
+        await addData(path, "ManualOfStyle", characterManualOfStyle);
 
         await replaceImage(
             characterBlurb,
@@ -160,7 +160,7 @@ function CharacterPageTemplate() {
             "Burb",
             `${character.split(" ")}`
         );
-        await addData(path, "CharacterBlurb", characterBlurb);
+        await addData(path, "Blurb", characterBlurb);
 
         await replaceImage(
             info,
@@ -168,7 +168,7 @@ function CharacterPageTemplate() {
             "Info",
             `${character.split(" ")}`
         );
-        await addData(path, "CharacterInfo", info);
+        await addData(path, "Info", info);
 
         await replaceImage(
             characterPowersAndAbilities,
@@ -178,7 +178,7 @@ function CharacterPageTemplate() {
         );
         await addData(
             path,
-            "CharacterPowersAndAbilities",
+            "PowersAndAbilities",
             characterPowersAndAbilities
         );
     }
@@ -190,7 +190,7 @@ function CharacterPageTemplate() {
             "Synopsis",
             `${character.split(" ")}`
         );
-        await addData(path, "CharacterSynopsis", characterSynopsis);
+        await addData(path, "Synopsis", characterSynopsis);
     }
     async function handleCharacterRelationshipSubmit() {
         await replaceImage(
@@ -199,7 +199,7 @@ function CharacterPageTemplate() {
             "Relationships",
             `${character.split(" ")}`
         );
-        await addData(path, "CharacterRelationships", relationships);
+        await addData(path, "Relationships", relationships);
         console.log(relationships);
     }
 
@@ -289,7 +289,9 @@ function CharacterPageTemplate() {
                     <div>
                         <h2>Character Powers and Abilities</h2>
                         <ContentForm
-                            handleFormContents={handleInfo}
+                            handleFormContents={
+                                handleCharacterPowersAndAbilities
+                            }
                             isManualOfStyle={true}
                             section={"info"}
                             reset={confirm}

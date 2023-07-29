@@ -87,28 +87,28 @@ function EventPageTemplate() {
 
     function handleEventManualOfStyle(inputArray) {
         setEventManualOfStyle({
-            contentType: "EventManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handleEventBlurb(inputArray) {
         seteventBlurb({
-            contentType: "EventBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleEventSynopsis(inputArray) {
         setEventSynopsis({
-            contentType: "EventSynopsis",
+            contentType: "Synopsis",
             content: inputArray,
         });
     }
 
     function handleImpact(inputArray) {
         setImpact({
-            contentType: "EventImpact",
+            contentType: "Impact",
             content: inputArray,
         });
     }
@@ -117,40 +117,40 @@ function EventPageTemplate() {
         await replaceImage(
             eventManualOfStyle,
             "EventInfo",
-            "eventManualOfStyle",
+            "ManualOfStyle",
             `${event.split(" ")}`
         );
-        await addData(path, "eventManualOfStyle", eventManualOfStyle);
+        await addData(path, "ManualOfStyle", eventManualOfStyle);
     }
 
     async function handleEventBlurbSubmit() {
         await replaceImage(
             eventBlurb,
             "EventInfo",
-            "eventBlurb",
+            "Blurb",
             `${event.split(" ")}`
         );
-        await addData(path, "eventBlurb", eventBlurb);
+        await addData(path, "Blurb", eventBlurb);
     }
 
     async function handleEventSynopsisSubmit() {
         await replaceImage(
             eventSynopsis,
             "EventInfo",
-            "eventSynopsis",
+            "Synopsis",
             `${event.split(" ")}`
         );
-        await addData(path, "eventSynopsis", eventSynopsis);
+        await addData(path, "Synopsis", eventSynopsis);
     }
 
     async function handleImpactSubmit() {
         await replaceImage(
             impact,
             "EventInfo",
-            "eventImpact",
+            "Impact",
             `${event.split(" ")}`
         );
-        await addData(path, "eventImpact", impact);
+        await addData(path, "Impact", impact);
     }
 
     async function handleUpload(e) {

@@ -102,35 +102,35 @@ function LocationPageTemplate() {
 
     function handleLocationManualOfStyle(inputArray) {
         setLocationManualOfStyle({
-            contentType: "LocationManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handleLocationBlurb(inputArray) {
         setLocationBlurb({
-            contentType: "LocationBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleGeographyAndEcology(inputArray) {
         setGeographyAndEcology({
-            contentType: "LocationGeographyAndEcology",
+            contentType: "GeographyAndEcology",
             content: inputArray,
         });
     }
 
     function handleLocationHistory(inputArray) {
         setLocationHistory({
-            contentType: "LocationHistory",
+            contentType: "History",
             content: inputArray,
         });
     }
 
     function handleCulture(inputArray) {
         setCulture({
-            contentType: "LocationCulture",
+            contentType: "Culture",
             content: inputArray,
         });
     }
@@ -139,20 +139,20 @@ function LocationPageTemplate() {
         await replaceImage(
             locationManualOfStyle,
             "ItemInfo",
-            "locationManualOfStyle",
+            "ManualOfStyle",
             `${location.split(" ")}`
         );
-        await addData(path, "locationManualOfStyle", locationManualOfStyle);
+        await addData(path, "ManualOfStyle", locationManualOfStyle);
     }
 
     async function handleLocationBlurbSubmit() {
         await replaceImage(
             locationBlurb,
             "ItemInfo",
-            "locationBlurb",
+            "Blurb",
             `${location.split(" ")}`
         );
-        await addData(path, "locationBlurb", locationBlurb);
+        await addData(path, "Blurb", locationBlurb);
     }
 
     async function handleGeographyAndEcologySubmit() {
@@ -169,10 +169,10 @@ function LocationPageTemplate() {
         await replaceImage(
             locationHistory,
             "ItemInfo",
-            "locationHistory",
+            "History",
             `${location.split(" ")}`
         );
-        await addData(path, "locationHistory", locationHistory);
+        await addData(path, "History", locationHistory);
     }
 
     async function handleCultureSubmit() {

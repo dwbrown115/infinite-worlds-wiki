@@ -88,28 +88,28 @@ function BookPageTemplate() {
 
     function handleBookManualOfStyle(inputArray) {
         setBookManualOfStyle({
-            contentType: "BookManualOfStyle",
+            contentType: "ManualOfStyle",
             content: inputArray,
         });
     }
 
     function handleBookBlurb(inputArray) {
         setBookBlurb({
-            contentType: "BookBlurb",
+            contentType: "Blurb",
             content: inputArray,
         });
     }
 
     function handleChapters(inputArray) {
         setChapters({
-            contentType: "BookChapters",
+            contentType: "Chapters",
             content: inputArray,
         });
     }
 
     function handleBookSynopsis(inputArray) {
         setBookSynopsis({
-            contentType: "BookbookSynopsis",
+            contentType: "Synopsis",
             content: inputArray,
         });
     }
@@ -118,20 +118,20 @@ function BookPageTemplate() {
         await replaceImage(
             bookManualOfStyle,
             "BookInfo",
-            "bookManualOfStyle",
+            "ManualOfStyle",
             `${book.split(" ")}`
         );
-        await addData(path, "bookManualOfStyle", bookManualOfStyle);
+        await addData(path, "ManualOfStyle", bookManualOfStyle);
     }
 
     async function handleBookBlurbSubmit() {
         await replaceImage(
             bookBlurb,
             "BookInfo",
-            "bookBlurb",
+            "Blurb",
             `${book.split(" ")}`
         );
-        await addData(path, "bookBlurb", bookBlurb);
+        await addData(path, "Blurb", bookBlurb);
     }
 
     async function handleChaptersSubmit() {
@@ -148,10 +148,10 @@ function BookPageTemplate() {
         await replaceImage(
             bookSynopsis,
             "BookInfo",
-            "bookSynopsis",
+            "Synopsis",
             `${book.split(" ")}`
         );
-        await addData(path, "bookSynopsis", bookSynopsis);
+        await addData(path, "Synopsis", bookSynopsis);
     }
 
     async function handleUpload(e) {
