@@ -44,6 +44,7 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
     function handleReset() {
         removeAllObjects(sections);
         setConfirm(false);
+        localStorage.removeItem(section);
     }
 
     const addSection = () => {
