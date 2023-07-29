@@ -174,7 +174,8 @@ function EventPageTemplate() {
                     await handleeventSynopsisSubmit();
                     await handleImpactSubmit();
                     await handleResetConfirm();
-                    setEvent("");
+                    await handleResetConfirm();
+                    await setEvent("");
                 })
                 .catch((error) => {
                     console.log(error);

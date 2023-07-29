@@ -199,16 +199,18 @@ function CharacterPageTemplate() {
             );
         } else {
             console.log("doc doesn't exist");
-            await setDoc(
-                doc(db, "ContentRef", `${character.split(" ")}`),
-                data
-            ).then(async () => {
-                await handleCharacterInfoSubmit();
-                await handleCharactercharacterSynopsisSubmit();
-                await handleCharacterRelationshipSubmit();
-                await handleResetConfirm();
-                await setCharacter("");
-            });
+            await setDoc(doc(db, "ContentRef", `${character.split(" ")}`), data)
+                .then(async () => {
+                    await handleCharacterInfoSubmit();
+                    await handleCharactercharacterSynopsisSubmit();
+                    await handleCharacterRelationshipSubmit();
+                    await handleResetConfirm();
+                    await handleResetConfirm();
+                    await setCharacter("");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }
 

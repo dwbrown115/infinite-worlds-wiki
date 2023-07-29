@@ -173,7 +173,8 @@ function BookPageTemplate() {
                     await handleChaptersSubmit();
                     await handlebookSynopsisSubmit();
                     await handleResetConfirm();
-                    setBook("");
+                    await handleResetConfirm();
+                    await setBook("");
                 })
                 .catch((error) => {
                     console.log(error);
