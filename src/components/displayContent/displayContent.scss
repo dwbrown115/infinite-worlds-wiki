@@ -1,0 +1,14 @@
+.ManualofStyleSectionContent {
+    display: flex;
+    // width: 40%;
+    > * {
+        margin: 5px;
+    }
+}
+
+.SectionContent {
+    display: flex;
+    > * {
+        margin: 5px;
+    }
+}

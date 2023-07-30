@@ -18,7 +18,7 @@ function SearchResults() {
 
     const search = (query) => {
         var client = algoliasearch(ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_KEY);
-        var index = client.initIndex("vite-firebase-content");
+        var index = client.initIndex("InfiniteWorldsWiki");
         try {
             index.search(query).then(function (responses) {
                 const resultsArray = [];

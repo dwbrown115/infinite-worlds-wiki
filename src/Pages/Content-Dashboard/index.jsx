@@ -10,7 +10,9 @@ import { getAuth } from "firebase/auth";
 
 import firebase_app from "../../firebase/config";
 import { Content } from "../../components";
-import { Loading } from "../../helpers";
+import { Loading, SortObjects } from "../../helpers";
+
+import "./content.scss";
 
 function ContentDashboard() {
     const db = getFirestore(firebase_app);
@@ -21,7 +23,7 @@ function ContentDashboard() {
     const [isLoading, setIsLoading] = useState(true);
 
     const grabContent = async () => {
-        const q = await query(collection(db, "content"));
+        const q = await query(collection(db, "ContentRef"));
         // console.log(q);
         const content = onSnapshot(q, (querySnapshot) => {
             let itemsArr = [];
@@ -29,11 +31,14 @@ function ContentDashboard() {
             querySnapshot.forEach((doc) => {
                 itemsArr.push({ ...doc.data(), id: doc.id });
             });
+            SortObjects(itemsArr, ["Series", "Type"]);
+            // console.log(itemsArr);
             setItems(itemsArr);
             // console.log(itemsArr);
             setIsLoading(false);
             return () => content();
         });
+        // console.log(SortObjects(items, ["Series", "Type"]));
     };
 
     const handleClick = () => {
@@ -56,15 +61,34 @@ function ContentDashboard() {
             <>
                 <h1>Content Dashboard</h1>
                 <div>
-                    {items.map((item) => {
+                    {items.map((item, index) => {
                         return (
-                            <Content
-                                key={item.id}
-                                id={item.id}
-                                title={item.title}
-                                text={item.text}
-                                admin={false}
-                            />
+                            <div key={index}>
+                                <div className="Item">
+                                    <div>Series: </div>
+                                    <div>{item.Series}</div>
+                                </div>
+                                <div className="Item">
+                                    <div>Name: </div>
+                                    <Link
+                                        to={`/${item.Type.replace(" ", "")}/${
+                                            item.id
+                                        }`}
+                                    >
+                                        {item.Name}
+                                    </Link>
+                                </div>
+                                <div className="Item">
+                                    <div>Type: </div>
+                                    <div>{item.Type}</div>
+                                </div>
+                                {/* <div className="Item">
+                                    <div>Id: </div>
+                                    <div>{item.id}</div>
+                                </div> */}
+                                <br />
+                                {/* <br /> */}
+                            </div>
                         );
                     })}
                 </div>

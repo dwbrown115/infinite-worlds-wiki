@@ -27,14 +27,12 @@ export { default as CharacterInfo } from "./Content-Dashboard/Content-Id/Charact
 export { default as CharacterRelationships } from "./Content-Dashboard/Content-Id/CharacterPages/CharacterRelationships";
 export { default as CharacterSynopsis } from "./Content-Dashboard/Content-Id/CharacterPages/CharacterSynopsis";
 export { default as EventPage } from "./Content-Dashboard/Content-Id/EventPage";
+export { default as FactionPage } from "./Content-Dashboard/Content-Id/FactionPage";
 export { default as ItemPage } from "./Content-Dashboard/Content-Id/ItemPage";
 export { default as LocationPage } from "./Content-Dashboard/Content-Id/LocationPage";
 export { default as PowerSystemPage } from "./Content-Dashboard/Content-Id/PowerSystemPage";
 export { default as RacePage } from "./Content-Dashboard/Content-Id/RacePage";
-
 export { default as ContentId } from "./Content-Dashboard/Content-Id/content-id";
-export { default as ContentSynopsis } from "./Content-Dashboard/Content-Id/content-synopsis/content-synopsis";
-export { default as ContentRelationships } from "./Content-Dashboard/Content-Id/content-relationships/content-relationships";
 export { default as SignIn } from "./Signin";
 export { default as ForgotPassword } from "./Signin/ForgotPassword";
 export { default as SignUp } from "./Signup";

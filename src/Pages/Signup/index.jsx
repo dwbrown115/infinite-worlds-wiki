@@ -15,7 +15,7 @@ function SignUp() {
     const auth = getAuth(firebase_app);
     const navigate = useNavigate();
     var client = algoliasearch(ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_KEY);
-    var index = client.initIndex("infinite-worlds-wiki-users");
+    var index = client.initIndex("InfiniteWorldsWikiUsers");
     const [userName, setUserName] = useState("jinsai115");
     const [email, setEmail] = useState("jinsai115@gmail.com");
     const [password, setPassword] = useState("@Jivvc115");

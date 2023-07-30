@@ -32,6 +32,7 @@ import {
     CharacterRelationships,
     CharacterSynopsis,
     EventPage,
+    FactionPage,
     ItemPage,
     LocationPage,
     PowerSystemPage,
@@ -135,6 +136,7 @@ function App() {
                         Component={CharacterRelationships}
                     />
                     <Route path="/Event/:id" Component={EventPage} />
+                    <Route path="/Faction/:id" Component={FactionPage} />
                     <Route path="/Item/:id" Component={ItemPage} />
                     <Route path="/Location/:id" Component={LocationPage} />
                     <Route

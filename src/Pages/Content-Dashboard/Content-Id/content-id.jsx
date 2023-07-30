@@ -1,9 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-// import { FadeLoader } from "react-spinners";
 import { useNavigate, Link } from "react-router-dom";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 
 import { Loading } from "../../../helpers";
 import firebase_app from "../../../firebase/config";
