@@ -16,6 +16,7 @@ export { default as EditCharacterInfo } from "./User-Dashboard/Content-Edit/Edit
 export { default as EditCharacterSynopsis } from "./User-Dashboard/Content-Edit/EditContentPages/EditCharacterPages/EditCharacterSynopsis";
 export { default as EditCharacterRelationships } from "./User-Dashboard/Content-Edit/EditContentPages/EditCharacterPages/EditCharacterRelationships";
 export { default as EditEventPage } from "./User-Dashboard/Content-Edit/EditContentPages/EditEventPages";
+export { default as EditFactionPage } from "./User-Dashboard/Content-Edit/EditContentPages/EditFactionPages";
 export { default as EditItemPage } from "./User-Dashboard/Content-Edit/EditContentPages/EditItemPages";
 export { default as EditLocationPage } from "./User-Dashboard/Content-Edit/EditContentPages/EditLocationPages";
 export { default as EditPowerSystemPage } from "./User-Dashboard/Content-Edit/EditContentPages/EditPowerSystemPages";

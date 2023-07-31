@@ -7,6 +7,9 @@ import { DisplayContent } from "../../../../components";
 import { firebase_app, getData } from "../../../../firebase";
 
 function LocationPage() {
+    const auth = getAuth(firebase_app);
+    const navigate = useNavigate();
+
     const [id, setId] = useState(
         deletePartOfString(window.location.href.split("Location/")[1], "/")
     );
@@ -17,6 +20,8 @@ function LocationPage() {
     const [history, setHistory] = useState([]);
     const [culture, setCulture] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [message, setMessage] = useState("");
+    const [hideButton, setHideButton] = useState(true);
 
     const path = `/Content/Locations/${id}`;
 
@@ -51,10 +56,32 @@ function LocationPage() {
         grabContent();
     }, [id]);
 
+    function handleEdit() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate(`/EditLocationPage/${id}`);
+            } else {
+                setMessage("You must be logged in to edit this content.");
+                setHideButton(false);
+            }
+        });
+    }
+
     function handlePageContent() {
         return (
             <div>
-                <h1>{id.replace(",", " ")}</h1>
+                <div>
+                    <div style={{ display: "flex" }}>
+                        <h1>{id.replace(",", " ")}</h1>
+                        <button onClick={handleEdit}>Edit Page</button>
+                    </div>
+                    <div>{message}</div>
+                    {hideButton === false ? (
+                        <Link to={"/login"}>Login</Link>
+                    ) : (
+                        <div />
+                    )}
+                </div>
                 <div
                     className="HeroWrapper"
                     style={{ display: "flex", flexDirection: "row-reverse" }}
@@ -83,7 +110,10 @@ function LocationPage() {
                         />
                     </div>
                     <div>
-                        <DisplayContent array={culture} isManualOfStyle={false} />
+                        <DisplayContent
+                            array={culture}
+                            isManualOfStyle={false}
+                        />
                     </div>
                 </div>
             </div>
@@ -92,7 +122,7 @@ function LocationPage() {
 
     return (
         <>
-        <Loading isLoading={isLoading} component={handlePageContent()}/>
+            <Loading isLoading={isLoading} component={handlePageContent()} />
             <Link to={`/content`}>Back</Link>
         </>
     );

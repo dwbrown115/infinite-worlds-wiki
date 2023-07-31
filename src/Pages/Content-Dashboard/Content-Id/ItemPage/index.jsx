@@ -7,6 +7,9 @@ import { DisplayContent } from "../../../../components";
 import { firebase_app, getData } from "../../../../firebase";
 
 function ItemPage() {
+    const auth = getAuth(firebase_app);
+    const navigate = useNavigate();
+
     const [id, setId] = useState(
         deletePartOfString(window.location.href.split("Item/")[1], "/")
     );
@@ -15,6 +18,8 @@ function ItemPage() {
     const [history, setHistory] = useState([]);
     const [uses, setUses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [message, setMessage] = useState("");
+    const [hideButton, setHideButton] = useState(true);
 
     const path = `/Content/Items/${id}`;
 
@@ -43,10 +48,32 @@ function ItemPage() {
         grabContent();
     }, [id]);
 
+    function handleEdit() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate(`/EditItemPage/${id}`);
+            } else {
+                setMessage("You must be logged in to edit content.");
+                setHideButton(false);
+            }
+        });
+    }
+
     function handlePageContent() {
         return (
             <div>
-                <h1>{id.replace(",", " ")}</h1>
+                <div>
+                    <div style={{ display: "flex" }}>
+                        <h1>{id.replace(",", " ")}</h1>
+                        <button onClick={handleEdit}>Edit Page</button>
+                    </div>
+                    <div>{message}</div>
+                    {hideButton === false ? (
+                        <Link to={"/login"}>Login</Link>
+                    ) : (
+                        <div />
+                    )}
+                </div>
                 <div
                     className="HeroWrapper"
                     style={{ display: "flex", flexDirection: "row-reverse" }}

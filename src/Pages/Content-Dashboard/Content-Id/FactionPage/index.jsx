@@ -7,6 +7,9 @@ import { DisplayContent } from "../../../../components";
 import { firebase_app, getData } from "../../../../firebase";
 
 function FactionPage() {
+    const auth = getAuth(firebase_app);
+    const navigate = useNavigate();
+
     const [id, setId] = useState(
         deletePartOfString(window.location.href.split("Faction/")[1], "/")
     );
@@ -16,6 +19,8 @@ function FactionPage() {
     const [objectives, setObjectives] = useState([]);
     const [members, setMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [message, setMessage] = useState("");
+    const [hideButton, setHideButton] = useState(true);
 
     const path = `/Content/Factions/${id}`;
 
@@ -50,10 +55,32 @@ function FactionPage() {
         grabContent();
     }, [id]);
 
+    function handleEdit() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate(`/EditFactionPage/${id}`);
+            } else {
+                setMessage("You must be logged in to edit this content.");
+                setHideButton(false);
+            }
+        });
+    }
+
     function handlePageContent() {
         return (
             <div>
-                <h1>{id.replace(",", " ")}</h1>
+                <div>
+                    <div style={{ display: "flex" }}>
+                        <h1>{id.replace(",", " ")}</h1>
+                        <button onClick={handleEdit}>Edit Page</button>
+                    </div>
+                    <div>{message}</div>
+                    {hideButton === false ? (
+                        <Link to={"/login"}>Login</Link>
+                    ) : (
+                        <div />
+                    )}
+                </div>
                 <div>
                     <div
                         className="HeroWrapper"

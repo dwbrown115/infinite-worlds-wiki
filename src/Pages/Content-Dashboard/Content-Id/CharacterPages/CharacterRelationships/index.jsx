@@ -7,11 +7,16 @@ import { DisplayContent } from "../../../../../components";
 import { firebase_app, getData } from "../../../../../firebase";
 
 function CharacterRelationships() {
+    const auth = getAuth(firebase_app);
+    const navigate = useNavigate();
+
     const [id, setId] = useState(
         deletePartOfString(window.location.href.split("Character/")[1], "/")
     );
     const [relationships, setRelationships] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [message, setMessage] = useState("");
+    const [hideButton, setHideButton] = useState(true);
 
     const path = `/Content/Characters/${id}`;
 
@@ -29,6 +34,17 @@ function CharacterRelationships() {
         grabContent();
     }, [id]);
 
+    function handleEdit() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate(`/EditCharacterRelationships/${id}`);
+            } else {
+                setMessage("You must be logged in to edit this content.");
+                setHideButton(false);
+            }
+        });
+    }
+
     function handlePageContent() {
         return (
             <div>
@@ -36,7 +52,18 @@ function CharacterRelationships() {
                     <Link to={`/Character/${id}`}>Info</Link>
                     <Link to={`/Character/${id}/Synopsis`}>Synopsis</Link>
                 </div>
-                <div>Relationships</div>
+                <div>
+                    <div style={{ display: "flex" }}>
+                        <h1>{id.replace(",", " ")}</h1>
+                        <button onClick={handleEdit}>Edit Page</button>
+                    </div>
+                    <div>{message}</div>
+                    {hideButton === false ? (
+                        <Link to={"/login"}>Login</Link>
+                    ) : (
+                        <div />
+                    )}
+                </div>
                 <DisplayContent array={relationships} isManualOfStyle={false} />
                 <Link to={`/content`}>Back</Link>
             </div>

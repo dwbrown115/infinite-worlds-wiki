@@ -23,6 +23,7 @@ import {
     EditCharacterRelationships,
     EditCharacterSynopsis,
     EditEventPage,
+    EditFactionPage,
     EditItemPage,
     EditLocationPage,
     EditPowerSystemPage,
@@ -88,43 +89,37 @@ function App() {
                         path="/auth/reset-password"
                         Component={NewPassword}
                     />
+                    <Route path="/EditBookPage/:id" Component={EditBookPage} />
                     <Route
-                        path="/user/edit/EditBookPage/:id"
-                        Component={EditBookPage}
-                    />
-                    <Route
-                        path="/user/edit/:id?/EditCharacterInfo"
+                        path="/EditCharacterInfo/:id"
                         Component={EditCharacterInfo}
                     />
                     <Route
-                        path="/user/edit/:id?/EditCharacterRelationships"
+                        path="/EditCharacterRelationships/:id"
                         Component={EditCharacterRelationships}
                     />
                     <Route
-                        path="/user/edit/:id?/EditCharacterSynopsis"
+                        path="/EditCharacterSynopsis/:id"
                         Component={EditCharacterSynopsis}
                     />
                     <Route
-                        path="/user/edit/EditEventPage/:id"
+                        path="/EditEventPage/:id"
                         Component={EditEventPage}
                     />
                     <Route
-                        path="/user/edit/EditItemPage/:id"
-                        Component={EditItemPage}
+                        path="/EditFactionPage/:id"
+                        Component={EditFactionPage}
                     />
+                    <Route path="/EditItemPage/:id" Component={EditItemPage} />
                     <Route
-                        path="/user/edit/EditLocationPage/:id"
+                        path="/EditLocationPage/:id"
                         Component={EditLocationPage}
                     />
                     <Route
-                        path="/user/edit/EditPowerSystemPage/:id"
+                        path="/EditPowerSystemPage/:id"
                         Component={EditPowerSystemPage}
                     />
-                    <Route
-                        path="/user/edit/EditRacePage/:id"
-                        Component={EditRacePage}
-                    />
-
+                    <Route path="/EditRacePage/:id" Component={EditRacePage} />
                     <Route path="/Book/:id" Component={BookPage} />
                     <Route path="/Character/:id" Component={CharacterInfo} />
                     <Route
