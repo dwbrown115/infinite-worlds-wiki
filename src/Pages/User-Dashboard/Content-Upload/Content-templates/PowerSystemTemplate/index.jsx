@@ -24,11 +24,11 @@ function PowerSystemPageTemplate() {
     const [info, setInfo] = useState([]);
     const [uses, setUses] = useState([]);
     const [notableUsers, setNotableUsers] = useState([]);
+    const [edited, setEdited] = useState(false);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${powerSystem.split(" ")}/`;
@@ -63,13 +63,16 @@ function PowerSystemPageTemplate() {
         localStorage.setItem("info", JSON.stringify(info));
         localStorage.setItem("uses", JSON.stringify(uses));
         localStorage.setItem("notableUsers", JSON.stringify(notableUsers));
+        localStorage.setItem("powerSystemEdited", edited);
     }, [
         powerSystem,
+        series,
         powerSystemManualOfStyle,
         powerSystemBlurb,
         info,
         uses,
         notableUsers,
+        edited
     ]);
 
     function handleResetConfirm() {
@@ -297,7 +300,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"powerSystemManualOfStyle"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"powerSystemEdited"}
                             />
                         </div>
                         <hr />
@@ -308,7 +311,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"powerSystemBlurb"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"powerSystemEdited"}
                             />
                         </div>
                     </div>
@@ -321,7 +324,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"info"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"powerSystemEdited"}
                             />
                         </div>
                         <hr />
@@ -332,7 +335,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"uses"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"powerSystemEdited"}
                             />
                         </div>
                         <hr />
@@ -343,7 +346,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"notableUsers"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"powerSystemEdited"}
                             />
                         </div>
                     </div>

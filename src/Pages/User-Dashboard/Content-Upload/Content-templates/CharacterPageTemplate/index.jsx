@@ -52,6 +52,7 @@ function CharacterPageTemplate() {
     useEffect(() => {
         localStorage.setItem("character", character);
         localStorage.setItem("series-character", series);
+        localStorage.setItem("edited-character", edited);
         localStorage.setItem(
             "characterManualOfStyle",
             JSON.stringify(characterManualOfStyle)
@@ -65,11 +66,13 @@ function CharacterPageTemplate() {
         localStorage.setItem("relationships", JSON.stringify(relationships));
     }, [
         character,
+        series,
         characterManualOfStyle,
         characterBlurb,
         info,
         characterSynopsis,
         relationships,
+        edited,
     ]);
 
     function handleResetConfirm() {
@@ -267,6 +270,7 @@ function CharacterPageTemplate() {
                     console.log(error);
                 });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -318,7 +322,7 @@ function CharacterPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"characterManualOfStyle"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-character"}
                             />
                         </div>
                         <div>
@@ -328,7 +332,7 @@ function CharacterPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"characterBlurb"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-character"}
                             />
                         </div>
                     </div>
@@ -341,7 +345,7 @@ function CharacterPageTemplate() {
                             isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"edited-character"}
                         />
                     </div>
                     <div>
@@ -353,7 +357,7 @@ function CharacterPageTemplate() {
                             isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"edited-character"}
                         />
                     </div>
                 </div>
@@ -365,7 +369,7 @@ function CharacterPageTemplate() {
                         isManualOfStyle={false}
                         section={"characterSynopsis"}
                         reset={confirm}
-                        edited={edited}
+                        edited={"edited-character"}
                     />
                 </div>
                 <hr />
@@ -376,7 +380,7 @@ function CharacterPageTemplate() {
                         isManualOfStyle={false}
                         section={"relationships"}
                         reset={confirm}
-                        edited={edited}
+                        edited={"edited-character"}
                     />
                 </div>
                 <hr />

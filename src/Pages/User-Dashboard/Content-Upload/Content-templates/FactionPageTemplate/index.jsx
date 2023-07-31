@@ -22,11 +22,11 @@ function FactionPageTemplate() {
     const [history, setHistory] = useState([]);
     const [objectives, setObjectives] = useState([]);
     const [members, setMembers] = useState([]);
+    const [edited, setEdited] = useState(false);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${faction.split(" ")}/`;
@@ -58,7 +58,17 @@ function FactionPageTemplate() {
         localStorage.setItem("factionHistory", JSON.stringify(history));
         localStorage.setItem("factionObjectives", JSON.stringify(objectives));
         localStorage.setItem("factionMembers", JSON.stringify(members));
-    }, [faction, manualOfStyle, blurb, history, objectives, members]);
+        localStorage.setItem("factionEdited", edited);
+    }, [
+        faction,
+        series,
+        manualOfStyle,
+        blurb,
+        history,
+        objectives,
+        members,
+        edited,
+    ]);
 
     function handleResetConfirm() {
         setEdited(false);
@@ -214,6 +224,7 @@ function FactionPageTemplate() {
                 }, 1);
             });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -232,7 +243,10 @@ function FactionPageTemplate() {
                         type="text"
                         placeholder="Faction name:"
                         value={faction}
-                        onChange={(e) => {setFaction(e.target.value); setEdited(true);}}
+                        onChange={(e) => {
+                            setFaction(e.target.value);
+                            setEdited(true);
+                        }}
                         required
                     />
                 </div>
@@ -242,7 +256,9 @@ function FactionPageTemplate() {
                         type="text"
                         placeholder="Series:"
                         value={series}
-                        onChange={(e) => {setSeries(e.target.value), setEdited(true);}}
+                        onChange={(e) => {
+                            setSeries(e.target.value), setEdited(true);
+                        }}
                         required
                     />
                 </div>
@@ -255,7 +271,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={true}
                             section={"factionManualOfStyle"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"factionEdited"}
                         />
                     </div>
                     <hr />
@@ -266,7 +282,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionBlurb"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"factionEdited"}
                         />
                     </div>
                 </div>
@@ -279,7 +295,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionHistory"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"factionEdited"}
                         />
                     </div>
                     <hr />
@@ -290,7 +306,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionObjectives"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"factionEdited"}
                         />
                     </div>
                     <hr />
@@ -301,7 +317,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={true}
                             section={"factionMembers"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"factionEdited"}
                         />
                     </div>
                 </div>

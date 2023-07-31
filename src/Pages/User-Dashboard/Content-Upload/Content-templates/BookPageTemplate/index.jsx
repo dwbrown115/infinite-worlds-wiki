@@ -31,33 +31,45 @@ function BookPageTemplate() {
 
     const path = `${collection}/${book.split(" ")}/`;
 
+    // useEffect(() => {
+    //     localStorage.setItem("edited", edited);
+    // }, [edited]);
+
     useEffect(() => {
         const storedBook = localStorage.getItem("book");
         if (storedBook) {
             setBook(storedBook);
-        } else if (!storedBook) {
-            // console.log("No book");
         }
 
         const storedSeries = localStorage.getItem("series");
         if (storedSeries) {
             setSeries(storedSeries);
-        } else if (!storedSeries) {
-            // console.log("No series");
         }
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("book", book);
-        localStorage.setItem("series", series);
-        localStorage.setItem(
-            "bookManualOfStyle",
-            JSON.stringify(bookManualOfStyle)
-        );
-        localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
-        localStorage.setItem("chapters", JSON.stringify(chapters));
-        localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
-    }, [book, bookManualOfStyle, bookBlurb, chapters, bookSynopsis]);
+        // localStorage.setItem("book", book);
+        // localStorage.setItem("series", series);
+        localStorage.setItem("edited-book", edited);
+        // console.log(localStorage.getItem(`edited-book`));
+        // console.log(book);
+        // localStorage.setItem("series-character", series);
+        // localStorage.setItem(
+        //     "bookManualOfStyle",
+        //     JSON.stringify(bookManualOfStyle)
+        // );
+        // localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
+        // localStorage.setItem("chapters", JSON.stringify(chapters));
+        // localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
+    }, [
+        book,
+        series,
+        bookManualOfStyle,
+        bookBlurb,
+        chapters,
+        bookSynopsis,
+        edited,
+    ]);
 
     function handleResetConfirm() {
         setEdited(false);
@@ -216,6 +228,7 @@ function BookPageTemplate() {
                     console.log(error);
                 });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -265,7 +278,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"bookManualOfStyle"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-book"}
                             />
                         </div>
                         <hr />
@@ -276,7 +289,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"bookBlurb"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-book"}
                             />
                         </div>
                     </div>
@@ -288,7 +301,7 @@ function BookPageTemplate() {
                             isManualOfStyle={false}
                             section={"bookSynopsis"}
                             reset={confirm}
-                            edited={edited}
+                            edited={"edited-book"}
                         />
                     </div>
                     <hr />
@@ -300,7 +313,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"chapters"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-book"}
                             />
                             <button onClick={() => setOptional(false)}>
                                 Remove Chapters Section

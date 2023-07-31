@@ -23,11 +23,11 @@ function RacePageTemplate() {
     const [culture, setCulture] = useState([]);
     const [raceHistory, setRaceHistory] = useState([]);
     const [notableMembers, setNotableMembers] = useState([]);
+    const [edited, setEdited] = useState(false);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${race.split(" ")}/`;
@@ -50,7 +50,7 @@ function RacePageTemplate() {
 
     useEffect(() => {
         localStorage.setItem("race", race);
-        localStorage.setItem("series-rac3", series);
+        localStorage.setItem("series-race", series);
         localStorage.setItem(
             "raceManualOfStyle",
             JSON.stringify(raceManualOfStyle)
@@ -63,14 +63,17 @@ function RacePageTemplate() {
         localStorage.setItem("culture", JSON.stringify(culture));
         localStorage.setItem("raceHistory", JSON.stringify(raceHistory));
         localStorage.setItem("notableMembers", JSON.stringify(notableMembers));
+        localStorage.setItem("raceEdited", edited);
     }, [
         race,
+        series,
         raceManualOfStyle,
         raceBlurb,
         characteristics,
         culture,
         raceHistory,
         notableMembers,
+        edited,
     ]);
 
     function handleResetConfirm() {
@@ -291,7 +294,10 @@ function RacePageTemplate() {
                             type="text"
                             placeholder="Race name:"
                             value={race}
-                            onChange={(e) => {setRace(e.target.value); setEdited(true);}}
+                            onChange={(e) => {
+                                setRace(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -301,7 +307,10 @@ function RacePageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => {setSeries(e.target.value); setEdited(true);}}
+                            onChange={(e) => {
+                                setSeries(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>

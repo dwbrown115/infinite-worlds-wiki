@@ -1,43 +1,101 @@
 import { useState, useEffect } from "react";
 
-import { jsonParser, checkImage } from "../../helpers";
+import { jsonParser, checkImage, deletePartOfString } from "../../helpers";
+import { getData } from "../../firebase";
 
 // eslint-disable-next-line react/prop-types
-function ContentForm({ handleFormContents, isManualOfStyle, section, reset, edited }) {
+function ContentForm({
+    handleFormContents,
+    isManualOfStyle,
+    section,
+    reset,
+    edited,
+    path,
+    contentName,
+}) {
     const [sections, setSections] = useState([]);
+    const [edit, setEdit] = useState(jsonParser(localStorage.getItem(edited)));
     const [confirm, setConfirm] = useState(false);
 
-    function grabLocalStorage() {
-        const storedArray = jsonParser(localStorage.getItem(section));
-        // console.log(storedArray);
-        // const array = storedArray.content;
+    async function grabDataBaseContent() {
+        if (path) {
+            const dataSnap = await getData(path, section);
+            if (dataSnap) {
+                console.log("Grabbing from database");
+                // console.log(dataSnap);
+                setSections(dataSnap.content);
+            } else {
+                console.log("No data found");
+            }
+        }
+    }
+
+    function grabLocalStorage(location) {
+        const storedArray = jsonParser(localStorage.getItem(location));
+        console.log(storedArray);
         if (storedArray) {
             if (storedArray.content != null) {
-                // console.log("Defined");
+                console.log("Defined");
                 if (storedArray.content != undefined) {
                     setSections(storedArray.content);
                 }
             }
-        } else {
-            console.log("Not Defined");
         }
     }
 
-    function grabDataBaseContent() {
-        console.log("database content")
+    function grabEdit() {
+        if (edit == null) {
+            setEdit(false);
+        }
     }
 
     useEffect(() => {
-        if (edited == true) {
-            grabLocalStorage();
-        } else if (edited == false) {
-            grabDataBaseContent();
+        // console.log(edit);
+        // setEdit(jsonParser(localStorage.getItem(edited)));
+    }, [edited]);
+
+    useEffect(() => {
+        grabEdit();
+        const grabbedDataBase = jsonParser(
+            localStorage.getItem(`${contentName}${section}Grabbed`)
+        );
+        if (!grabbedDataBase) {
+            // grabDataBaseContent();
+            if (contentName) {
+                grabDataBaseContent();
+                // localStorage.setItem(`${contentName}${section}Grabbed`, true);
+            } else if (!contentName) {
+                grabLocalStorage(section);
+            }
+        } else {
+            grabLocalStorage(`${contentName}${section}`);
+            // console.log("Grabbing from local storage")
         }
-    }, []);
+        // console.log(grabbedDataBase);
+        // localStorage.setItem(`${contentName}${section}Grabbed`, true)
+        // if (contentName) {
+        //     grabLocalStorage(`${contentName}${section}`);
+        // } else if (!contentName) {
+        //     grabLocalStorage(section);
+        // }
+        // const storedArray = jsonParser(
+        //     localStorage.getItem(`${contentName}${section}`)
+        // );
+        // if (storedArray) {
+        //     console.log("Defined");
+        // } else {
+        //     console.log("Not Defined");
+        // }
+        // if (edit == true) {
+        //     checkForContentName();
+        // } else if (edit == false) {
+        //     // grabDataBaseContent();
+        //     console.log("Grabbing from database");
+        // }
+    }, [edit]);
 
     useEffect(() => {
         handleFormContents(sections);
-        // console.log("Sections", sections);
     }, [sections]);
 
     useEffect(() => {
@@ -149,15 +207,24 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset, edit
                 </button>
                 <br />
                 {/* eslint-disable-next-line react/prop-types */}
-                {section.sectionImage === null ? (
+                {/* {section.sectionImage === null ? (
                     <button type="button" onClick={() => addImage(index)}>
                         Add Image
                     </button>
                 ) : (
                     <div />
-                )}
+                )} */}
                 <br />
                 {/* eslint-disable-next-line react/prop-types */}
+                {/* {section.imageUrl === null ? (
+                    <div>
+                        <div>Current Image:</div>
+                        <img src={section.imageUrl} alt="current image" />
+                    </div>
+                ) : (
+                    <div />
+                )} */}
+
                 {section.sectionImage !== null && (
                     <div className="image">
                         <label htmlFor={`image${index}`}>Image:</label>

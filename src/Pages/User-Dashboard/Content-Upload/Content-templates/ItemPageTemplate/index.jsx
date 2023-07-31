@@ -21,11 +21,11 @@ function ItemPageTemplate() {
     const [itemBlurb, setItemBlurb] = useState([]);
     const [itemHistory, setItemHistory] = useState([]);
     const [itemUses, setItemUses] = useState([]);
+    const [edited, setEdited] = useState(false);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${item.split(" ")}/`;
@@ -56,7 +56,8 @@ function ItemPageTemplate() {
         localStorage.setItem("itemBlurb", JSON.stringify(itemBlurb));
         localStorage.setItem("itemHistory", JSON.stringify(itemHistory));
         localStorage.setItem("itemUses", JSON.stringify(itemUses));
-    }, [item, itemManualOfStyle, itemBlurb, itemHistory, itemUses]);
+        localStorage.setItem("itemEdited", edited);
+    }, [item, series, itemManualOfStyle, itemBlurb, itemHistory, itemUses, edited]);
 
     function handleResetConfirm() {
         setEdited(false);
@@ -209,6 +210,7 @@ function ItemPageTemplate() {
                 }, 1);
             });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -258,7 +260,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"itemManualOfStyle"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"itemEdited"}
                             />
                         </div>
                         <hr />
@@ -269,7 +271,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemBlurb"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"itemEdited"}
                             />
                         </div>
                     </div>
@@ -282,7 +284,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemHistory"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"itemEdited"}
                             />
                         </div>
                         <hr />
@@ -293,7 +295,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemUses"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"itemEdited"}
                             />
                         </div>
                     </div>

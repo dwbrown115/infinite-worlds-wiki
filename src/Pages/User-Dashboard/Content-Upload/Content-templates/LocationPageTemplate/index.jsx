@@ -23,11 +23,11 @@ function LocationPageTemplate() {
     const [geographyAndEcology, setGeographyAndEcology] = useState([]);
     const [locationHistory, setLocationHistory] = useState([]);
     const [culture, setCulture] = useState([]);
+    const [edited, setEdited] = useState(false);
     const [email, setEmail] = useState("");
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${location.split(" ")}/`;
@@ -67,13 +67,16 @@ function LocationPageTemplate() {
             JSON.stringify(locationHistory)
         );
         localStorage.setItem("culture", JSON.stringify(culture));
+        localStorage.setItem("locationEdited", edited);
     }, [
         location,
+        series,
         locationManualOfStyle,
         locationBlurb,
         geographyAndEcology,
         locationHistory,
         culture,
+        edited
     ]);
 
     function handleResetConfirm() {
@@ -257,6 +260,7 @@ function LocationPageTemplate() {
                 }, 1);
             });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -328,7 +332,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"locationManualOfStyle"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"locationEdited"}
                             />
                         </div>
                         <hr />
@@ -339,7 +343,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"locationBlurb"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"locationEdited"}
                             />
                         </div>
                     </div>
@@ -352,7 +356,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"geographyAndEcology"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"locationEdited"}
                             />
                         </div>
                         <hr />
@@ -363,7 +367,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"locationHistory"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"locationEdited"}
                             />
                         </div>
                         <hr />
@@ -374,7 +378,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"culture"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"locationEdited"}
                             />
                         </div>
                     </div>

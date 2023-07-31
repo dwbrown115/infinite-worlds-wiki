@@ -56,7 +56,16 @@ function EventPageTemplate() {
         localStorage.setItem("eventBlurb", JSON.stringify(eventBlurb));
         localStorage.setItem("eventSynopsis", JSON.stringify(eventSynopsis));
         localStorage.setItem("impact", JSON.stringify(impact));
-    }, [event, eventManualOfStyle, eventBlurb, eventSynopsis, impact]);
+        localStorage.setItem("edited-event", edited);
+    }, [
+        event,
+        series,
+        eventManualOfStyle,
+        eventBlurb,
+        eventSynopsis,
+        impact,
+        edited,
+    ]);
 
     function handleResetConfirm() {
         setEdited(false);
@@ -214,6 +223,7 @@ function EventPageTemplate() {
                     console.log(error);
                 });
         }
+        setEdited(false);
         setProgress(100);
         setLoading(false);
         setTimeout(() => {
@@ -233,7 +243,10 @@ function EventPageTemplate() {
                             type="text"
                             placeholder="Event name:"
                             value={event}
-                            onChange={(e) => {setEvent(e.target.value); setEdited(true);}}
+                            onChange={(e) => {
+                                setEvent(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -243,7 +256,10 @@ function EventPageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => {setSeries(e.target.value); setEdited(true);}}
+                            onChange={(e) => {
+                                setSeries(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -260,7 +276,7 @@ function EventPageTemplate() {
                                     isManualOfStyle={true}
                                     section={"eventManualOfStyle"}
                                     reset={confirm}
-                                    edited={edited}
+                                    edited={"edited-event"}
                                 />
                             </div>
                             <hr />
@@ -271,7 +287,7 @@ function EventPageTemplate() {
                                     isManualOfStyle={false}
                                     section={"eventBlurb"}
                                     reset={confirm}
-                                    edited={edited}
+                                    edited={"edited-event"}
                                 />
                             </div>
                         </div>
@@ -283,7 +299,7 @@ function EventPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"eventSynopsis"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-event"}
                             />
                         </div>
                         <hr />
@@ -294,7 +310,7 @@ function EventPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"impact"}
                                 reset={confirm}
-                                edited={edited}
+                                edited={"edited-event"}
                             />
                         </div>
                     </div>
