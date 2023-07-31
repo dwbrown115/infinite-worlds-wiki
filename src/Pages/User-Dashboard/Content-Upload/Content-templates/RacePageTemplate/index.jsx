@@ -27,6 +27,7 @@ function RacePageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${race.split(" ")}/`;
@@ -73,6 +74,7 @@ function RacePageTemplate() {
     ]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setRace("");
@@ -113,6 +115,7 @@ function RacePageTemplate() {
     }, [user]);
 
     function handleRaceManualOfStyle(inputArray) {
+        setEdited(true);
         setRaceManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -120,6 +123,7 @@ function RacePageTemplate() {
     }
 
     function handleRaceBlurb(inputArray) {
+        setEdited(true);
         setRaceBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -127,6 +131,7 @@ function RacePageTemplate() {
     }
 
     function handleCharacteristics(inputArray) {
+        setEdited(true);
         setCharacteristics({
             contentType: "Characteristics",
             content: inputArray,
@@ -134,6 +139,7 @@ function RacePageTemplate() {
     }
 
     function handleCulture(inputArray) {
+        setEdited(true);
         setCulture({
             contentType: "Culture",
             content: inputArray,
@@ -141,6 +147,7 @@ function RacePageTemplate() {
     }
 
     function handleRaceHistory(inputArray) {
+        setEdited(true);
         setRaceHistory({
             contentType: "History",
             content: inputArray,
@@ -148,6 +155,7 @@ function RacePageTemplate() {
     }
 
     function handleNotableMembers(inputArray) {
+        setEdited(true);
         setNotableMembers({
             contentType: "NotableMembers",
             content: inputArray,
@@ -283,7 +291,7 @@ function RacePageTemplate() {
                             type="text"
                             placeholder="Race name:"
                             value={race}
-                            onChange={(e) => setRace(e.target.value)}
+                            onChange={(e) => {setRace(e.target.value); setEdited(true);}}
                             required
                         />
                     </div>
@@ -293,7 +301,7 @@ function RacePageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => setSeries(e.target.value)}
+                            onChange={(e) => {setSeries(e.target.value); setEdited(true);}}
                             required
                         />
                     </div>
@@ -307,6 +315,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={true}
                                 section={"raceManualOfStyle"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -317,6 +326,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={false}
                                 section={"raceBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -329,6 +339,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={false}
                                 section={"characteristics"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -339,6 +350,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={false}
                                 section={"culture"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -349,6 +361,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={false}
                                 section={"raceHistory"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -359,6 +372,7 @@ function RacePageTemplate() {
                                 isManualOfStyle={false}
                                 section={"notableMembers"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>

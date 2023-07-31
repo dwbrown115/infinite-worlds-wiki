@@ -26,6 +26,7 @@ function BookPageTemplate() {
     const [confirm, setConfirm] = useState(false);
     const [optional, setOptional] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${book.split(" ")}/`;
@@ -59,6 +60,7 @@ function BookPageTemplate() {
     }, [book, bookManualOfStyle, bookBlurb, chapters, bookSynopsis]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setBook("");
@@ -100,6 +102,7 @@ function BookPageTemplate() {
     }, [user]);
 
     function handleBookManualOfStyle(inputArray) {
+        setEdited(true);
         setBookManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -107,6 +110,7 @@ function BookPageTemplate() {
     }
 
     function handleBookBlurb(inputArray) {
+        setEdited(true);
         setBookBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -114,6 +118,7 @@ function BookPageTemplate() {
     }
 
     function handleChapters(inputArray) {
+        setEdited(true);
         setChapters({
             contentType: "Chapters",
             content: inputArray,
@@ -121,6 +126,7 @@ function BookPageTemplate() {
     }
 
     function handleBookSynopsis(inputArray) {
+        setEdited(true);
         setBookSynopsis({
             contentType: "Synopsis",
             content: inputArray,
@@ -128,7 +134,7 @@ function BookPageTemplate() {
     }
 
     async function handleBookManualOfStyleSubmit() {
-        setProgress(12.5)
+        setProgress(12.5);
         await replaceImage(
             bookManualOfStyle,
             "BookInfo",
@@ -229,7 +235,10 @@ function BookPageTemplate() {
                             type="text"
                             placeholder="Book name:"
                             value={book}
-                            onChange={(e) => setBook(e.target.value)}
+                            onChange={(e) => {
+                                setBook(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -239,7 +248,10 @@ function BookPageTemplate() {
                             type="text"
                             placeholder="Series name:"
                             value={series}
-                            onChange={(e) => setSeries(e.target.value)}
+                            onChange={(e) => {
+                                setSeries(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -253,6 +265,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"bookManualOfStyle"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -263,6 +276,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"bookBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -274,6 +288,7 @@ function BookPageTemplate() {
                             isManualOfStyle={false}
                             section={"bookSynopsis"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                     <hr />
@@ -285,6 +300,7 @@ function BookPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"chapters"}
                                 reset={confirm}
+                                edited={edited}
                             />
                             <button onClick={() => setOptional(false)}>
                                 Remove Chapters Section

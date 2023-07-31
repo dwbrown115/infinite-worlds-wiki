@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { jsonParser, checkImage } from "../../helpers";
 
 // eslint-disable-next-line react/prop-types
-function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
+function ContentForm({ handleFormContents, isManualOfStyle, section, reset, edited }) {
     const [sections, setSections] = useState([]);
     const [confirm, setConfirm] = useState(false);
 
-    useEffect(() => {
+    function grabLocalStorage() {
         const storedArray = jsonParser(localStorage.getItem(section));
         // console.log(storedArray);
         // const array = storedArray.content;
@@ -20,6 +20,18 @@ function ContentForm({ handleFormContents, isManualOfStyle, section, reset }) {
             }
         } else {
             console.log("Not Defined");
+        }
+    }
+
+    function grabDataBaseContent() {
+        console.log("database content")
+    }
+
+    useEffect(() => {
+        if (edited == true) {
+            grabLocalStorage();
+        } else if (edited == false) {
+            grabDataBaseContent();
         }
     }, []);
 

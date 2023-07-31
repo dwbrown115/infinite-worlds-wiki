@@ -28,6 +28,7 @@ function CharacterPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${character.split(" ")}/`;
@@ -72,6 +73,7 @@ function CharacterPageTemplate() {
     ]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setCharacter("");
@@ -115,6 +117,7 @@ function CharacterPageTemplate() {
     }, [user]);
 
     const handleCharacterManualOfStyle = (inputArray) => {
+        setEdited(true);
         setCharacterManualOfStyle({
             contentType: "Manualofsyle",
             content: inputArray,
@@ -123,6 +126,7 @@ function CharacterPageTemplate() {
     };
 
     const handleCharacterBlurb = (inputArray) => {
+        setEdited(true);
         setCharacterBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -130,6 +134,7 @@ function CharacterPageTemplate() {
     };
 
     const handleInfo = (inputArray) => {
+        setEdited(true);
         setInfo({
             contentType: "Info",
             content: inputArray,
@@ -137,6 +142,7 @@ function CharacterPageTemplate() {
     };
 
     const handleCharacterPowersAndAbilities = (inputArray) => {
+        setEdited(true);
         setCharacterPowersAndAbilities({
             contentType: "PowersAndAbilities",
             content: inputArray,
@@ -144,6 +150,7 @@ function CharacterPageTemplate() {
     };
 
     const handleCharacterSynopsis = (inputArray) => {
+        setEdited(true);
         setCharacterSynopsis({
             contentType: "Synopsis",
             content: inputArray,
@@ -151,6 +158,7 @@ function CharacterPageTemplate() {
     };
 
     const handleRelationships = (inputArray) => {
+        setEdited(true);
         setRelationships({
             contentType: "Relationships",
             content: inputArray,
@@ -277,7 +285,10 @@ function CharacterPageTemplate() {
                         type="text"
                         placeholder="Character name:"
                         value={character}
-                        onChange={(e) => setCharacter(e.target.value)}
+                        onChange={(e) => {
+                            setCharacter(e.target.value);
+                            setEdited(true);
+                        }}
                         required
                     />
                 </div>
@@ -287,7 +298,10 @@ function CharacterPageTemplate() {
                         type="text"
                         placeholder="Series:"
                         value={series}
-                        onChange={(e) => setSeries(e.target.value)}
+                        onChange={(e) => {
+                            setSeries(e.target.value);
+                            setEdited(true);
+                        }}
                         required
                     />
                 </div>
@@ -304,6 +318,7 @@ function CharacterPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"characterManualOfStyle"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <div>
@@ -313,6 +328,7 @@ function CharacterPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"characterBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -325,6 +341,7 @@ function CharacterPageTemplate() {
                             isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                     <div>
@@ -336,6 +353,7 @@ function CharacterPageTemplate() {
                             isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                 </div>
@@ -347,6 +365,7 @@ function CharacterPageTemplate() {
                         isManualOfStyle={false}
                         section={"characterSynopsis"}
                         reset={confirm}
+                        edited={edited}
                     />
                 </div>
                 <hr />
@@ -357,6 +376,7 @@ function CharacterPageTemplate() {
                         isManualOfStyle={false}
                         section={"relationships"}
                         reset={confirm}
+                        edited={edited}
                     />
                 </div>
                 <hr />

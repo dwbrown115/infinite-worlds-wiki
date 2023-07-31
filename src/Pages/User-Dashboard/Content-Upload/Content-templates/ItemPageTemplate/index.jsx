@@ -25,6 +25,7 @@ function ItemPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${item.split(" ")}/`;
@@ -58,6 +59,7 @@ function ItemPageTemplate() {
     }, [item, itemManualOfStyle, itemBlurb, itemHistory, itemUses]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setItem("");
@@ -98,6 +100,7 @@ function ItemPageTemplate() {
     }, [user]);
 
     function handleItemManualOfStyle(inputArray) {
+        setEdited(true);
         setItemManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -105,6 +108,7 @@ function ItemPageTemplate() {
     }
 
     function handleItemBlurb(inputArray) {
+        setEdited(true);
         setItemBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -112,6 +116,7 @@ function ItemPageTemplate() {
     }
 
     function handleItemHistory(inputArray) {
+        setEdited(true);
         setItemHistory({
             contentType: "History",
             content: inputArray,
@@ -119,6 +124,7 @@ function ItemPageTemplate() {
     }
 
     function handleItemUses(inputArray) {
+        setEdited(true);
         setItemUses({
             contentType: "Uses",
             content: inputArray,
@@ -163,7 +169,7 @@ function ItemPageTemplate() {
     async function handleItemUsesSubmit() {
         setProgress(75);
         await replaceImage(itemUses, "ItemInfo", "Uses", `${item.split(" ")}`);
-        setProgress(87.5)
+        setProgress(87.5);
         await addData(path, "Uses", itemUses);
     }
 
@@ -222,7 +228,10 @@ function ItemPageTemplate() {
                             type="text"
                             placeholder="Item name:"
                             value={item}
-                            onChange={(e) => setItem(e.target.value)}
+                            onChange={(e) => {
+                                setItem(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -232,7 +241,10 @@ function ItemPageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => setSeries(e.target.value)}
+                            onChange={(e) => {
+                                setSeries(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -246,6 +258,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"itemManualOfStyle"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -256,6 +269,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -268,6 +282,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemHistory"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -278,6 +293,7 @@ function ItemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"itemUses"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>

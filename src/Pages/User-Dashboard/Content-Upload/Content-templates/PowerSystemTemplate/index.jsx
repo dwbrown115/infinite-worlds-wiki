@@ -28,6 +28,7 @@ function PowerSystemPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${powerSystem.split(" ")}/`;
@@ -72,6 +73,7 @@ function PowerSystemPageTemplate() {
     ]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setPowerSystem("");
@@ -112,6 +114,7 @@ function PowerSystemPageTemplate() {
     }, [user]);
 
     function handlePowerSystemManualOfStyle(inputArray) {
+        setEdited(true);
         setPowerSystemManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -119,6 +122,7 @@ function PowerSystemPageTemplate() {
     }
 
     function handlePowerSystemBlurb(inputArray) {
+        setEdited(true);
         setPowerSystemBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -126,6 +130,7 @@ function PowerSystemPageTemplate() {
     }
 
     function handleInfo(inputArray) {
+        setEdited(true);
         setInfo({
             contentType: "Info",
             content: inputArray,
@@ -133,6 +138,7 @@ function PowerSystemPageTemplate() {
     }
 
     function handleUses(inputArray) {
+        setEdited(true);
         setUses({
             contentType: "Uses",
             content: inputArray,
@@ -140,6 +146,7 @@ function PowerSystemPageTemplate() {
     }
 
     function handleNotableUsers(inputArray) {
+        setEdited(true);
         setNotableUsers({
             contentType: "NotableUsers",
             content: inputArray,
@@ -153,11 +160,7 @@ function PowerSystemPageTemplate() {
             "ManualOfStyle",
             `${powerSystem.split(" ")}`
         );
-        await addData(
-            path,
-            "ManualOfStyle",
-            powerSystemManualOfStyle
-        );
+        await addData(path, "ManualOfStyle", powerSystemManualOfStyle);
         setProgress(10);
     }
 
@@ -265,7 +268,10 @@ function PowerSystemPageTemplate() {
                             type="text"
                             placeholder="Power system name:"
                             value={powerSystem}
-                            onChange={(e) => setPowerSystem(e.target.value)}
+                            onChange={(e) => {
+                                setPowerSystem(e.target.value);
+                                setEdited(true);
+                            }}
                         />
                     </div>
                     <div>
@@ -274,7 +280,10 @@ function PowerSystemPageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => setSeries(e.target.value)}
+                            onChange={(e) => {
+                                setSeries(e.target.value);
+                                setEdited(true);
+                            }}
                         />
                     </div>
                     <hr />
@@ -288,7 +297,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"powerSystemManualOfStyle"}
                                 reset={confirm}
-                                k
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -299,6 +308,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"powerSystemBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -311,6 +321,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"info"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -321,6 +332,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"uses"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -331,6 +343,7 @@ function PowerSystemPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"notableUsers"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>

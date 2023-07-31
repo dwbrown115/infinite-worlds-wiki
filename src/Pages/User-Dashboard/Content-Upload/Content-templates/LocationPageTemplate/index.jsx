@@ -27,6 +27,7 @@ function LocationPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${location.split(" ")}/`;
@@ -76,6 +77,7 @@ function LocationPageTemplate() {
     ]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setLocation("");
@@ -118,6 +120,7 @@ function LocationPageTemplate() {
     }, [user]);
 
     function handleLocationManualOfStyle(inputArray) {
+        setEdited(true);
         setLocationManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -125,6 +128,7 @@ function LocationPageTemplate() {
     }
 
     function handleLocationBlurb(inputArray) {
+        setEdited(true);
         setLocationBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -132,6 +136,7 @@ function LocationPageTemplate() {
     }
 
     function handleGeographyAndEcology(inputArray) {
+        setEdited(true);
         setGeographyAndEcology({
             contentType: "GeographyAndEcology",
             content: inputArray,
@@ -139,6 +144,7 @@ function LocationPageTemplate() {
     }
 
     function handleLocationHistory(inputArray) {
+        setEdited(true);
         setLocationHistory({
             contentType: "History",
             content: inputArray,
@@ -146,6 +152,7 @@ function LocationPageTemplate() {
     }
 
     function handleCulture(inputArray) {
+        setEdited(true);
         setCulture({
             contentType: "Culture",
             content: inputArray,
@@ -269,7 +276,10 @@ function LocationPageTemplate() {
                             type="text"
                             placeholder="Location name:"
                             value={location}
-                            onChange={(e) => setLocation(e.target.value)}
+                            onChange={(e) => {
+                                setLocation(e.target.value);
+                                setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -280,6 +290,7 @@ function LocationPageTemplate() {
                             id="locationType"
                             onChange={(e) => {
                                 setLocationType(e.target.value);
+                                setEdited(true);
                             }}
                             value={locationType}
                             required
@@ -301,7 +312,9 @@ function LocationPageTemplate() {
                             type="text"
                             placeholder="Series:"
                             value={series}
-                            onChange={(e) => setSeries(e.target.value)}
+                            onChange={(e) => {
+                                setSeries(e.target.value), setEdited(true);
+                            }}
                             required
                         />
                     </div>
@@ -315,6 +328,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={true}
                                 section={"locationManualOfStyle"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -325,6 +339,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"locationBlurb"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>
@@ -337,6 +352,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"geographyAndEcology"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -347,6 +363,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"locationHistory"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                         <hr />
@@ -357,6 +374,7 @@ function LocationPageTemplate() {
                                 isManualOfStyle={false}
                                 section={"culture"}
                                 reset={confirm}
+                                edited={edited}
                             />
                         </div>
                     </div>

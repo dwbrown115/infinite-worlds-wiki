@@ -26,6 +26,7 @@ function FactionPageTemplate() {
     const [reset, setReset] = useState(false);
     const [confirm, setConfirm] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edited, setEdited] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const path = `${collection}/${faction.split(" ")}/`;
@@ -60,6 +61,7 @@ function FactionPageTemplate() {
     }, [faction, manualOfStyle, blurb, history, objectives, members]);
 
     function handleResetConfirm() {
+        setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setFaction("");
@@ -101,6 +103,7 @@ function FactionPageTemplate() {
     }, [user]);
 
     function handleManualOfStyle(inputArray) {
+        setEdited(true);
         setManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
@@ -108,6 +111,7 @@ function FactionPageTemplate() {
     }
 
     function handleBlurb(inputArray) {
+        setEdited(true);
         setBlurb({
             contentType: "Blurb",
             content: inputArray,
@@ -115,6 +119,7 @@ function FactionPageTemplate() {
     }
 
     function handleHistory(inputArray) {
+        setEdited(true);
         setHistory({
             contentType: "History",
             content: inputArray,
@@ -122,6 +127,7 @@ function FactionPageTemplate() {
     }
 
     function handleObjectives(inputArray) {
+        setEdited(true);
         setObjectives({
             contentType: "Objectives",
             content: inputArray,
@@ -129,6 +135,7 @@ function FactionPageTemplate() {
     }
 
     function handleMembers(inputArray) {
+        setEdited(true);
         setMembers({
             contentType: "Members",
             content: inputArray,
@@ -225,7 +232,7 @@ function FactionPageTemplate() {
                         type="text"
                         placeholder="Faction name:"
                         value={faction}
-                        onChange={(e) => setFaction(e.target.value)}
+                        onChange={(e) => {setFaction(e.target.value); setEdited(true);}}
                         required
                     />
                 </div>
@@ -235,7 +242,7 @@ function FactionPageTemplate() {
                         type="text"
                         placeholder="Series:"
                         value={series}
-                        onChange={(e) => setSeries(e.target.value)}
+                        onChange={(e) => {setSeries(e.target.value), setEdited(true);}}
                         required
                     />
                 </div>
@@ -248,6 +255,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={true}
                             section={"factionManualOfStyle"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                     <hr />
@@ -258,6 +266,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionBlurb"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                 </div>
@@ -270,6 +279,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionHistory"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                     <hr />
@@ -280,6 +290,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={false}
                             section={"factionObjectives"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                     <hr />
@@ -290,6 +301,7 @@ function FactionPageTemplate() {
                             isManualOfStyle={true}
                             section={"factionMembers"}
                             reset={confirm}
+                            edited={edited}
                         />
                     </div>
                 </div>
