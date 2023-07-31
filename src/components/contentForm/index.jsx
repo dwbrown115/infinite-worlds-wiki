@@ -24,6 +24,11 @@ function ContentForm({
                 console.log("Grabbing from database");
                 // console.log(dataSnap);
                 setSections(dataSnap.content);
+                localStorage.setItem(
+                    `${contentName}${section}`,
+                    JSON.stringify(dataSnap)
+                );
+                localStorage.setItem(`${contentName}${section}Grabbed`, true);
             } else {
                 console.log("No data found");
             }
@@ -32,10 +37,10 @@ function ContentForm({
 
     function grabLocalStorage(location) {
         const storedArray = jsonParser(localStorage.getItem(location));
-        console.log(storedArray);
+        // console.log(storedArray);
         if (storedArray) {
             if (storedArray.content != null) {
-                console.log("Defined");
+                // console.log("Defined");
                 if (storedArray.content != undefined) {
                     setSections(storedArray.content);
                 }
@@ -56,6 +61,7 @@ function ContentForm({
 
     useEffect(() => {
         grabEdit();
+        // console.log(contentName + section);
         const grabbedDataBase = jsonParser(
             localStorage.getItem(`${contentName}${section}Grabbed`)
         );
@@ -67,9 +73,9 @@ function ContentForm({
             } else if (!contentName) {
                 grabLocalStorage(section);
             }
-        } else {
+        } else if (grabbedDataBase) {
+            console.log("Grabbing from local storage");
             grabLocalStorage(`${contentName}${section}`);
-            // console.log("Grabbing from local storage")
         }
         // console.log(grabbedDataBase);
         // localStorage.setItem(`${contentName}${section}Grabbed`, true)

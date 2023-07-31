@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
@@ -60,21 +60,26 @@ function EditBookPage() {
         setIsLoading(false);
     }, [id]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         localStorage.setItem(`${id}Edited`, true);
-        localStorage.setItem(
-            `${id}ManualOfStyle`,
-            JSON.stringify(manualOfStyle)
-        );
+        // localStorage.setItem(
+        //     `${id}ManualOfStyle`,
+        //     JSON.stringify(manualOfStyle)
+        // );
+        var manualOfStyleCurrent = jsonParser(localStorage.getItem(`${id}ManualOfStyle`));
+        console.log(manualOfStyle);
         // console.log(edited);
     }, [edited, manualOfStyle]);
 
     function handleManualOfStyleEdit(inputArray) {
         setEdited(true);
+        // setManualOfStyle(inputArray);
+        // console.log(inputArray);
         setManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
         });
+        // console.log(manualOfStyle);
         // console.log(manualOfStyle);
     }
 
@@ -97,19 +102,26 @@ function EditBookPage() {
         // grabEdit();
         // console.log(localStorage.getItem(`${id}Edited`));
         console.log(jsonParser(localStorage.getItem(`${id}ManualOfStyle`)));
+        // console.log(jsonParser(localStorage));
+        console.log(localStorage.getItem(`${id}ManualOfStyleGrabbed`));
         // setEdited(true);
         // setEdited(false);
         // if (edited == true) {
-        //     setEdited(false);
+        // setEdited(false);
         // } else {
         //     setEdited(true);
         // }
+    }
+
+    function clear() {
+        localStorage.clear();
     }
 
     function handlePageContent() {
         return (
             <div>
                 <button onClick={test}>Test</button>
+                <button onClick={clear}>Clear</button>
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <div>
                     <h2>Edit Manual of Style</h2>
