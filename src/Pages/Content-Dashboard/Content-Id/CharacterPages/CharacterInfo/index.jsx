@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
-import { Loading, deletePartOfString } from "../../../../../helpers";
+import { Loading, deletePartOfString, replacePartOfAString } from "../../../../../helpers";
 import { DisplayContent } from "../../../../../components";
 import firebase_app from "../../../../../firebase/config";
 import getData from "../../../../../firebase/firestore/getData";
@@ -74,7 +74,7 @@ function CharacterInfo() {
                 </div>
                 <div>
                     <div style={{ display: "flex" }}>
-                        <h1>{id.replace(",", " ")}</h1>
+                        <h1>{replacePartOfAString(id, ",", " ")}</h1>
                         <button onClick={handleEdit}>Edit Page</button>
                     </div>
                     <div>{message}</div>

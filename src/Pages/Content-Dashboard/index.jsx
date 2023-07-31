@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth";
 
 import firebase_app from "../../firebase/config";
 import { Content } from "../../components";
-import { Loading, SortObjects } from "../../helpers";
+import { Loading, SortObjects, replacePartOfAString } from "../../helpers";
 
 import "./content.scss";
 
@@ -71,9 +71,11 @@ function ContentDashboard() {
                                 <div className="Item">
                                     <div>Name: </div>
                                     <Link
-                                        to={`/${item.Type.replace(" ", "")}/${
-                                            item.id
-                                        }`}
+                                        to={`/${replacePartOfAString(
+                                            item.Type,
+                                            " ",
+                                            ""
+                                        )}/${item.id}`}
                                     >
                                         {item.Name}
                                     </Link>
@@ -82,12 +84,7 @@ function ContentDashboard() {
                                     <div>Type: </div>
                                     <div>{item.Type}</div>
                                 </div>
-                                {/* <div className="Item">
-                                    <div>Id: </div>
-                                    <div>{item.id}</div>
-                                </div> */}
                                 <br />
-                                {/* <br /> */}
                             </div>
                         );
                     })}
