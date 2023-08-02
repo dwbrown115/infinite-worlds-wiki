@@ -1,3 +1,4 @@
+export { default as ArraysBackup } from "./ArraysBackup";
 export { default as checkForImage } from "./checkForImage";
 export { default as checkImage } from "./checkImage";
 export { default as compareObjectArrays } from "./compareObjectArrays";

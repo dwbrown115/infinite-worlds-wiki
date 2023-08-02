@@ -11,6 +11,7 @@ import {
     replacePartOfAString,
     jsonParser,
     handleCheckEmptyArray,
+    setBackupArray,
 } from "../../../../../helpers";
 import { firebase_app, getData } from "../../../../../firebase";
 
@@ -27,11 +28,26 @@ function EditBookPage() {
     const [blurb, setBlurb] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
     const [chapters, setChapters] = useState([]);
+    const [reset, setReset] = useState(false);
+    const [confirm, setConfirm] = useState(false);
     const [optional, setOptional] = useState(false);
     const [edited, setEdited] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const path = `/Content/Books/${id}`;
+
+    function handleResetConfirm() {
+        setEdited(false);
+        if (reset == true) {
+            setConfirm(true);
+            setTimeout(() => {
+                setReset(false);
+                setConfirm(false);
+            }, 1);
+        }
+    }
 
     async function grabUser() {
         const collection = "/users";
@@ -117,12 +133,13 @@ function EditBookPage() {
     }, [user]);
 
     function test() {
+        setBackupArray(id, "ManualOfStyle", path);
         // localStorage.clear();
         // grabEdit();
         // console.log(localStorage.getItem(`${id}Edited`));
-        console.log(jsonParser(localStorage.getItem(`${id}ManualOfStyle`)));
+        // console.log(jsonParser(localStorage.getItem(`${id}ManualOfStyle`)));
         // console.log(jsonParser(localStorage));
-        console.log(localStorage.getItem(`${id}ManualOfStyleGrabbed`));
+        // console.log(localStorage.getItem(`${id}ManualOfStyleGrabbed`));
         // setEdited(true);
         // setEdited(false);
         // if (edited == true) {
@@ -141,72 +158,110 @@ function EditBookPage() {
             <div>
                 <button onClick={test}>Test</button>
                 <button onClick={clear}>Clear</button>
+                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
-                <div>
-                    <h2>Edit Manual of Style</h2>
-                    <ContentForm
-                        handleFormContents={handleManualOfStyleEdit}
-                        isManualOfStyle={true}
-                        section={"ManualOfStyle"}
-                        reset={confirm}
-                        edited={`${id}Edited`}
-                        path={path}
-                        contentName={id}
-                    />
-                </div>
-                <div>
-                    <h2>Edit Blurb</h2>
-                    <ContentForm
-                        handleFormContents={handleBlurbEdit}
-                        isManualOfStyle={false}
-                        section={"Blurb"}
-                        reset={confirm}
-                        edited={`${id}Edited`}
-                        path={path}
-                        contentName={id}
-                    />
-                </div>
-                <div>
-                    <h2>Edit Synopsis</h2>
-                    <ContentForm
-                        handleFormContents={handleSynopsisEdit}
-                        isManualOfStyle={false}
-                        section={"Synopsis"}
-                        reset={confirm}
-                        edited={`${id}Edited`}
-                        path={path}
-                        contentName={id}
-                    />
-                </div>
-                <div>
-                    <h2>Book Chapters</h2>
-                    {optional === true ? (
-                        <div>
-                            <ContentForm
-                                handleFormContents={handleChaptersEdit}
-                                isManualOfStyle={true}
-                                section={"Chapters"}
-                                reset={confirm}
-                                edited={`${id}Edited`}
-                                path={path}
-                                contentName={id}
-                            />
-                            <button onClick={() => setOptional(false)}>
-                                Remove Chapters Section
+                <form>
+                    <div>
+                        <h2>Edit Manual of Style</h2>
+                        <ContentForm
+                            handleFormContents={handleManualOfStyleEdit}
+                            isManualOfStyle={true}
+                            section={"ManualOfStyle"}
+                            reset={confirm}
+                            edited={`${id}Edited`}
+                            path={path}
+                            contentName={id}
+                        />
+                    </div>
+                    <hr />
+                    <div>
+                        <h2>Edit Blurb</h2>
+                        <ContentForm
+                            handleFormContents={handleBlurbEdit}
+                            isManualOfStyle={false}
+                            section={"Blurb"}
+                            reset={confirm}
+                            edited={`${id}Edited`}
+                            path={path}
+                            contentName={id}
+                        />
+                    </div>
+                    <hr />
+                    <div>
+                        <h2>Edit Synopsis</h2>
+                        <ContentForm
+                            handleFormContents={handleSynopsisEdit}
+                            isManualOfStyle={false}
+                            section={"Synopsis"}
+                            reset={confirm}
+                            edited={`${id}Edited`}
+                            path={path}
+                            contentName={id}
+                        />
+                    </div>
+                    <hr />
+                    <div>
+                        <h2>Book Chapters</h2>
+                        {optional === true ? (
+                            <div>
+                                <ContentForm
+                                    handleFormContents={handleChaptersEdit}
+                                    isManualOfStyle={true}
+                                    section={"Chapters"}
+                                    reset={confirm}
+                                    edited={`${id}Edited`}
+                                    path={path}
+                                    contentName={id}
+                                />
+                                <button onClick={() => setOptional(false)}>
+                                    Remove Chapters Section
+                                </button>
+                            </div>
+                        ) : (
+                            <button onClick={() => setOptional(true)}>
+                                Add Chapters
                             </button>
-                        </div>
-                    ) : (
-                        <button onClick={() => setOptional(true)}>
-                            Add Chapters
-                        </button>
-                    )}
-                </div>
+                        )}
+                    </div>
+                    <hr />
+                </form>
             </div>
         );
     }
     return (
         <>
             <Loading isLoading={isLoading} component={handlePageContent()} />
+            {uploading ? (
+                <div>
+                    <ProgressBar percentage={progress} />
+                    <h1>Uploading...</h1>
+                    <br />
+                </div>
+            ) : (
+                <>
+                    {reset === false ? (
+                        <div>
+                            <button
+                                onClick={() => {
+                                    setReset(true);
+                                }}
+                            >
+                                Reset All
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <button onClick={() => setReset(false)}>
+                                Cancel reset
+                            </button>
+                            <button onClick={handleResetConfirm}>
+                                Confirm reset
+                            </button>
+                        </div>
+                    )}
+                    <br />
+                </>
+            )}
             <Link to={`/Book/${id}`}>Back</Link>
         </>
     );

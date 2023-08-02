@@ -77,31 +77,11 @@ function ContentForm({
             console.log("Grabbing from local storage");
             grabLocalStorage(`${contentName}${section}`);
         }
-        // console.log(grabbedDataBase);
-        // localStorage.setItem(`${contentName}${section}Grabbed`, true)
-        // if (contentName) {
-        //     grabLocalStorage(`${contentName}${section}`);
-        // } else if (!contentName) {
-        //     grabLocalStorage(section);
-        // }
-        // const storedArray = jsonParser(
-        //     localStorage.getItem(`${contentName}${section}`)
-        // );
-        // if (storedArray) {
-        //     console.log("Defined");
-        // } else {
-        //     console.log("Not Defined");
-        // }
-        // if (edit == true) {
-        //     checkForContentName();
-        // } else if (edit == false) {
-        //     // grabDataBaseContent();
-        //     console.log("Grabbing from database");
-        // }
     }, [edit]);
 
     useEffect(() => {
         handleFormContents(sections);
+        // console.log(sections);
     }, [sections]);
 
     useEffect(() => {
@@ -190,8 +170,9 @@ function ContentForm({
     // This is the new function that handles the image removal
     const removeImage = (index) => {
         const newSections = [...sections];
-        newSections[index].sectionImage = null; // Set the image to null
+        newSections[index].sectionImage = undefined; // Set the image to null
         setSections(newSections);
+        document.getElementById(`image${index}`).value = null;
     };
 
     // This is the function that renders the sections
@@ -199,6 +180,7 @@ function ContentForm({
         return sections?.map((section, index) => (
             <div key={index} className="section">
                 <br />
+                {/* <hr style={{ marginLeft: "20px", marginRight: "20px" }} /> */}
                 <label htmlFor={`sectionName${index}`}>Section Name:</label>
                 <input
                     id={`sectionName${index}`}
@@ -213,51 +195,109 @@ function ContentForm({
                 </button>
                 <br />
                 {/* eslint-disable-next-line react/prop-types */}
-                {/* {section.sectionImage === null ? (
-                    <button type="button" onClick={() => addImage(index)}>
-                        Add Image
-                    </button>
+                {section.sectionImage === undefined ? (
+                    <div>
+                        {!section.imageUrl && (
+                            <button
+                                type="button"
+                                onClick={() => addImage(index)}
+                            >
+                                Add Image
+                            </button>
+                        )}
+                    </div>
                 ) : (
                     <div />
-                )} */}
+                )}
                 <br />
-                {/* eslint-disable-next-line react/prop-types */}
-                {/* {section.imageUrl === null ? (
+                {section.imageUrl && (
                     <div>
                         <div>Current Image:</div>
                         <img src={section.imageUrl} alt="current image" />
                     </div>
-                ) : (
-                    <div />
-                )} */}
-
-                {section.sectionImage !== null && (
-                    <div className="image">
-                        <label htmlFor={`image${index}`}>Image:</label>
-                        <input
-                            id={`image${index}`}
-                            type="file"
-                            name="myImage"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(e, index)}
-                            required
-                        />
-                        {/* eslint-disable-next-line react/prop-types */}
-                        {section.sectionImage && (
-                            <img
-                                // eslint-disable-next-line react/prop-types
-                                src={checkImage(section.sectionImage)}
-                                alt="re-upload image"
-                            />
+                )}
+                {section.imageUrl !== undefined ? (
+                    <div>
+                        {section.sectionImage !== null && (
+                            <div className="image">
+                                <div>
+                                    {/* <div style={{ display: "flex" }}> */}
+                                    {/* <div htmlFor={`image${index}`}> */}
+                                    <div>New Image:</div>
+                                    {section.sectionImage && (
+                                        <div>
+                                            {checkImage(
+                                                section.sectionImage
+                                            ) && (
+                                                <img
+                                                    // eslint-disable-next-line react/prop-types
+                                                    src={checkImage(
+                                                        section.sectionImage
+                                                    )}
+                                                    alt="re-upload image"
+                                                />
+                                            )}
+                                        </div>
+                                    )}
+                                    {/* <br /> */}
+                                    <input
+                                        id={`image${index}`}
+                                        type="file"
+                                        name="myImage"
+                                        accept="image/*"
+                                        onChange={(e) =>
+                                            handleImageChange(e, index)
+                                        }
+                                        required
+                                    />
+                                </div>
+                                <br />
+                                <button
+                                    type="button"
+                                    onClick={() => removeImage(index)}
+                                >
+                                    Remove Image
+                                </button>
+                            </div>
                         )}
-                        <button
-                            type="button"
-                            onClick={() => removeImage(index)}
-                        >
-                            Remove Image
-                        </button>
+                    </div>
+                ) : (
+                    <div>
+                        {section.sectionImage !== undefined && (
+                            <div className="image">
+                                <label htmlFor={`image${index}`}>Image:</label>
+                                {section.sectionImage && (
+                                    <div>
+                                        <img
+                                            // eslint-disable-next-line react/prop-types
+                                            src={checkImage(
+                                                section.sectionImage
+                                            )}
+                                            alt="re-upload image"
+                                        />
+                                    </div>
+                                )}
+                                <input
+                                    id={`image${index}`}
+                                    type="file"
+                                    name="myImage"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        handleImageChange(e, index)
+                                    }
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeImage(index)}
+                                >
+                                    Remove Image
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
+
                 {/* eslint-disable-next-line react/prop-types */}
                 {section.sectionContent.map((content, contentIndex) => (
                     <div key={contentIndex} className="content">
@@ -304,7 +344,7 @@ function ContentForm({
                         </button>
                     </div>
                 ))}
-                {/* <br /> */}
+                <br />
                 {isManualOfStyle === true ? (
                     <button type="button" onClick={() => addContent(index)}>
                         Add Content
@@ -314,6 +354,7 @@ function ContentForm({
                         Add Paragraph
                     </button>
                 )}
+                <hr style={{ borderTop: "dashed .5px" }} />
             </div>
         ));
     };
