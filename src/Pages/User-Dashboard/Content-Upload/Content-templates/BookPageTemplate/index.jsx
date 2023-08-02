@@ -305,25 +305,27 @@ function BookPageTemplate() {
                         />
                     </div>
                     <hr />
-                    <h2>Book Chapters</h2>
-                    {optional === true ? (
-                        <div>
-                            <ContentForm
-                                handleFormContents={handleChapters}
-                                isManualOfStyle={true}
-                                section={"chapters"}
-                                reset={confirm}
-                                edited={"edited-book"}
-                            />
-                            <button onClick={() => setOptional(false)}>
-                                Remove Chapters Section
+                    <div>
+                        <h2>Book Chapters</h2>
+                        {optional === true ? (
+                            <div>
+                                <ContentForm
+                                    handleFormContents={handleChapters}
+                                    isManualOfStyle={true}
+                                    section={"chapters"}
+                                    reset={confirm}
+                                    edited={"edited-book"}
+                                />
+                                <button onClick={() => setOptional(false)}>
+                                    Remove Chapters Section
+                                </button>
+                            </div>
+                        ) : (
+                            <button onClick={() => setOptional(true)}>
+                                Add Chapters
                             </button>
-                        </div>
-                    ) : (
-                        <button onClick={() => setOptional(true)}>
-                            Add Chapters
-                        </button>
-                    )}
+                        )}
+                    </div>
                     <hr />
                     {loading ? null : <button type="submit">Submit</button>}
                 </form>

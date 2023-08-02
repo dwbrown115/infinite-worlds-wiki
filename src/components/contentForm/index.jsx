@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { jsonParser, checkImage, deletePartOfString } from "../../helpers";
+import { jsonParser, checkImage } from "../../helpers";
 import { getData } from "../../firebase";
 
 // eslint-disable-next-line react/prop-types

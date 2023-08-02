@@ -10,12 +10,13 @@ import {
     ProgressBar,
     replacePartOfAString,
     jsonParser,
+    handleCheckEmptyArray,
 } from "../../../../../helpers";
 import { firebase_app, getData } from "../../../../../firebase";
 
 function EditBookPage() {
     const auth = getAuth(firebase_app);
-    const navigate = useNavigate();
+    const router = useNavigate();
     const user = auth.currentUser;
 
     const [id, setId] = useState(
@@ -26,6 +27,7 @@ function EditBookPage() {
     const [blurb, setBlurb] = useState([]);
     const [synopsis, setSynopsis] = useState([]);
     const [chapters, setChapters] = useState([]);
+    const [optional, setOptional] = useState(false);
     const [edited, setEdited] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -62,25 +64,42 @@ function EditBookPage() {
 
     useLayoutEffect(() => {
         localStorage.setItem(`${id}Edited`, true);
-        // localStorage.setItem(
-        //     `${id}ManualOfStyle`,
-        //     JSON.stringify(manualOfStyle)
-        // );
-        var manualOfStyleCurrent = jsonParser(localStorage.getItem(`${id}ManualOfStyle`));
-        console.log(manualOfStyle);
-        // console.log(edited);
-    }, [edited, manualOfStyle]);
+        handleCheckEmptyArray(manualOfStyle, id, "ManualOfStyle");
+        handleCheckEmptyArray(blurb, id, "Blurb");
+        handleCheckEmptyArray(synopsis, id, "Synopsis");
+        handleCheckEmptyArray(chapters, id, "Chapters");
+    }, [edited, manualOfStyle, blurb, synopsis, chapters]);
 
     function handleManualOfStyleEdit(inputArray) {
         setEdited(true);
-        // setManualOfStyle(inputArray);
-        // console.log(inputArray);
         setManualOfStyle({
             contentType: "ManualOfStyle",
             content: inputArray,
         });
-        // console.log(manualOfStyle);
-        // console.log(manualOfStyle);
+    }
+
+    function handleBlurbEdit(inputArray) {
+        setEdited(true);
+        setBlurb({
+            contentType: "Blurb",
+            content: inputArray,
+        });
+    }
+
+    function handleSynopsisEdit(inputArray) {
+        setEdited(true);
+        setSynopsis({
+            contentType: "Synopsis",
+            content: inputArray,
+        });
+    }
+
+    function handleChaptersEdit(inputArray) {
+        setEdited(true);
+        setChapters({
+            contentType: "Chapters",
+            content: inputArray,
+        });
     }
 
     useEffect(() => {
@@ -134,6 +153,53 @@ function EditBookPage() {
                         path={path}
                         contentName={id}
                     />
+                </div>
+                <div>
+                    <h2>Edit Blurb</h2>
+                    <ContentForm
+                        handleFormContents={handleBlurbEdit}
+                        isManualOfStyle={false}
+                        section={"Blurb"}
+                        reset={confirm}
+                        edited={`${id}Edited`}
+                        path={path}
+                        contentName={id}
+                    />
+                </div>
+                <div>
+                    <h2>Edit Synopsis</h2>
+                    <ContentForm
+                        handleFormContents={handleSynopsisEdit}
+                        isManualOfStyle={false}
+                        section={"Synopsis"}
+                        reset={confirm}
+                        edited={`${id}Edited`}
+                        path={path}
+                        contentName={id}
+                    />
+                </div>
+                <div>
+                    <h2>Book Chapters</h2>
+                    {optional === true ? (
+                        <div>
+                            <ContentForm
+                                handleFormContents={handleChaptersEdit}
+                                isManualOfStyle={true}
+                                section={"Chapters"}
+                                reset={confirm}
+                                edited={`${id}Edited`}
+                                path={path}
+                                contentName={id}
+                            />
+                            <button onClick={() => setOptional(false)}>
+                                Remove Chapters Section
+                            </button>
+                        </div>
+                    ) : (
+                        <button onClick={() => setOptional(true)}>
+                            Add Chapters
+                        </button>
+                    )}
                 </div>
             </div>
         );
