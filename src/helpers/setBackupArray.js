@@ -7,7 +7,6 @@ export default async function setBackupArray(id, Array, path) {
     const currentArray = await jsonParser(
         localStorage.getItem(`${id}${Array}`)
     );
-    const backupPath = `ContentBackup/${id}/${Array}`;
     let finalArray = {};
 
     let compareOne = [];
@@ -32,6 +31,5 @@ export default async function setBackupArray(id, Array, path) {
             changedContent: ArraysBackup(compareOne, compareTwo),
         };
     }
-    // return finalArray, console.log(finalArray);
-    addData(backupPath, finalArray);
+    return finalArray, console.log(finalArray);
 }

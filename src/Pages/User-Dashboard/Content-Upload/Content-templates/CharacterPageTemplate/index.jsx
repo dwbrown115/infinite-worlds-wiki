@@ -20,6 +20,7 @@ function CharacterPageTemplate() {
     const [characterManualOfStyle, setCharacterManualOfStyle] = useState([]);
     const [characterBlurb, setCharacterBlurb] = useState([]);
     const [info, setInfo] = useState([]);
+    const [equipment, setEquipment] = useState([]);
     const [characterPowersAndAbilities, setCharacterPowersAndAbilities] =
         useState([]);
     const [characterSynopsis, setCharacterSynopsis] = useState([]);
@@ -59,6 +60,11 @@ function CharacterPageTemplate() {
         );
         localStorage.setItem("characterBlurb", JSON.stringify(characterBlurb));
         localStorage.setItem("info", JSON.stringify(info));
+        localStorage.setItem("equipment", JSON.stringify(equipment));
+        localStorage.setItem(
+            "powersAndAbilities",
+            JSON.stringify(characterPowersAndAbilities)
+        );
         localStorage.setItem(
             "characterSynopsis",
             JSON.stringify(characterSynopsis)
@@ -144,6 +150,14 @@ function CharacterPageTemplate() {
         });
     };
 
+    const handleEquipment = (inputArray) => {
+        setEdited(true);
+        setEquipment({
+            contentType: "Equipment",
+            content: inputArray,
+        });
+    };
+
     const handleCharacterPowersAndAbilities = (inputArray) => {
         setEdited(true);
         setCharacterPowersAndAbilities({
@@ -169,7 +183,7 @@ function CharacterPageTemplate() {
     };
 
     async function handleCharacterInfoSubmit() {
-        setProgress(8.333);
+        setProgress(7.14);
         await replaceImage(
             characterManualOfStyle,
             "CharacterInfo",
@@ -178,9 +192,9 @@ function CharacterPageTemplate() {
         );
         // console.log(JSON.parse(JSON.stringify(characterManualOfStyle)));
         await addData(path, "ManualOfStyle", characterManualOfStyle);
-        setProgress(16.666);
+        setProgress(14.28);
 
-        setProgress(24.999);
+        setProgress(21.42);
         await replaceImage(
             characterBlurb,
             "CharacterInfo",
@@ -188,9 +202,9 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Blurb", characterBlurb);
-        setProgress(33.332);
+        setProgress(28.56);
 
-        setProgress(41.665);
+        setProgress(35.7);
         await replaceImage(
             info,
             "CharacterInfo",
@@ -198,9 +212,19 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Info", info);
-        setProgress(49.998);
+        setProgress(42.84);
 
-        setProgress(58.331);
+        setProgress(49.98);
+        await replaceImage(
+            equipment,
+            "CharacterInfo",
+            "Equipment",
+            `${character.split(" ")}`
+        );
+        await addData(path, "Equipment", equipment);
+        setProgress(57.12);
+
+        setProgress(64.26);
         await replaceImage(
             characterPowersAndAbilities,
             "CharacterInfo",
@@ -208,11 +232,11 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "PowersAndAbilities", characterPowersAndAbilities);
-        setProgress(66.664);
+        setProgress(71.4);
     }
 
     async function handleCharacterSynopsisSubmit() {
-        setProgress(74.997);
+        setProgress(78.57);
         await replaceImage(
             characterSynopsis,
             "CharacterSynopsis",
@@ -220,10 +244,10 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Synopsis", characterSynopsis);
-        setProgress(83.33);
+        setProgress(85.71);
     }
     async function handleCharacterRelationshipSubmit() {
-        setProgress(91.663);
+        setProgress(92.85);
         await replaceImage(
             relationships,
             "CharacterRelationship",
@@ -231,7 +255,7 @@ function CharacterPageTemplate() {
             `${character.split(" ")}`
         );
         await addData(path, "Relationships", relationships);
-        setProgress(99.996);
+        setProgress(99.99);
     }
 
     async function handleUpload(e) {
@@ -342,6 +366,16 @@ function CharacterPageTemplate() {
                         <h2>Character Info</h2>
                         <ContentForm
                             handleFormContents={handleInfo}
+                            isManualOfStyle={false}
+                            section={"info"}
+                            reset={confirm}
+                            edited={"edited-character"}
+                        />
+                    </div>
+                    <div>
+                        <h2>Character Equipment</h2>
+                        <ContentForm
+                            handleFormContents={handleEquipment}
                             isManualOfStyle={false}
                             section={"info"}
                             reset={confirm}

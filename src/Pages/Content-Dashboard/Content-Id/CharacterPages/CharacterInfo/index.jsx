@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
-import { Loading, deletePartOfString, replacePartOfAString } from "../../../../../helpers";
+import {
+    Loading,
+    deletePartOfString,
+    replacePartOfAString,
+} from "../../../../../helpers";
 import { DisplayContent } from "../../../../../components";
 import firebase_app from "../../../../../firebase/config";
 import getData from "../../../../../firebase/firestore/getData";
@@ -17,6 +21,7 @@ function CharacterInfo() {
     const [manualOfStyle, setManualOfStyle] = useState([]);
     const [blurb, setBlurb] = useState([]);
     const [info, setInfo] = useState([]);
+    const [equipment, setEquipment] = useState([]);
     const [powersAndAbilities, setPowersAndAbilities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState("");
@@ -36,6 +41,10 @@ function CharacterInfo() {
         const info = await getData(path, "Info");
         if (info) {
             setInfo(info);
+        }
+        const equipment = await getData(path, "Equipment");
+        if (equipment) {
+            setEquipment(equipment);
         }
         const powersAndAbilities = await getData(path, "PowersAndAbilities");
         if (powersAndAbilities) {
@@ -104,7 +113,12 @@ function CharacterInfo() {
                 <div className="InfoWrapper">
                     <DisplayContent array={info} isManualOfStyle={false} />
                 </div>
+                <div className="EquipmentWrapper">
+                    <h2>Equipment</h2>
+                    <DisplayContent array={equipment} isManualOfStyle={false} />
+                </div>
                 <div className="PowersAndAbilitiesWrapper">
+                    <h2>Powers and Abilities</h2>
                     <DisplayContent
                         array={powersAndAbilities}
                         isManualOfStyle={false}

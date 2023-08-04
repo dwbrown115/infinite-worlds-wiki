@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { arrayUnion, updateDoc, doc, getFirestore } from "firebase/firestore";
+import { arrayUnion } from "firebase/firestore";
 
 import { ContentForm } from "../../../../../components";
 import {
@@ -10,7 +10,6 @@ import {
     replaceImage,
     ProgressBar,
     replacePartOfAString,
-    jsonParser,
     handleCheckEmptyArray,
     setBackupArray,
 } from "../../../../../helpers";
@@ -22,7 +21,6 @@ import {
 } from "../../../../../firebase";
 
 function EditBookPage() {
-    const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const router = useNavigate();
     const user = auth.currentUser;
@@ -66,22 +64,14 @@ function EditBookPage() {
         }
     }
 
-    async function grabContent() {
-        // const manualOfStyle = await getData(path, "ManualOfStyle");
-        // console.log(manualOfStyle);
-    }
-
     useEffect(() => {
         setIsLoading(true);
-        // setId(
-        //     deletePartOfString(
-        //         window.location.href.split("EditBookPage/")[1],
-        //         "/"
-        //     )
-        // );
-        // console.log(id);
-        grabContent();
-        // console.log(localStorage.getItem(`${id}Edited`));
+        setId(
+            deletePartOfString(
+                window.location.href.split("EditBookPage/")[1],
+                "/"
+            )
+        );
         setIsLoading(false);
     }, [id]);
 
@@ -193,7 +183,7 @@ function EditBookPage() {
         setUploading(false);
         setTimeout(() => {
             setProgress(0);
-            router(0);
+            // router(0);
         }, 100);
     }
 
