@@ -248,7 +248,7 @@ function ContentForm({
                                         onChange={(e) =>
                                             handleImageChange(e, index)
                                         }
-                                        required
+                                        // required
                                     />
                                 </div>
                                 <br />

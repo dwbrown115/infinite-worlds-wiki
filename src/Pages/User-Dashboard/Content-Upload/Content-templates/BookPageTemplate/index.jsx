@@ -48,19 +48,17 @@ function BookPageTemplate() {
     }, []);
 
     useEffect(() => {
-        // localStorage.setItem("book", book);
-        // localStorage.setItem("series", series);
+        localStorage.setItem("book", book);
+        localStorage.setItem("series", series);
         localStorage.setItem("edited-book", edited);
-        // console.log(localStorage.getItem(`edited-book`));
-        // console.log(book);
-        // localStorage.setItem("series-character", series);
-        // localStorage.setItem(
-        //     "bookManualOfStyle",
-        //     JSON.stringify(bookManualOfStyle)
-        // );
-        // localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
-        // localStorage.setItem("chapters", JSON.stringify(chapters));
-        // localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
+        localStorage.setItem("series-character", series);
+        localStorage.setItem(
+            "bookManualOfStyle",
+            JSON.stringify(bookManualOfStyle)
+        );
+        localStorage.setItem("bookBlurb", JSON.stringify(bookBlurb));
+        localStorage.setItem("chapters", JSON.stringify(chapters));
+        localStorage.setItem("bookSynopsis", JSON.stringify(bookSynopsis));
     }, [
         book,
         series,

@@ -1,6 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { arrayUnion, updateDoc, doc, getFirestore } from "firebase/firestore";
 
 import { ContentForm } from "../../../../../components";
 import {
@@ -13,9 +14,15 @@ import {
     handleCheckEmptyArray,
     setBackupArray,
 } from "../../../../../helpers";
-import { firebase_app, getData } from "../../../../../firebase";
+import {
+    addData,
+    firebase_app,
+    getData,
+    updateData,
+} from "../../../../../firebase";
 
 function EditBookPage() {
+    const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const router = useNavigate();
     const user = auth.currentUser;
@@ -118,6 +125,78 @@ function EditBookPage() {
         });
     }
 
+    async function handleManualOfStyleSubmit() {
+        setProgress(0);
+        await replaceImage(manualOfStyle, "BookInfo", "ManualOfStyle", id);
+        await updateData(path, "ManualOfStyle", manualOfStyle);
+        await setBackupArray(id, "ManualOfStyle", path);
+        localStorage.removeItem(`${id}ManualOfStyle`);
+        setProgress(12.5);
+    }
+
+    async function handleBlurbSubmit() {
+        setProgress(25);
+        const backupArray = await setBackupArray(id, "Blurb", path);
+        await replaceImage(blurb, "BookInfo", "Blurb", id);
+        await addData(path, "Blurb", blurb);
+        await setBackupArray(id, "Blurb", path);
+        localStorage.removeItem(`${id}Blurb`);
+        setProgress(37.5);
+    }
+
+    async function handleSynopsisSubmit() {
+        setProgress(50);
+        const backupArray = await setBackupArray(id, "Synopsis", path);
+        await replaceImage(synopsis, "BookInfo", "Synopsis", id);
+        await addData(path, "Synopsis", synopsis);
+        await setBackupArray(id, "Synopsis", path);
+        localStorage.removeItem(`${id}Synopsis`);
+        setProgress(62.5);
+    }
+
+    async function handleChaptersSubmit() {
+        setProgress(75);
+        if (optional == true) {
+            const backupArray = await setBackupArray(id, "Chapters", path);
+            await replaceImage(chapters, "BookInfo", "Chapters", id);
+            await addData(path, "Chapters", chapters);
+            await setBackupArray(id, "Chapters", path);
+            localStorage.removeItem(`${id}Chapters`);
+        }
+        setProgress(87.5);
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setUploading(true);
+        const time = Date().toLocaleString();
+        let array = await getData("/ContentRef", id);
+        // const contentRef = doc(db, "ContentRef", id);
+        // console.log(array)
+        const updatedAt = { updatedAt: time, updatedBy: email };
+        array = { ...array, timeStampArray: arrayUnion(updatedAt) };
+        try {
+            await updateData("/ContentRef", id, array);
+            await handleManualOfStyleSubmit();
+            await handleBlurbSubmit();
+            await handleSynopsisSubmit();
+            await handleChaptersSubmit();
+            localStorage.removeItem(`${id}Edited`);
+            localStorage.removeItem(`${id}ManualOfStyleGrabbed`);
+            localStorage.removeItem(`${id}SynopsisGrabbed`);
+            localStorage.removeItem(`${id}BlurbGrabbed`);
+            localStorage.removeItem(`${id}ChaptersGrabbed`);
+        } catch (e) {
+            console.log(e);
+        }
+        setProgress(100);
+        setUploading(false);
+        setTimeout(() => {
+            setProgress(0);
+            router(0);
+        }, 100);
+    }
+
     useEffect(() => {
         auth.onAuthStateChanged(function (user) {
             if (user) {
@@ -133,24 +212,14 @@ function EditBookPage() {
     }, [user]);
 
     function test() {
-        setBackupArray(id, "ManualOfStyle", path);
-        // localStorage.clear();
-        // grabEdit();
-        // console.log(localStorage.getItem(`${id}Edited`));
-        // console.log(jsonParser(localStorage.getItem(`${id}ManualOfStyle`)));
+        // setBackupArray(id, "ManualOfStyle", path);
         // console.log(jsonParser(localStorage));
-        // console.log(localStorage.getItem(`${id}ManualOfStyleGrabbed`));
-        // setEdited(true);
-        // setEdited(false);
-        // if (edited == true) {
-        // setEdited(false);
-        // } else {
-        //     setEdited(true);
-        // }
+        console.log(localStorage);
     }
 
     function clear() {
         localStorage.clear();
+        router(0);
     }
 
     function handlePageContent() {
@@ -160,31 +229,33 @@ function EditBookPage() {
                 <button onClick={clear}>Clear</button>
                 <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div>
-                        <h2>Edit Manual of Style</h2>
-                        <ContentForm
-                            handleFormContents={handleManualOfStyleEdit}
-                            isManualOfStyle={true}
-                            section={"ManualOfStyle"}
-                            reset={confirm}
-                            edited={`${id}Edited`}
-                            path={path}
-                            contentName={id}
-                        />
-                    </div>
-                    <hr />
-                    <div>
-                        <h2>Edit Blurb</h2>
-                        <ContentForm
-                            handleFormContents={handleBlurbEdit}
-                            isManualOfStyle={false}
-                            section={"Blurb"}
-                            reset={confirm}
-                            edited={`${id}Edited`}
-                            path={path}
-                            contentName={id}
-                        />
+                        <div>
+                            <h2>Edit Manual of Style</h2>
+                            <ContentForm
+                                handleFormContents={handleManualOfStyleEdit}
+                                isManualOfStyle={true}
+                                section={"ManualOfStyle"}
+                                reset={confirm}
+                                edited={`${id}Edited`}
+                                path={path}
+                                contentName={id}
+                            />
+                        </div>
+                        <hr />
+                        <div>
+                            <h2>Edit Blurb</h2>
+                            <ContentForm
+                                handleFormContents={handleBlurbEdit}
+                                isManualOfStyle={false}
+                                section={"Blurb"}
+                                reset={confirm}
+                                edited={`${id}Edited`}
+                                path={path}
+                                contentName={id}
+                            />
+                        </div>
                     </div>
                     <hr />
                     <div>
@@ -224,6 +295,9 @@ function EditBookPage() {
                         )}
                     </div>
                     <hr />
+                    <button type="submit">Submit</button>
+                    <br />
+                    <br />
                 </form>
             </div>
         );
