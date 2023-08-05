@@ -14,11 +14,13 @@ import {
     setBackupArray,
 } from "../../../../../helpers";
 import {
-    addData,
     firebase_app,
+    addData,
+    checkForBackup,
     getData,
     updateData,
 } from "../../../../../firebase";
+import { func } from "prop-types";
 
 function EditBookPage() {
     const auth = getAuth(firebase_app);
@@ -42,17 +44,6 @@ function EditBookPage() {
     const [progress, setProgress] = useState(0);
 
     const path = `/Content/Books/${id}`;
-
-    function handleResetConfirm() {
-        setEdited(false);
-        if (reset == true) {
-            setConfirm(true);
-            setTimeout(() => {
-                setReset(false);
-                setConfirm(false);
-            }, 1);
-        }
-    }
 
     async function grabUser() {
         const collection = "/users";
@@ -115,43 +106,61 @@ function EditBookPage() {
         });
     }
 
+    function handleClearStorage() {
+        localStorage.removeItem(`${id}ManualOfStyle`);
+        localStorage.removeItem(`${id}Blurb`);
+        localStorage.removeItem(`${id}Synopsis`);
+        localStorage.removeItem(`${id}Chapters`);
+        localStorage.removeItem(`${id}Edited`);
+        localStorage.removeItem(`${id}ManualOfStyleGrabbed`);
+        localStorage.removeItem(`${id}SynopsisGrabbed`);
+        localStorage.removeItem(`${id}BlurbGrabbed`);
+        localStorage.removeItem(`${id}ChaptersGrabbed`);
+    }
+
+    function handleResetConfirm() {
+        // setEdited(false);
+        // if (reset == true) {
+        //     setConfirm(true);
+        //     setTimeout(() => {
+        //         setReset(false);
+        //         setConfirm(false);
+        //     }, 1);
+        // }
+        handleClearStorage();
+        router(0);
+    }
+
     async function handleManualOfStyleSubmit() {
         setProgress(0);
         await replaceImage(manualOfStyle, "BookInfo", "ManualOfStyle", id);
         await updateData(path, "ManualOfStyle", manualOfStyle);
-        await setBackupArray(id, "ManualOfStyle", path);
-        localStorage.removeItem(`${id}ManualOfStyle`);
+        // await checkForBackup(id, "ManualOfStyle", path, "Books");
         setProgress(12.5);
     }
 
     async function handleBlurbSubmit() {
         setProgress(25);
-        const backupArray = await setBackupArray(id, "Blurb", path);
         await replaceImage(blurb, "BookInfo", "Blurb", id);
         await addData(path, "Blurb", blurb);
-        await setBackupArray(id, "Blurb", path);
-        localStorage.removeItem(`${id}Blurb`);
+        // await checkForBackup(id, "Blurb", path, "Books");
         setProgress(37.5);
     }
 
     async function handleSynopsisSubmit() {
         setProgress(50);
-        const backupArray = await setBackupArray(id, "Synopsis", path);
         await replaceImage(synopsis, "BookInfo", "Synopsis", id);
         await addData(path, "Synopsis", synopsis);
-        await setBackupArray(id, "Synopsis", path);
-        localStorage.removeItem(`${id}Synopsis`);
+        // await checkForBackup(id, "Synopsis", path, "Books");
         setProgress(62.5);
     }
 
     async function handleChaptersSubmit() {
         setProgress(75);
         if (optional == true) {
-            const backupArray = await setBackupArray(id, "Chapters", path);
             await replaceImage(chapters, "BookInfo", "Chapters", id);
             await addData(path, "Chapters", chapters);
-            await setBackupArray(id, "Chapters", path);
-            localStorage.removeItem(`${id}Chapters`);
+            // await checkForBackup(id, "Chapters", path, "Books");
         }
         setProgress(87.5);
     }
@@ -171,17 +180,13 @@ function EditBookPage() {
             await handleBlurbSubmit();
             await handleSynopsisSubmit();
             await handleChaptersSubmit();
-            localStorage.removeItem(`${id}Edited`);
-            localStorage.removeItem(`${id}ManualOfStyleGrabbed`);
-            localStorage.removeItem(`${id}SynopsisGrabbed`);
-            localStorage.removeItem(`${id}BlurbGrabbed`);
-            localStorage.removeItem(`${id}ChaptersGrabbed`);
         } catch (e) {
             console.log(e);
         }
         setProgress(100);
         setUploading(false);
         setTimeout(() => {
+            handleClearStorage();
             setProgress(0);
             // router(0);
         }, 100);
@@ -201,22 +206,9 @@ function EditBookPage() {
         });
     }, [user]);
 
-    function test() {
-        // setBackupArray(id, "ManualOfStyle", path);
-        // console.log(jsonParser(localStorage));
-        console.log(localStorage);
-    }
-
-    function clear() {
-        localStorage.clear();
-        router(0);
-    }
-
     function handlePageContent() {
         return (
             <div>
-                <button onClick={test}>Test</button>
-                <button onClick={clear}>Clear</button>
                 <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>

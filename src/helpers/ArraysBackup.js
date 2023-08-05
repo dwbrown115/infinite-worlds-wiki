@@ -16,6 +16,7 @@ export default function ArraysBackup(arr1, arr2) {
 
             if (arr2[i].sectionContent.length !== 0) {
                 // console.log(arr1[i].sectionContent.length);
+                // console.log(arr2[i].sectionContent.length);
                 let length = Math.max(
                     arr1[i].sectionContent.length,
                     arr2[i].sectionContent.length
@@ -72,7 +73,8 @@ export default function ArraysBackup(arr1, arr2) {
                         result.push(sectionChanges);
                     }
                 }
-            } else if (
+            }
+            if (
                 JSON.stringify(
                     arr1[i].sectionName !== JSON.stringify(arr2[i].sectionName)
                 )
