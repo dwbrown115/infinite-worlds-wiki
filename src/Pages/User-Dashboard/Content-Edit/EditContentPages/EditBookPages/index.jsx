@@ -11,16 +11,8 @@ import {
     ProgressBar,
     replacePartOfAString,
     handleCheckEmptyArray,
-    setBackupArray,
 } from "../../../../../helpers";
-import {
-    firebase_app,
-    addData,
-    checkForBackup,
-    getData,
-    updateData,
-} from "../../../../../firebase";
-import { func } from "prop-types";
+import { firebase_app, getData, updateData } from "../../../../../firebase";
 
 function EditBookPage() {
     const auth = getAuth(firebase_app);
@@ -113,20 +105,12 @@ function EditBookPage() {
         localStorage.removeItem(`${id}Chapters`);
         localStorage.removeItem(`${id}Edited`);
         localStorage.removeItem(`${id}ManualOfStyleGrabbed`);
-        localStorage.removeItem(`${id}SynopsisGrabbed`);
         localStorage.removeItem(`${id}BlurbGrabbed`);
+        localStorage.removeItem(`${id}SynopsisGrabbed`);
         localStorage.removeItem(`${id}ChaptersGrabbed`);
     }
 
     function handleResetConfirm() {
-        // setEdited(false);
-        // if (reset == true) {
-        //     setConfirm(true);
-        //     setTimeout(() => {
-        //         setReset(false);
-        //         setConfirm(false);
-        //     }, 1);
-        // }
         handleClearStorage();
         router(0);
     }
@@ -135,23 +119,20 @@ function EditBookPage() {
         setProgress(0);
         await replaceImage(manualOfStyle, "BookInfo", "ManualOfStyle", id);
         await updateData(path, "ManualOfStyle", manualOfStyle);
-        // await checkForBackup(id, "ManualOfStyle", path, "Books");
         setProgress(12.5);
     }
 
     async function handleBlurbSubmit() {
         setProgress(25);
         await replaceImage(blurb, "BookInfo", "Blurb", id);
-        await addData(path, "Blurb", blurb);
-        // await checkForBackup(id, "Blurb", path, "Books");
+        await updateData(path, "Blurb", blurb);
         setProgress(37.5);
     }
 
     async function handleSynopsisSubmit() {
         setProgress(50);
         await replaceImage(synopsis, "BookInfo", "Synopsis", id);
-        await addData(path, "Synopsis", synopsis);
-        // await checkForBackup(id, "Synopsis", path, "Books");
+        await updateData(path, "Synopsis", synopsis);
         setProgress(62.5);
     }
 
@@ -159,8 +140,7 @@ function EditBookPage() {
         setProgress(75);
         if (optional == true) {
             await replaceImage(chapters, "BookInfo", "Chapters", id);
-            await addData(path, "Chapters", chapters);
-            // await checkForBackup(id, "Chapters", path, "Books");
+            await updateData(path, "Chapters", chapters);
         }
         setProgress(87.5);
     }
@@ -170,8 +150,6 @@ function EditBookPage() {
         setUploading(true);
         const time = Date().toLocaleString();
         let array = await getData("/ContentRef", id);
-        // const contentRef = doc(db, "ContentRef", id);
-        // console.log(array)
         const updatedAt = { updatedAt: time, updatedBy: email };
         array = { ...array, timeStampArray: arrayUnion(updatedAt) };
         try {
@@ -186,9 +164,8 @@ function EditBookPage() {
         setProgress(100);
         setUploading(false);
         setTimeout(() => {
-            handleClearStorage();
             setProgress(0);
-            // router(0);
+            handleResetConfirm();
         }, 100);
     }
 

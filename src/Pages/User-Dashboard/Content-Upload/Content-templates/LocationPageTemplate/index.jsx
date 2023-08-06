@@ -76,7 +76,7 @@ function LocationPageTemplate() {
         geographyAndEcology,
         locationHistory,
         culture,
-        edited
+        edited,
     ]);
 
     function handleResetConfirm() {

@@ -72,7 +72,7 @@ function CharacterSynopsis() {
                     )}
                 </div>
                 <DisplayContent array={synopsis} isManualOfStyle={false} />
-                <Link to={`/content`}>Back</Link>
+                <Link to={`/Character/${id}`}>Back</Link>
             </div>
         );
     }

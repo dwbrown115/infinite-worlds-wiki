@@ -81,6 +81,7 @@ function RacePageTemplate() {
         if (reset == true) {
             setConfirm(true);
             setRace("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);

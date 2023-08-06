@@ -80,6 +80,7 @@ function PowerSystemPageTemplate() {
         if (reset == true) {
             setConfirm(true);
             setPowerSystem("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);

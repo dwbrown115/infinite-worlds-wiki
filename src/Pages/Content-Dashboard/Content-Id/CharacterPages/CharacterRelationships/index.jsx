@@ -69,7 +69,7 @@ function CharacterRelationships() {
                     )}
                 </div>
                 <DisplayContent array={relationships} isManualOfStyle={false} />
-                <Link to={`/content`}>Back</Link>
+                <Link to={`/Character/${id}`}>Back</Link>
             </div>
         );
     }

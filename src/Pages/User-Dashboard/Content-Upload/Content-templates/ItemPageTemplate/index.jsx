@@ -7,6 +7,7 @@ import { ContentForm } from "../../../../../components";
 import { replaceImage, ProgressBar } from "../../../../../helpers";
 import addData from "../../../../../firebase/firestore/addData";
 import firebase_app from "../../../../../firebase/config";
+import { func } from "prop-types";
 
 function ItemPageTemplate() {
     const db = getFirestore(firebase_app);
@@ -19,6 +20,7 @@ function ItemPageTemplate() {
     const [series, setSeries] = useState("");
     const [itemManualOfStyle, setItemManualOfStyle] = useState([]);
     const [itemBlurb, setItemBlurb] = useState([]);
+    const [description, setDescription] = useState([]);
     const [itemHistory, setItemHistory] = useState([]);
     const [itemUses, setItemUses] = useState([]);
     const [edited, setEdited] = useState(false);
@@ -57,13 +59,22 @@ function ItemPageTemplate() {
         localStorage.setItem("itemHistory", JSON.stringify(itemHistory));
         localStorage.setItem("itemUses", JSON.stringify(itemUses));
         localStorage.setItem("itemEdited", edited);
-    }, [item, series, itemManualOfStyle, itemBlurb, itemHistory, itemUses, edited]);
+    }, [
+        item,
+        series,
+        itemManualOfStyle,
+        itemBlurb,
+        itemHistory,
+        itemUses,
+        edited,
+    ]);
 
     function handleResetConfirm() {
         setEdited(false);
         if (reset == true) {
             setConfirm(true);
             setItem("");
+            setSeries("");
             setTimeout(() => {
                 setReset(false);
                 setConfirm(false);
@@ -116,6 +127,14 @@ function ItemPageTemplate() {
         });
     }
 
+    function handleDescription(inputArray) {
+        setEdited(true);
+        setDescription({
+            contentType: "Description",
+            content: inputArray,
+        });
+    }
+
     function handleItemHistory(inputArray) {
         setEdited(true);
         setItemHistory({
@@ -133,6 +152,7 @@ function ItemPageTemplate() {
     }
 
     async function handleItemManualOfStyleSubmit() {
+        setProgress(10);
         await replaceImage(
             itemManualOfStyle,
             "ItemInfo",
@@ -140,11 +160,11 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "ManualOfStyle", itemManualOfStyle);
-        setProgress(12.5);
+        setProgress(20);
     }
 
     async function handleItemBlurbSubmit() {
-        setProgress(25);
+        setProgress(30);
         await replaceImage(
             itemBlurb,
             "ItemInfo",
@@ -152,11 +172,23 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "Blurb", itemBlurb);
-        setProgress(37.5);
+        setProgress(40);
+    }
+
+    async function handleDescriptionSubmit() {
+        setProgress(50);
+        await replaceImage(
+            description,
+            "ItemInfo",
+            "Description",
+            `${item.split(" ")}`
+        );
+        await addData(path, "Description", description);
+        setProgress(60);
     }
 
     async function handleItemHistorySubmit() {
-        setProgress(50);
+        setProgress(70);
         await replaceImage(
             itemHistory,
             "ItemInfo",
@@ -164,14 +196,14 @@ function ItemPageTemplate() {
             `${item.split(" ")}`
         );
         await addData(path, "History", itemHistory);
-        setProgress(62.5);
+        setProgress(80);
     }
 
     async function handleItemUsesSubmit() {
-        setProgress(75);
+        setProgress(90);
         await replaceImage(itemUses, "ItemInfo", "Uses", `${item.split(" ")}`);
-        setProgress(87.5);
         await addData(path, "Uses", itemUses);
+        setProgress(100);
     }
 
     async function handleUpload(e) {
@@ -200,6 +232,7 @@ function ItemPageTemplate() {
             ).then(async () => {
                 await handleItemManualOfStyleSubmit();
                 await handleItemBlurbSubmit();
+                await handleDescriptionSubmit();
                 await handleItemHistorySubmit();
                 await handleItemUsesSubmit();
                 await setItem("");
@@ -277,6 +310,17 @@ function ItemPageTemplate() {
                     </div>
                     <hr />
                     <div>
+                        <div>
+                            <h2>Item Description</h2>
+                            <ContentForm
+                                handleFormContents={handleDescription}
+                                isManualOfStyle={false}
+                                section={"description"}
+                                reset={confirm}
+                                edited={"itemEdited"}
+                            />
+                        </div>
+                        <hr />
                         <div>
                             <h2>Item History</h2>
                             <ContentForm
