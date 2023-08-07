@@ -38,3 +38,6 @@ export { default as SignIn } from "./Signin";
 export { default as ForgotPassword } from "./Signin/ForgotPassword";
 export { default as SignUp } from "./Signup";
 export { default as SearchResults } from "./SearchResults";
+export { default as RequestAFeature } from "./RequestAFeature";
+export { default as ReportABug } from "./ReportABug";
+export { default as FeaturesAndBugsPipeline } from "./FeaturesAndBugsPipeline";

@@ -1,7 +1,7 @@
-function Navbar() {
+function Sidebar() {
     return (
         <div>Navbar</div>
     )
 }
 
-export default Navbar
+export default Sidebar
