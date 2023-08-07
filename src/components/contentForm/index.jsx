@@ -387,7 +387,12 @@ function ContentForm({
                             <div />
                         )}
                         {confirm === true ? (
-                            <>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                }}
+                            >
                                 <button
                                     onClick={() => {
                                         setConfirm(false);
@@ -398,7 +403,7 @@ function ContentForm({
                                 <button onClick={handleReset}>
                                     Confirm reset
                                 </button>
-                            </>
+                            </div>
                         ) : (
                             <div />
                         )}
@@ -408,6 +413,12 @@ function ContentForm({
         );
     }
 
-    return <>{handleContent()}</>;
+    return (
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+            {handleContent()}
+        </div>
+    );
 }
 export default ContentForm;

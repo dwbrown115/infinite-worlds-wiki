@@ -72,7 +72,7 @@ function PowerSystemPageTemplate() {
         info,
         uses,
         notableUsers,
-        edited
+        edited,
     ]);
 
     function handleResetConfirm() {
@@ -261,9 +261,10 @@ function PowerSystemPageTemplate() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>
-                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Power System Page Template</h1>
                     <div>
@@ -362,7 +363,13 @@ function PowerSystemPageTemplate() {
                         <br />
                     </div>
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                        }}
+                    >
                         {reset === false ? (
                             <div>
                                 <button
@@ -384,11 +391,11 @@ function PowerSystemPageTemplate() {
                             </div>
                         )}
                         <br />
-                    </>
+                    </div>
                 )}
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
-        </>
+        </div>
     );
 }
 

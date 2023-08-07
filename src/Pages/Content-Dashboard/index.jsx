@@ -58,7 +58,13 @@ function ContentDashboard() {
 
     const handlePageContent = () => {
         return (
-            <>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
                 <h1>Content Dashboard</h1>
                 <div>
                     {items.map((item, index) => {
@@ -89,15 +95,19 @@ function ContentDashboard() {
                         );
                     })}
                 </div>
-                <Link to={"/user/upload"}>Create content</Link>
-                <button onClick={handleClick}>Back</button>
-            </>
+            </div>
         );
     };
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
-        </>
+            <Link to={"/user/upload"}>Create content</Link>
+            <div>
+                <button onClick={handleClick}>Back</button>
+            </div>
+        </div>
     );
 }
 

@@ -183,7 +183,6 @@ function EditEventPage() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -251,7 +250,9 @@ function EditEventPage() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -260,7 +261,13 @@ function EditEventPage() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -282,10 +289,10 @@ function EditEventPage() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Event/${id}`}>Back</Link>
-        </>
+        </div>
     );
 }
 

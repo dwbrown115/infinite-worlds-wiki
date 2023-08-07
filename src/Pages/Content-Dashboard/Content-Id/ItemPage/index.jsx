@@ -108,10 +108,12 @@ function ItemPage() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             <Link to={`/content`}>Back</Link>
-        </>
+        </div>
     );
 }
 

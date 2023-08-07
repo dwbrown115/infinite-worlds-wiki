@@ -77,7 +77,9 @@ function NewPassword() {
     }, []);
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>
                 <form onSubmit={handlePasswordUpdate}>
                     <h2>Set a new password</h2>
@@ -111,7 +113,7 @@ function NewPassword() {
                 </form>
                 <Link to="/user">back</Link>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -428,7 +428,13 @@ function CharacterPageTemplate() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -450,7 +456,7 @@ function CharacterPageTemplate() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={"/user/upload"}>Go Back</Link>
         </div>

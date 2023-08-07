@@ -211,7 +211,6 @@ function EditLocationPage() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -291,7 +290,9 @@ function EditLocationPage() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -300,7 +301,13 @@ function EditLocationPage() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -322,10 +329,10 @@ function EditLocationPage() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Location/${id}`}>Back</Link>
-        </>
+        </div>
     );
 }
 

@@ -39,7 +39,9 @@ function SignIn() {
         router("/login/forgot-password");
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div className="form-wrapper">
                 <div>Sign in</div>
                 <form onSubmit={handleForm} className="form">
@@ -73,7 +75,7 @@ function SignIn() {
                 <button onClick={handleClick}>Forgot password?</button>
                 <Link to={"/"}>Home</Link>
             </div>
-        </>
+        </div>
     );
 }
 

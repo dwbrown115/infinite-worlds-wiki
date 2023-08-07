@@ -48,7 +48,13 @@ function SearchResults() {
 
     const handlePageContent = () => {
         return (
-            <>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
                 <br />
                 <br />
                 <form onSubmit={handleSubmit} id="search-books">
@@ -94,13 +100,15 @@ function SearchResults() {
                     )}
                 </div>
                 <Link to={"/"}>Home</Link>
-            </>
+            </div>
         );
     };
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
-        </>
+        </div>
     );
 }
 

@@ -20,12 +20,14 @@ function Home() {
         });
     }, [user]);
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>Home</div>
             <Link to={"/login"}>Sign in</Link>
             <Link to={"/signup"}>Sign up</Link>
             <Link to={"/content"}>Content Dashboard</Link>
-        </>
+        </div>
     );
 }
 

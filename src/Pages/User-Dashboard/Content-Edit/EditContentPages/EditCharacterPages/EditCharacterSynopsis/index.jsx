@@ -129,7 +129,6 @@ function EditCharacterSynopsis() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")} Synopsis</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -152,7 +151,9 @@ function EditCharacterSynopsis() {
         );
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -161,7 +162,13 @@ function EditCharacterSynopsis() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -183,10 +190,10 @@ function EditCharacterSynopsis() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Character/${id}/Synopsis`}>Back</Link>
-        </>
+        </div>
     );
 }
 

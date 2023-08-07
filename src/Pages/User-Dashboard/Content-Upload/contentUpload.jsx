@@ -26,7 +26,13 @@ function ContentUpload() {
 
     const handlePageContent = () => {
         return (
-            <>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
                 <h1>Upload Content Templates</h1>
                 <hr />
                 <br />
@@ -73,11 +79,17 @@ function ContentUpload() {
                 <hr />
                 {/* <button onClick={handleTest}>test</button> */}
                 <Link to={"/user"}>Go Back</Link>
-            </>
+            </div>
         );
     };
 
-    return <>{handlePageContent()}</>;
+    return (
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+            {handlePageContent()}
+        </div>
+    );
 }
 
 export default ContentUpload;

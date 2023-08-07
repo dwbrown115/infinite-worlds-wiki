@@ -186,7 +186,6 @@ function EditBookPage() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -262,7 +261,9 @@ function EditBookPage() {
         );
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -271,7 +272,13 @@ function EditBookPage() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -293,10 +300,10 @@ function EditBookPage() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Book/${id}`}>Back</Link>
-        </>
+        </div>
     );
 }
 

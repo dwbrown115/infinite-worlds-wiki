@@ -231,7 +231,13 @@ function ContentEdit() {
 
     const handlePageContent = () => {
         return (
-            <>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
                 <div>
                     <h3>Edit Content</h3>
                     <form id="contentForm" onSubmit={handleForm}>
@@ -292,14 +298,16 @@ function ContentEdit() {
                     </form>
                 </div>
                 <Link to={"/content"}>Go Back</Link>
-            </>
+            </div>
         );
     };
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             <button onClick={handleDebug}>debug</button>
-        </>
+        </div>
     );
 }
 

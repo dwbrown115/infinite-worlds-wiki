@@ -4,7 +4,9 @@ import "./displayContent.scss";
 
 function DisplayContent({ array, isManualOfStyle }) {
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             {array.content?.map((item, index) => {
                 return (
                     <div className="ContentWrapper" key={index}>
@@ -38,7 +40,7 @@ function DisplayContent({ array, isManualOfStyle }) {
                     </div>
                 );
             })}
-        </>
+        </div>
     );
 }
 

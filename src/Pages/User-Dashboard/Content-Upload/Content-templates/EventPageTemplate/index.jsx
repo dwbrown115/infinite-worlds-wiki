@@ -232,9 +232,10 @@ function EventPageTemplate() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>
-                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Event Page Template</h1>
                     <div>
@@ -325,7 +326,13 @@ function EventPageTemplate() {
                         <br />
                     </div>
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                        }}
+                    >
                         {reset === false ? (
                             <div>
                                 <button
@@ -347,11 +354,11 @@ function EventPageTemplate() {
                             </div>
                         )}
                         <br />
-                    </>
+                    </div>
                 )}
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
-        </>
+        </div>
     );
 }
 

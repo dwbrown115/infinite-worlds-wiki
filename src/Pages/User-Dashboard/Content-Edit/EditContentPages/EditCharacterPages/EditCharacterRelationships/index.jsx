@@ -128,7 +128,6 @@ function EditCharacterRelationships() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")} Relationships</h1>
                 <form onSubmit={handleSubmit}>
                     <hr />
@@ -152,7 +151,9 @@ function EditCharacterRelationships() {
         );
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -161,7 +162,13 @@ function EditCharacterRelationships() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -183,10 +190,10 @@ function EditCharacterRelationships() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Character/${id}/Relationships`}>Back</Link>
-        </>
+        </div>
     );
 }
 

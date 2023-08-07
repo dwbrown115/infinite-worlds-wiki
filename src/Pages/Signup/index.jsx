@@ -97,7 +97,9 @@ function SignUp() {
     };
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div className="form-wrapper">
                 <div>Sign up</div>
                 {/* <button onClick={debug}>Test</button> */}
@@ -155,7 +157,7 @@ function SignUp() {
                 </form>
                 <Link to={"/"}>Home</Link>
             </div>
-        </>
+        </div>
     );
 }
 

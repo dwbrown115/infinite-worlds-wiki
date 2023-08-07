@@ -89,7 +89,13 @@ function UserDashboard() {
 
     const handlePageContent = () => {
         return (
-            <>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
                 <div>
                     <div>
                         <div>
@@ -136,15 +142,17 @@ function UserDashboard() {
                         Change password
                     </button>
                 </div>
-            </>
+            </div>
         );
     };
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {/* <div>{handlePageContent()}</div> */}
-        </>
+        </div>
     );
 }
 

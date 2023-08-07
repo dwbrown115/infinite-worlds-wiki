@@ -211,7 +211,6 @@ function EditPowerSystemPage() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -287,7 +286,9 @@ function EditPowerSystemPage() {
         );
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -296,7 +297,13 @@ function EditPowerSystemPage() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -318,10 +325,10 @@ function EditPowerSystemPage() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/PowerSystem/${id}`}>Back</Link>
-        </>
+        </div>
     );
 }
 

@@ -200,7 +200,6 @@ function EditItemPage() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <h1>Edit {replacePartOfAString(id, ",", " ")}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -279,7 +278,9 @@ function EditItemPage() {
         );
     }
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
                 <div>
@@ -288,7 +289,13 @@ function EditItemPage() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -310,10 +317,10 @@ function EditItemPage() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to={`/Item/${id}`}>Back</Link>
-        </>
+        </div>
     );
 }
 

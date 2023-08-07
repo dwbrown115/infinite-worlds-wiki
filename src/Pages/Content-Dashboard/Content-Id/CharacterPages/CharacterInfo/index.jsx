@@ -130,9 +130,11 @@ function CharacterInfo() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <Loading isLoading={isLoading} component={handlePageContent()} />
-        </>
+        </div>
     );
 }
 

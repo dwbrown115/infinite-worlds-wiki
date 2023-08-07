@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
 function Footer() {
     return (
-        <>
-        <div>Footer</div>
-        </>
-    )
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+            <div>Footer</div>
+        </div>
+    );
 }
 
-export default Footer
+export default Footer;

@@ -233,7 +233,9 @@ function FactionPageTemplate() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <hr />
             <form onSubmit={handleSubmit}>
                 <h1>Faction Page Template</h1>
@@ -332,7 +334,13 @@ function FactionPageTemplate() {
                     <br />
                 </div>
             ) : (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}
+                >
                     {reset === false ? (
                         <div>
                             <button
@@ -354,10 +362,10 @@ function FactionPageTemplate() {
                         </div>
                     )}
                     <br />
-                </>
+                </div>
             )}
             <Link to="/user/upload">Back</Link>
-        </>
+        </div>
     );
 }
 

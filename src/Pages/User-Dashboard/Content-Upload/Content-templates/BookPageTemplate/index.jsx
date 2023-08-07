@@ -237,7 +237,6 @@ function BookPageTemplate() {
     function handlePageContent() {
         return (
             <div>
-                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Book Page Template</h1>
                     <div>
@@ -335,7 +334,13 @@ function BookPageTemplate() {
                         <br />
                     </div>
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                        }}
+                    >
                         {reset === false ? (
                             <div>
                                 <button
@@ -357,14 +362,20 @@ function BookPageTemplate() {
                             </div>
                         )}
                         <br />
-                    </>
+                    </div>
                 )}
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
         );
     }
 
-    return <>{handlePageContent()}</>;
+    return (
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+            {handlePageContent()}
+        </div>
+    );
 }
 
 export default BookPageTemplate;

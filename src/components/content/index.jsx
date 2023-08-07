@@ -32,7 +32,9 @@ function Content(
     };
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <br />
             {admin === true ? (
                 <div>
@@ -142,7 +144,7 @@ function Content(
                     )}
                 </div>
             )}
-        </>
+        </div>
     );
 }
 

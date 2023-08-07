@@ -284,9 +284,10 @@ function RacePageTemplate() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>
-                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Race Page Template</h1>
                     <div>
@@ -397,7 +398,13 @@ function RacePageTemplate() {
                         <br />
                     </div>
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                        }}
+                    >
                         {reset === false ? (
                             <div>
                                 <button
@@ -419,11 +426,11 @@ function RacePageTemplate() {
                             </div>
                         )}
                         <br />
-                    </>
+                    </div>
                 )}
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
-        </>
+        </div>
     );
 }
 

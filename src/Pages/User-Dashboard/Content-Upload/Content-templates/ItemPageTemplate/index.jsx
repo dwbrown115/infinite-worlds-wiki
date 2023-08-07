@@ -252,9 +252,10 @@ function ItemPageTemplate() {
     }
 
     return (
-        <>
+        <div
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
             <div>
-                <hr />
                 <form onSubmit={handleUpload}>
                     <h1>Item Page Template</h1>
                     <div>
@@ -354,7 +355,13 @@ function ItemPageTemplate() {
                         <br />
                     </div>
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                        }}
+                    >
                         {reset === false ? (
                             <div>
                                 <button
@@ -376,11 +383,11 @@ function ItemPageTemplate() {
                             </div>
                         )}
                         <br />
-                    </>
+                    </div>
                 )}
                 <Link to={"/user/upload"}>Go Back</Link>
             </div>
-        </>
+        </div>
     );
 }
 
