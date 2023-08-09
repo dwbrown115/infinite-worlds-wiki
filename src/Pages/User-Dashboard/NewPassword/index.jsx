@@ -7,8 +7,9 @@ import {
 } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
-import firebase_app from "../../../firebase/config";
-import logOut from "../../../firebase/auth/signout";
+import { firebase_app, logOut } from "../../../firebase";
+// import firebase_app from "../../../firebase/config";
+// import logOut from "../../../firebase/auth/signout";
 
 function NewPassword() {
     const auth = getAuth(firebase_app);
@@ -111,7 +112,6 @@ function NewPassword() {
                     />
                     <button type="submit">Submit</button>
                 </form>
-                <Link to="/user">back</Link>
             </div>
         </div>
     );

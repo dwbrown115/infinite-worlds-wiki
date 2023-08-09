@@ -45,7 +45,6 @@ function IsAuth() {
             <div>Please authenticate your email.</div>
             <div>Go to your email to accomplish that</div>
             <button onClick={handleClick}>Resend email</button>
-            <Link to={"/"}>Back</Link>
         </div>
     );
 }

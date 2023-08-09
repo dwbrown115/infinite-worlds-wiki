@@ -1,13 +1,13 @@
 import React from "react";
 
-function ReportABug() {
+function ItemPages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Report a bug</div>
+            Item Pages
         </div>
     );
 }
 
-export default ReportABug;
+export default ItemPages;

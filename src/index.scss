@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    // height: max-content;
+    height: 100vh;
+    > * {
+        // height: auto;
+        position: relative;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    margin: 5px;
+    // padding: 5px 10px;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #1ac4f8;
+}
+
+li {
+    // padding: 10px 15px;
+    // text-align: center;
+    // border: 1px solid #000;
+    margin: 5px;
+    // border-radius: 5px;
+}

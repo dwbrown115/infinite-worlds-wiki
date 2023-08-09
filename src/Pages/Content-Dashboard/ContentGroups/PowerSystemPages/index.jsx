@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
-function ReportABug() {
+function PowerSystemPages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Report a bug</div>
+            Power System Pages
         </div>
-    );
+    )
 }
 
-export default ReportABug;
+export default PowerSystemPages

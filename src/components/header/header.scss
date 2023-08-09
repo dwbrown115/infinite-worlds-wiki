@@ -1,0 +1,31 @@
+.headerWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-direction: column;
+    margin: 5px;
+    padding-left: 10px;
+}
+
+.userActions {
+    display: flex;
+    list-style-type: none;
+    > * {
+        margin: 5px;
+    }
+}
+
+.userWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .userHello {
+        margin: 5px;
+    }
+
+    .logoutButtonWrapper {
+        .logoutButton {
+            // height: 50%;
+        }
+    }
+}

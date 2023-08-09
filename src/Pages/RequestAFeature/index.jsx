@@ -5,7 +5,7 @@ function RequestAFeature() {
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Request A Feature</div>
+            <div>Request a feature</div>
         </div>
     );
 }

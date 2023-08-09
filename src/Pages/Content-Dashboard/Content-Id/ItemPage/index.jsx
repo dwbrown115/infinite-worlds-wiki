@@ -69,7 +69,15 @@ function ItemPage() {
                 <div>
                     <div style={{ display: "flex" }}>
                         <h1>{replacePartOfAString(id, ",", " ")}</h1>
-                        <button onClick={handleEdit}>Edit Page</button>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <button onClick={handleEdit}>Edit Page</button>
+                        </div>
                     </div>
                     <div>{message}</div>
                     {hideButton === false ? (
@@ -112,7 +120,6 @@ function ItemPage() {
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
             <Loading isLoading={isLoading} component={handlePageContent()} />
-            <Link to={`/content`}>Back</Link>
         </div>
     );
 }

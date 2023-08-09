@@ -10,10 +10,9 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-import firebase_app from "../../firebase/config";
+import { firebase_app, logOut } from "../../firebase";
 import { Content } from "../../components";
 import { Loading } from "../../helpers";
-import logOut from "../../firebase/auth/signout";
 
 function UserDashboard() {
     const db = getFirestore(firebase_app);
@@ -94,6 +93,7 @@ function UserDashboard() {
                     display: "flex",
                     flexDirection: "column",
                     width: "100%",
+                    height: "100vh",
                 }}
             >
                 <div>
@@ -126,21 +126,24 @@ function UserDashboard() {
                     })}
                     <br />
                     <br />
-                    {/* <button onClick={handleTest}>Test</button> */}
-                    <button onClick={handleLogout}>Sign out</button>
+                    <div>
+                        <button onClick={handleLogout}>Sign out</button>
+                    </div>
                     <br />
-                    <Link to={"/user/upload"}>Create Content</Link>
+                    <div>
+                        <button
+                            onClick={() => {
+                                router("/auth/reset-password");
+                            }}
+                        >
+                            Change password
+                        </button>
+                    </div>
+                    {/* <br /> */}
                     <br />
-                    <Link to={"/content"}>Content Dashboard</Link>
-                    <br />
-                    {/* <Link to={"/auth/reset-password"}>Reset password</Link> */}
-                    <button
-                        onClick={() => {
-                            router("/auth/reset-password");
-                        }}
-                    >
-                        Change password
-                    </button>
+                    <div>
+                        <Link to={"/user/upload"}>Create Content</Link>
+                    </div>
                 </div>
             </div>
         );

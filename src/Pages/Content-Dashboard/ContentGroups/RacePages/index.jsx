@@ -1,13 +1,13 @@
 import React from "react";
 
-function ReportABug() {
+function RacePages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Report a bug</div>
+            Race Pages
         </div>
     );
 }
 
-export default ReportABug;
+export default RacePages;

@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
-function ReportABug() {
+function CharacterPagesList() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Report a bug</div>
+            Character Pages
         </div>
-    );
+    )
 }
 
-export default ReportABug;
+export default CharacterPagesList

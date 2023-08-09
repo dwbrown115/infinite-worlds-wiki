@@ -84,7 +84,15 @@ function CharacterInfo() {
                 <div>
                     <div style={{ display: "flex" }}>
                         <h1>{replacePartOfAString(id, ",", " ")}</h1>
-                        <button onClick={handleEdit}>Edit Page</button>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <button onClick={handleEdit}>Edit Page</button>
+                        </div>
                     </div>
                     <div>{message}</div>
                     {hideButton === false ? (
@@ -124,7 +132,6 @@ function CharacterInfo() {
                         isManualOfStyle={false}
                     />
                 </div>
-                <Link to={`/content`}>Back</Link>
             </div>
         );
     }

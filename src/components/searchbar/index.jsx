@@ -15,9 +15,7 @@ function SearchBar() {
         router(0);
     };
     return (
-        <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
-        >
+        <div>
             <form onSubmit={handleSubmit} id="search-books">
                 <label type="text">Search: </label>
                 <input

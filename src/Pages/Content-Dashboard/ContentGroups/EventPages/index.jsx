@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
-function ReportABug() {
+function EventPages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Report a bug</div>
+            Event Pages
         </div>
-    );
+    )
 }
 
-export default ReportABug;
+export default EventPages

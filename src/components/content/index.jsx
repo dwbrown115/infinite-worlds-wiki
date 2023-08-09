@@ -118,11 +118,11 @@ function Content(
                     {search !== true ? (
                         <div>
                             <div>
-                                <div>Title:</div>
+                                <div>Series:</div>
                                 <Link to={`/content/${id}`}>{title}</Link>
                             </div>
                             <br />
-                            <button onClick={handleEditClick}>Edit</button>
+                            {/* <button onClick={handleEditClick}>Edit</button> */}
                         </div>
                     ) : (
                         <div>
@@ -130,15 +130,14 @@ function Content(
                                 <div>Title:</div>
                                 <Link to={`/content/${id}`}>{title}</Link>
                             </div>
-                            <div>
+                            {/* <div>
                                 <div>Text:</div>
-                                {/* <div>{text}</div> */}
                                 <p
                                     dangerouslySetInnerHTML={{
                                         __html: sanitizer(text),
                                     }}
                                 ></p>
-                            </div>
+                            </div> */}
                             <br />
                         </div>
                     )}

@@ -33,7 +33,7 @@ function ContentUpload() {
                     width: "100%",
                 }}
             >
-                <h1>Upload Content Templates</h1>
+                <h1>Content Templates</h1>
                 <hr />
                 <br />
                 <Link to={"/user/upload/BookPageTemplate"}>
