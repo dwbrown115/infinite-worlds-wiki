@@ -3,6 +3,7 @@ export { default as checkForImage } from "./checkForImage";
 export { default as checkImage } from "./checkImage";
 export { default as compareObjectArrays } from "./compareObjectArrays";
 export { default as deletePartOfString } from "./deletePartOfAString";
+export { default as filterAndOrganize } from "./FilterAndOrganize";
 export { default as handleCheckEmptyArray } from "./handleCheckEmptyArray";
 export { default as jsonParser } from "./jsonParser";
 export { default as Loading } from "./loading";

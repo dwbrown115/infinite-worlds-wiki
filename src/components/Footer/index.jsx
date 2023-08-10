@@ -5,7 +5,7 @@ import "./Footer.scss";
 function Footer() {
     return (
         <div
-        className="FooterWrapper"
+        // className="Footer"
         // style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
             <div>Footer</div>

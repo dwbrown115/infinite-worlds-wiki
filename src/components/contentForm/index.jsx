@@ -415,10 +415,16 @@ function ContentForm({
 
     return (
         <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                // height: "100vh",
+            }}
         >
             {handleContent()}
         </div>
     );
 }
 export default ContentForm;
+

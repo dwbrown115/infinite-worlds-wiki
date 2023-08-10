@@ -22,7 +22,7 @@ function ContentDashboard() {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const grabContent = async () => {
+    async function grabContent() {
         const q = await query(collection(db, "ContentRef"));
         // console.log(q);
         const content = onSnapshot(q, (querySnapshot) => {
@@ -38,8 +38,7 @@ function ContentDashboard() {
             setIsLoading(false);
             return () => content();
         });
-        // console.log(SortObjects(items, ["Series", "Type"]));
-    };
+    }
 
     const handleClick = () => {
         auth.onAuthStateChanged(function (user) {
@@ -103,10 +102,10 @@ function ContentDashboard() {
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
             <Loading isLoading={isLoading} component={handlePageContent()} />
-            <Link to={"/user/upload"}>Create content</Link>
-            <div>
+            {/* <Link to={"/user/upload"}>Create content</Link> */}
+            {/* <div>
                 <button onClick={handleClick}>Back</button>
-            </div>
+            </div> */}
         </div>
     );
 }

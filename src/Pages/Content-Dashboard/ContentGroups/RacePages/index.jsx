@@ -1,11 +1,14 @@
 import React from "react";
 
+import { DisplayContentType } from "../../../../components";
+
 function RacePages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            Race Pages
+            {/* Race Pages */}
+            <DisplayContentType Type={"Race"} />
         </div>
     );
 }

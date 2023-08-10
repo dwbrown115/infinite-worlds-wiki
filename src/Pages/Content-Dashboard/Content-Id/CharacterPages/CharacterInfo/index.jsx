@@ -81,18 +81,13 @@ function CharacterInfo() {
                         Relationships
                     </Link>
                 </div>
+                <br />
+                <div>
+                    <button onClick={handleEdit}>Edit Page</button>
+                </div>
                 <div>
                     <div style={{ display: "flex" }}>
                         <h1>{replacePartOfAString(id, ",", " ")}</h1>
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <button onClick={handleEdit}>Edit Page</button>
-                        </div>
                     </div>
                     <div>{message}</div>
                     {hideButton === false ? (

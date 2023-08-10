@@ -236,7 +236,7 @@ function BookPageTemplate() {
 
     function handlePageContent() {
         return (
-            <div>
+            <div style={{ width: "100%" }}>
                 <form onSubmit={handleUpload}>
                     <h1>Book Page Template</h1>
                     <div>

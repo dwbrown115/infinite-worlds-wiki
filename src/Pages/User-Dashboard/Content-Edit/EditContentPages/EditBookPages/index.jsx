@@ -262,7 +262,12 @@ function EditBookPage() {
     }
     return (
         <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                // height: "100vh",
+            }}
         >
             <Loading isLoading={isLoading} component={handlePageContent()} />
             {uploading ? (
@@ -273,11 +278,11 @@ function EditBookPage() {
                 </div>
             ) : (
                 <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                    }}
+                    // style={{
+                    //     display: "flex",
+                    //     flexDirection: "column",
+                    //     width: "100%",
+                    // }}
                 >
                     {reset === false ? (
                         <div>

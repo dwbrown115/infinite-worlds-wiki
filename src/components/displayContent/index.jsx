@@ -5,7 +5,12 @@ import "./displayContent.scss";
 function DisplayContent({ array, isManualOfStyle }) {
     return (
         <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                // height: "100vh",
+            }}
         >
             {array.content?.map((item, index) => {
                 return (

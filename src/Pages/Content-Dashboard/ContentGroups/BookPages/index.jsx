@@ -1,13 +1,15 @@
-import React from 'react'
+import React from "react";
+
+import { DisplayContentType } from "../../../../components";
 
 function BookPages() {
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            Book Pages
+            <DisplayContentType Type={"Book"} />
         </div>
     );
 }
 
-export default BookPages
+export default BookPages;
