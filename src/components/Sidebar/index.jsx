@@ -17,7 +17,7 @@ function Sidebar() {
             </div>
             <div className="TopWrapper">
                 <Link to={"/"}>Home</Link>
-                <a href="https://discord.gg/SMDsWAMr">Chat</a>
+                <a href="https://discord.gg/SMDsWAMr">Discord</a>
             </div>
             <div className="ListWrapper">
                 {/* <Link to={"/content"}>Content Dashboard</Link> */}
@@ -60,7 +60,9 @@ function Sidebar() {
                 <h3>Other</h3>
                 <ul className="List">
                     <li>
-                        <Link to={"/FeaturesAndBugsPipeline"}>Pipeline</Link>
+                        <Link to={"/FeaturesAndBugsPipeline"}>
+                            Features Pipeline
+                        </Link>
                     </li>
                 </ul>
             </div>

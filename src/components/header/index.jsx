@@ -47,15 +47,16 @@ function Header() {
         });
     }, [user]);
 
-    const handleLogout = async () => {
+    async function handleLogout() {
+        console.log("Logging out");
         try {
             await logOut(user);
-            // router("/");
+            router(0);
         } catch (e) {
             console.log(e);
             return false;
         }
-    };
+    }
     return (
         <div>
             <div className="headerWrapper">

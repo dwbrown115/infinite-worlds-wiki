@@ -8,7 +8,7 @@ import {
 import algoliasearch from "algoliasearch";
 
 import firebase_app from "../../firebase/config";
-import addData from "../../firebase/firestore/addData";
+import { addData } from "../../firebase";
 import { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_KEY } from "../../../config";
 
 function SignUp() {
@@ -101,7 +101,7 @@ function SignUp() {
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
             <div className="form-wrapper">
-                <div>Sign up</div>
+                <h1>Sign up</h1>
                 {/* <button onClick={debug}>Test</button> */}
                 {/* onSubmit={handleForm} */}
                 <form onSubmit={handleForm} className="form">

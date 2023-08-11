@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import signIn from "../../firebase/auth/signin";
+import { signIn } from "../../firebase";
 
 import firebase_app from "../../firebase/config";
 
@@ -43,7 +43,7 @@ function SignIn() {
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
             <div className="form-wrapper">
-                <div>Sign in</div>
+                <h1>Sign in</h1>
                 <form onSubmit={handleForm} className="form">
                     <label htmlFor="email">
                         <p>Email</p>
