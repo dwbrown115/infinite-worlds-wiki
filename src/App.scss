@@ -4,15 +4,20 @@
 
 .RoutesWrapper {
     margin-left: 12em;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
+    width: 100%;
+    min-height: 100vh;
 }
 
 .PageWrapper {
     // height: 1000px;
+    // height: 10;
+    min-width: 100vh;
 }
 
 .App {
     // height: 100vh;
     // height: 100%;
     // position: relative;
+    min-height: 100vh;
 }

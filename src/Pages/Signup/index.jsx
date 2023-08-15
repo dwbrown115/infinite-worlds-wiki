@@ -16,10 +16,10 @@ function SignUp() {
     const navigate = useNavigate();
     var client = algoliasearch(ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_KEY);
     var index = client.initIndex("InfiniteWorldsWikiUsers");
-    const [userName, setUserName] = useState("jinsai115");
-    const [email, setEmail] = useState("jinsai115@gmail.com");
-    const [password, setPassword] = useState("@Jivvc115");
-    const [confirmPassword, setConfirmPassword] = useState("@Jivvc115");
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleSignUp = async () => {
         try {
@@ -153,9 +153,11 @@ function SignUp() {
                             placeholder="Confirm password:"
                         />
                     </label>
-                    <button type="submit">Sign up</button>
+                    <div>
+                        <button type="submit">Sign up</button>
+                    </div>
                 </form>
-                <Link to={"/"}>Home</Link>
+                {/* <Link to={"/"}>Home</Link> */}
             </div>
         </div>
     );

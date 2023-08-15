@@ -8,8 +8,8 @@ import firebase_app from "../../firebase/config";
 function SignIn() {
     const auth = getAuth(firebase_app);
     const router = useNavigate();
-    const [email, setEmail] = useState("jinsai115@gmail.com");
-    const [password, setPassword] = useState("@Jivvc115");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleForm = async (event) => {
         event.preventDefault();

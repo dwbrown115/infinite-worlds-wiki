@@ -64,6 +64,9 @@ function Sidebar() {
                             Features Pipeline
                         </Link>
                     </li>
+                    <li>
+                        <Link to={"/ChangeLog"}>Change Log</Link>
+                    </li>
                 </ul>
             </div>
         </div>

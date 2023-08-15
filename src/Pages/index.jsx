@@ -41,3 +41,6 @@ export { default as SearchResults } from "./SearchResults";
 export { default as RequestAFeature } from "./RequestAFeature";
 export { default as ReportABug } from "./ReportABug";
 export { default as FeaturesAndBugsPipeline } from "./FeaturesAndBugsPipeline";
+export { default as ChangeLog } from "./ChangeLog";
+export { default as ChangeLogAdd } from "./ChangeLogAdd";
+export { default as PrivacyPolicy } from "./PrivacyPolicy";

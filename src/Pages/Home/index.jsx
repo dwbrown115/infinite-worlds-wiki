@@ -9,24 +9,18 @@ function Home() {
     const router = useNavigate();
     const user = auth.currentUser;
 
-    // useEffect(() => {
-    //     auth.onAuthStateChanged(function (user) {
-    //         if (user) {
-    //             router("/user");
-    //             // console.log("user is logged in");
-    //         } else {
-    //             router("/");
-    //         }
-    //     });
-    // }, [user]);
     return (
         <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+            // style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
-            <div>Home</div>
-            {/* <Link to={"/login"}>Sign in</Link>
-            <Link to={"/signup"}>Sign up</Link>
-            <Link to={"/content"}>Content Dashboard</Link> */}
+            <h1>Welcome Traveler to the database of The Infinite Worlds</h1>
+            <div>
+                <p>
+                    I have collated all the information I have gathered since
+                    leaving Angoril. I Suppose you Travelers would refer to this
+                    as a wiki
+                </p>
+            </div>
         </div>
     );
 }

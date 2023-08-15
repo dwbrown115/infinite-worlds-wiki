@@ -41,6 +41,9 @@ import {
     PowerSystemPage,
     RacePage,
     FeaturesAndBugsPipeline,
+    ChangeLog,
+    ChangeLogAdd,
+    PrivacyPolicy,
 } from "./Pages";
 
 import {
@@ -237,10 +240,22 @@ function App() {
                                 path="/Content/RacePages"
                                 Component={RacePages}
                             />
+                            <Route
+                                path="/ChangeLog"
+                                Component={ChangeLog}
+                            />
+                            <Route
+                                path="/ChangeLogAdd"
+                                Component={ChangeLogAdd}
+                            />
+                            <Route
+                                path="/PrivacyPolicy"
+                                Component={PrivacyPolicy}
+                            />
                         </Routes>
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
             </Router>
         </div>
     );
