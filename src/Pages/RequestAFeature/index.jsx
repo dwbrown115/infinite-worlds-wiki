@@ -24,12 +24,12 @@ function RequestAFeature() {
     const [text, setText] = useState("");
     const [image, setImage] = useState("");
     const [imageUrl, setImageUrl] = useState(null);
-    // const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     const collection = "FeatureRequests";
-    const editedBy = email;
+    // const editedBy = email;
 
     const grabUser = async () => {
         const collection = "users";
@@ -77,7 +77,9 @@ function RequestAFeature() {
                         title: title,
                         text,
                         imageUrl,
-                        createdBy: editedBy,
+                        createdBy: userName,
+                        userEmail: email,
+                        priority: "low",
                         createdAt: time,
                     };
                     handleUpload(data);
@@ -88,7 +90,9 @@ function RequestAFeature() {
             const data = {
                 title: title,
                 text,
-                createdBy: editedBy,
+                createdBy: userName,
+                userEmail: email,
+                priority: "high",
                 createdAt: time,
             };
             handleUpload(data);

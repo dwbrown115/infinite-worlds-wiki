@@ -3,7 +3,7 @@ import algoliasearch from "algoliasearch";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_KEY } from "../../../config";
-import { Loading, searchAndBold, replacePartOfAString } from "../../helpers";
+import { Loading, replacePartOfAString } from "../../helpers";
 import { Content } from "../../components";
 
 function SearchResults() {

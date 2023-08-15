@@ -19,17 +19,16 @@ function ReportABug() {
     const router = useNavigate();
 
     // const [collection, setCollection] = useState("content");
-    const [id, setId] = useState(makeid(32));
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [image, setImage] = useState("");
     const [imageUrl, setImageUrl] = useState(null);
-    // const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     const collection = "BugReports";
-    const editedBy = email;
+    // const editedBy = email;
 
     const grabUser = async () => {
         const collection = "users";
@@ -39,7 +38,7 @@ function ReportABug() {
         const docSnap = await getDoc(docRef);
         try {
             const data = docSnap.data();
-            // setUserName(data["userName"]);
+            setUserName(data["userName"]);
             setEmail(data["email"]);
             setIsLoading(false);
         } catch (e) {
@@ -77,7 +76,8 @@ function ReportABug() {
                         title: title,
                         text,
                         imageUrl,
-                        createdBy: editedBy,
+                        createdBy: userName,
+                        userEmail: email,
                         createdAt: time,
                     };
                     handleUpload(data);
@@ -88,7 +88,8 @@ function ReportABug() {
             const data = {
                 title: title,
                 text,
-                createdBy: editedBy,
+                createdBy: userName,
+                userEmail: email,
                 createdAt: time,
             };
             handleUpload(data);
