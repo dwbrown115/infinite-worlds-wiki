@@ -75,7 +75,7 @@ function SignIn() {
                 </form>
                 <br />
                 <button onClick={handleClick}>Forgot password?</button>
-                <Link to={"/"}>Home</Link>
+                {/* <Link to={"/"}>Home</Link> */}
             </div>
         </div>
     );
