@@ -10,20 +10,37 @@
 }
 
 .LogoWrapper {
-    // .Logo:hover {
-    //     filter: invert(69%) sepia(16%) saturate(7078%) hue-rotate(157deg)
-    //         brightness(101%) contrast(95%);
-    // }
+    .logoImageWrapper {
+        width: 128px;
+        height: 128px;
+        margin: 0 auto;
+        .Logo {
+            width: 100%;
+            height: 100%;
+        }
+    }
     .LogoHeader {
         margin-top: 0;
     }
 }
+
+// .LogoWrapper:hover {
+//     filter: invert(69%) sepia(16%) saturate(7078%) hue-rotate(157deg)
+//         brightness(101%) contrast(95%);
+//     .LogoHeader {
+//         color: black;
+//     }
+// }
 
 .TopWrapper {
     display: flex;
     flex-direction: column;
     margin-left: 10%;
     padding-left: 0;
+    .List {
+        list-style-type: none;
+        padding-left: 0;
+    }
 }
 
 .ListWrapper {

@@ -13,7 +13,7 @@ function Footer() {
             <div>
                 <a href="https://discord.gg/SMDsWAMr">Discord</a>
             </div>
-            <div>Version: Beta 1.2.0</div>
+            <div>Version: Beta 1.2.1</div>
             <div>
                 Created and managed by{" "}
                 {/* <a href="https://www.silvercastledigital.com/"> */}

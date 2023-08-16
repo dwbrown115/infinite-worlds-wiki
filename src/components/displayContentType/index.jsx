@@ -54,7 +54,7 @@ function DisplayContentType({ Type }) {
                                 return (
                                     <ul key={key}>
                                         <li>
-                                            <Link to={`/${type}/${name}`}>
+                                            <Link to={`/${type}/${content.id}`}>
                                                 {content.Name}
                                             </Link>
                                         </li>

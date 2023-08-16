@@ -17,10 +17,11 @@ function SearchBar() {
     return (
         <div>
             <form onSubmit={handleSubmit} id="search-books">
-                <label type="text">Search: </label>
+                {/* <label type="text">Search: </label> */}
                 <input
                     type="search"
                     id="searchBooks"
+                    placeholder="Search:"
                     className="search-books-input"
                     onChange={(e) => setSearchForm(e.target.value.toString())}
                 />

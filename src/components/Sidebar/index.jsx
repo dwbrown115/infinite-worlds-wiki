@@ -11,13 +11,24 @@ function Sidebar() {
         <div className="SidebarWrapper">
             <div className="LogoWrapper">
                 <Link to={"/"}>
-                    <img src={logo} alt="Logo" className="Logo" />
+                    <div className="logoImageWrapper">
+                        <img src={logo} alt="Logo" className="Logo" />
+                    </div>
                     <h2 className="LogoHeader">Infinite Worlds Wiki</h2>
                 </Link>
             </div>
             <div className="TopWrapper">
-                <Link to={"/"}>Home</Link>
-                <a href="https://discord.gg/SMDsWAMr">Discord</a>
+                <ul className="List">
+                    <li>
+                        <Link to={"/"}>Home</Link>
+                    </li>
+                    <li>
+                        <a href="https://discord.gg/SMDsWAMr">Discord</a>
+                    </li>
+                    <li>
+                        <a href="https://sethring.com/">Seth Ring</a>
+                    </li>
+                </ul>
             </div>
             <div className="ListWrapper">
                 {/* <Link to={"/content"}>Content Dashboard</Link> */}
