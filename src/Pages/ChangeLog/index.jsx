@@ -45,7 +45,14 @@ function ChangeLog() {
                             <h2>{item.title}</h2>
                             <ul>
                                 {item.changes.map((item, key) => {
-                                    return <li key={key}>{item.textItem}</li>;
+                                    return (
+                                        <li
+                                            style={{ listStyle: "none" }}
+                                            key={key}
+                                        >
+                                            {item.textItem}
+                                        </li>
+                                    );
                                 })}
                             </ul>
                         </div>
