@@ -39,7 +39,7 @@ function RequestAFeature() {
         const docSnap = await getDoc(docRef);
         try {
             const data = docSnap.data();
-            // setUserName(data["userName"]);
+            setUserName(data["userName"]);
             setEmail(data["email"]);
             setIsLoading(false);
         } catch (e) {
