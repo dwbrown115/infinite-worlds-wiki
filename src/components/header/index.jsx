@@ -77,9 +77,14 @@ function Header() {
                                 </li>
                             </ul>
                             <div className="userWrapper">
-                                <div className="userHello">
-                                    Welcome back{" "}
-                                    <Link to={"/user"}>{userName}</Link>
+                                <div
+                                    style={{ display: "flex" }}
+                                    className="userHello"
+                                >
+                                    Welcome Back
+                                    <div style={{ marginLeft: "5px" }}>
+                                        <Link to={"/user"}>{userName}</Link>
+                                    </div>
                                 </div>
                                 <div className="logoutButtonWrapper">
                                     <button
