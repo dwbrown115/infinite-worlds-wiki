@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import logo from "./infiniteWorldsWikiLogo.png";
+
+// import { logo } from "../../assets";
+
 import "./Sidebar.scss";
 function Sidebar() {
     return (
         <div className="SidebarWrapper">
             <div className="LogoWrapper">
                 <Link to={"/"}>
-                    <img
-                        src="/src/assets/infiniteWorldsWikiLogo.png"
-                        alt="Logo"
-                        className="Logo"
-                    />
+                    <img src={logo} alt="Logo" className="Logo" />
                     <h2 className="LogoHeader">Infinite Worlds Wiki</h2>
                 </Link>
             </div>
