@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 // import { signIn } from "../../firebase";
 
-import { signIn } from "firebase/auth";
+import signIn from "../../firebase/auth/signin";
 
 import firebase_app from "../../firebase/config";
 
