@@ -10,8 +10,8 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-import { firebase_app, logOut } from "../../firebase";
-import { Content } from "../../components";
+import { firebase_app } from "../../firebase";
+import logOut from '../../firebase/auth/signout'import { Content } from "../../components";
 import { Loading } from "../../helpers";
 
 function UserDashboard() {

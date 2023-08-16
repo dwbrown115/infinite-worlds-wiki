@@ -2,16 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import {
-    collection,
     doc,
     getDoc,
-    query,
-    onSnapshot,
     getFirestore,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-import { firebase_app, logOut } from "../../firebase";
+import { firebase_app } from "../../firebase";
+import logOut from '../../firebase/auth/signout'
 import { Searchbar } from "..";
 
 import "./header.scss";
