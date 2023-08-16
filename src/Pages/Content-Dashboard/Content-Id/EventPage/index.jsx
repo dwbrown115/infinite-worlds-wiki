@@ -48,6 +48,11 @@ function EventPage() {
     }
 
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} || Infinite Worlds Wiki`;
         setId(deletePartOfString(window.location.href.split("Event/")[1], "/"));
         grabContent();
     }, [id]);

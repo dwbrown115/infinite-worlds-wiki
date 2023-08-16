@@ -10,6 +10,7 @@ function ContentUpload() {
     const router = useNavigate();
 
     useEffect(() => {
+        document.title = "Content Upload || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {

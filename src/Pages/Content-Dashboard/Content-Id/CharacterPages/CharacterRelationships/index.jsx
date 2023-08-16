@@ -32,6 +32,11 @@ function CharacterRelationships() {
         setIsLoading(false);
     }
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} Relationships || Infinite Worlds Wiki`;
         setId(
             deletePartOfString(window.location.href.split("Character/")[1], "/")
         );

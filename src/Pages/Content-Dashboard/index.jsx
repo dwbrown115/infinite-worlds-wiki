@@ -52,6 +52,7 @@ function ContentDashboard() {
     };
 
     useEffect(() => {
+        document.title = "Content Dashboard || Infinite Worlds Wiki";
         grabContent();
     }, []);
 

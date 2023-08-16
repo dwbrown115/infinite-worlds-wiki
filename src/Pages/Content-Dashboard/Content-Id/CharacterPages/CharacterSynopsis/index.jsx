@@ -33,6 +33,11 @@ function CharacterSynopsis() {
     }
 
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} Synopsis || Infinite Worlds Wiki`;
         setId(
             deletePartOfString(window.location.href.split("Character/")[1], "/")
         );

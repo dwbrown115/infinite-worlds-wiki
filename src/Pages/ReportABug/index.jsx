@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// import firebase_app from "../../firebase/config";
-// import addData from "../../firebase/firestore/addData";
-// import makeid from "../../helpers/randomString";
 import { Loading, makeid } from "../../helpers";
 import { firebase_app, addData } from "../../firebase";
 
@@ -14,11 +11,9 @@ function ReportABug() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const storage = getStorage(firebase_app);
-    // const collection = "content";
     const user = auth.currentUser;
     const router = useNavigate();
 
-    // const [collection, setCollection] = useState("content");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [image, setImage] = useState("");
@@ -28,7 +23,6 @@ function ReportABug() {
     const [isLoading, setIsLoading] = useState(true);
 
     const collection = "BugReports";
-    // const editedBy = email;
 
     const grabUser = async () => {
         const collection = "users";
@@ -139,6 +133,10 @@ function ReportABug() {
             setImage(event.target.files[0]);
         }
     };
+
+    useEffect(() => {
+        document.title = "Report Bug || Infinite Worlds Wiki";
+    }, []);
 
     const handlePageContent = () => {
         return (

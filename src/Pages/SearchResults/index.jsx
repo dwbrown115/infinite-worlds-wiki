@@ -42,6 +42,7 @@ function SearchResults() {
     };
 
     useEffect(() => {
+        document.title = "Search Results || Infinite Worlds";
         // console.log(query);
         search(query);
         // console.log(query);

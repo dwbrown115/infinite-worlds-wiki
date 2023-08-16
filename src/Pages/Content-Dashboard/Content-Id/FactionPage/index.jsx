@@ -53,6 +53,11 @@ function FactionPage() {
     }
 
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} || Infinite Worlds Wiki`;
         setId(
             deletePartOfString(window.location.href.split("Faction/")[1], "/")
         );

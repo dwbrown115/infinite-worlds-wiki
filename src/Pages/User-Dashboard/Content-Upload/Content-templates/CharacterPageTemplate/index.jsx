@@ -110,6 +110,7 @@ function CharacterPageTemplate() {
     }
 
     useEffect(() => {
+        document.title = "Character Page Template || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {

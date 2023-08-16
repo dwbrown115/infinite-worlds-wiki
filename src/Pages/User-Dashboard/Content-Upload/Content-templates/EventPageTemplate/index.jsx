@@ -96,6 +96,7 @@ function EventPageTemplate() {
     }
 
     useEffect(() => {
+        document.title = "Event Page Template || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {

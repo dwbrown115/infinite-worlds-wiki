@@ -11,6 +11,7 @@ import { firebase_app } from "../../firebase";
 
 function FeaturesAndBugsPipeline() {
     const db = getFirestore(firebase_app);
+
     const [featureItems, setFeatureItems] = useState([]);
     const [bugItems, setBugItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -46,44 +47,54 @@ function FeaturesAndBugsPipeline() {
     }
 
     useEffect(() => {
+        document.title = "Features and Bugs Pipeline || Infinite Worlds Wiki";
         grabContent();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(featureItems);
-    //     console.log(bugItems);
-    // }, [featureItems, bugItems]);
-
-    function handleMapContent(name, array) {
+    function handleMapContent(array) {
         return (
             <div>
-                <h2>{name}</h2>
                 {array?.map((item, key) => {
                     // console.log(item);
                     return (
-                        <div key={key}>
-                            <hr />
+                        <div
+                            style={{ marginLeft: "20px", marginRight: "20px" }}
+                            key={key}
+                        >
+                            {/* <hr /> */}
                             <div style={{ display: "flex" }}>
-                                <h3>Title:</h3>
-                                <h3 style={{ marginLeft: "5px" }}>
+                                {/* <h3 style={{ marginBottom: "0px" }}>Title:</h3> */}
+                                <h3
+                                    style={{
+                                        marginLeft: "5px",
+                                        marginBottom: "0px",
+                                    }}
+                                >
                                     {item.title}
                                 </h3>
                             </div>
-                            <div>
-                                <h3>Description:</h3>
-                                <p>{item.text}</p>
+                            <div style={{ marginLeft: "30px" }}>
+                                <div>
+                                    <h3>Description:</h3>
+                                    <p>{item.text}</p>
+                                </div>
+                                {/* <hr /> */}
+                                <div>
+                                    Created by: <br />
+                                    <b>{item.createdBy}</b>
+                                </div>
+                                <br />
+                                <div>
+                                    Created at: <br />
+                                    <b>{item.createdAt}</b>
+                                </div>
+                                <br />
+                                <div>
+                                    Priority: <br />
+                                    <b>{item.priority}</b>
+                                </div>
+                                {/* <hr /> */}
                             </div>
-                            <hr />
-                            <div>
-                                Created by: <b>{item.createdBy}</b>
-                            </div>
-                            <div>
-                                Created at: <b>{item.createdAt}</b>
-                            </div>
-                            <div>
-                                Priority: <b>{item.priority}</b>
-                            </div>
-                            {/* <hr /> */}
                         </div>
                     );
                 })}
@@ -101,8 +112,29 @@ function FeaturesAndBugsPipeline() {
                 }}
             >
                 <h1>Features and Bugs Pipeline</h1>
-                {handleMapContent("Features", featureItems)}
-                {handleMapContent("Bugs", bugItems)}
+                <div style={{ marginLeft: "20px", marginRight: "20px" }}>
+                    <h2>Features</h2>
+                    {featureItems.length === 0 ? (
+                        <h3 style={{ marginLeft: "20px", marginRight: "20px" }}>
+                            All features have been added
+                        </h3>
+                    ) : (
+                        handleMapContent(featureItems)
+                    )}
+                    {/* <br /> */}
+                    {/* <hr /> */}
+                    <h2>Bugs</h2>
+                    {bugItems.length === 0 ? (
+                        <div
+                            style={{ marginLeft: "20px", marginRight: "20px" }}
+                        >
+                            <h3>All known bugs have been fixed</h3>
+                        </div>
+                    ) : (
+                        handleMapContent(bugItems)
+                    )}
+                </div>
+                {/* <hr /> */}
             </div>
         );
     }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -21,6 +21,10 @@ function ForgotPassword() {
             console.log(e);
         }
     }
+
+    useEffect(() => {
+        document.title = "Forgot Password || Infinite Worlds Wiki";
+    }, []);
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}

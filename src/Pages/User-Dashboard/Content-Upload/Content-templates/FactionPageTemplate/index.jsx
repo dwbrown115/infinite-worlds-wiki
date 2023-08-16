@@ -99,6 +99,7 @@ function FactionPageTemplate() {
     }
 
     useEffect(() => {
+        document.title = "Faction Page Template || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {

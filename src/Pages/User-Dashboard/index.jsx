@@ -61,6 +61,7 @@ function UserDashboard() {
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {
+                    document.title = "User Dashboard || Infinite Worlds Wiki";
                     grabUser();
                     grabContent();
                     // console.log(items);

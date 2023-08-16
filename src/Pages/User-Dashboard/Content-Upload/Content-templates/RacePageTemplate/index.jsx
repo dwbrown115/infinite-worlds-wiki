@@ -105,6 +105,7 @@ function RacePageTemplate() {
     }
 
     useEffect(() => {
+        document.title = "Race Page Template || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {

@@ -48,6 +48,11 @@ function ItemPage() {
     }
 
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} || Infinite Worlds Wiki`;
         setId(deletePartOfString(window.location.href.split("Item/")[1], "/"));
         grabContent();
     }, [id]);

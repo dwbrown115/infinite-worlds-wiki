@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import {
-    doc,
-    getDoc,
-    getFirestore,
-} from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 import { firebase_app } from "../../firebase";
-import logOut from '../../firebase/auth/signout'
+import logOut from "../../firebase/auth/signout";
 import { Searchbar } from "..";
 
 import "./header.scss";
@@ -39,8 +35,10 @@ function Header() {
     useEffect(() => {
         auth.onAuthStateChanged(function (user) {
             if (user) {
-                grabUser();
-                setLoggedIn(true);
+                if (user.emailVerified) {
+                    grabUser();
+                    setLoggedIn(true);
+                }
             }
         });
     }, [user]);

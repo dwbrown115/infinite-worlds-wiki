@@ -58,6 +58,11 @@ function RacePage() {
     }
 
     useEffect(() => {
+        document.title = `${replacePartOfAString(
+            id,
+            ",",
+            " "
+        )} || Infinite Worlds Wiki`;
         setId(deletePartOfString(window.location.href.split("Race/")[1], "/"));
         grabContent();
     }, [id]);

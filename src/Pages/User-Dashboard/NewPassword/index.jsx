@@ -64,6 +64,7 @@ function NewPassword() {
     }
 
     useEffect(() => {
+        document.title = "New Password || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (!user.emailVerified) {

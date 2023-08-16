@@ -71,6 +71,7 @@ function ContentId() {
     };
 
     useLayoutEffect(() => {
+        document.title = "Content";
         grabContent();
     }, [id]);
 

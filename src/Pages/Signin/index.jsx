@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 // import { signIn } from "../../firebase";
@@ -40,6 +40,10 @@ function SignIn() {
     function handleClick() {
         router("/login/forgot-password");
     }
+
+    useEffect(() => {
+        document.title = "Sign In || Infinite Worlds Wiki";
+    }, []);
     return (
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}

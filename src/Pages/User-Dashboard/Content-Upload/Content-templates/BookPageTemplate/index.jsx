@@ -98,6 +98,7 @@ function BookPageTemplate() {
     }
 
     useEffect(() => {
+        document.title = "Book Page Template || Infinite Worlds Wiki";
         auth.onAuthStateChanged(function (user) {
             if (user) {
                 if (user.emailVerified) {
