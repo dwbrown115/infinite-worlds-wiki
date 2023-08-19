@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { ContentForm } from "../../components";
 import { replaceImage } from "../../helpers";
-import { firebase_app, addData } from "../../firebase";
+import { addData } from "../../firebase";
 function ContentTemplateSection({
     type,
     section,
@@ -21,7 +21,6 @@ function ContentTemplateSection({
     const [reset, setReset] = useState(false);
     const [progress, setProgress] = useState([]);
 
-    
     useEffect(() => {
         if (submit === true) {
             handleDataSubmit();
@@ -78,6 +77,7 @@ function ContentTemplateSection({
                         edited={`edited-${type}`}
                     />
                     <br />
+
                     <div>
                         <button onClick={() => setOptionalInternal(true)}>
                             Remove the {sectionName.toLowerCase()}
@@ -87,7 +87,7 @@ function ContentTemplateSection({
             ) : (
                 <div>
                     <button onClick={() => setOptionalInternal(false)}>
-                        Add {sectionName}
+                        Add {sectionName.toLowerCase()}
                     </button>
                 </div>
             )}

@@ -3,18 +3,15 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
-import { ContentForm, ContentTemplateSection } from "../../../../../components";
-import { replaceImage, ProgressBar } from "../../../../../helpers";
-import addData from "../../../../../firebase/firestore/addData";
+import { ContentTemplateSection } from "../../../../../components";
+import { ProgressBar } from "../../../../../helpers";
 import firebase_app from "../../../../../firebase/config";
-import { func } from "prop-types";
 
 function BookPageTemplate() {
     const db = getFirestore(firebase_app);
     const auth = getAuth(firebase_app);
     const user = auth.currentUser;
     const collection = "Content/Books";
-    const windowProgress = window.progress;
     const router = useNavigate();
 
     const sections = [
@@ -57,7 +54,6 @@ function BookPageTemplate() {
     const path = `${collection}/${book.split(" ")}/`;
 
     useEffect(() => {
-        // window.progress = []
         const storedBook = localStorage.getItem("book");
         if (storedBook) {
             setBook(storedBook);
@@ -166,15 +162,10 @@ function BookPageTemplate() {
         }, 100);
     }
 
-    useEffect(() => {
-        // console.log("progress", progress);
-    }, [progress]);
-
     function handlePageContentTest() {
         return (
             <div style={{ width: "100%" }}>
                 <form onSubmit={handleUploadTest}>
-                    <h1>Book Page Template</h1>
                     <div>
                         <h3>Book Name</h3>
                         <input
@@ -233,6 +224,7 @@ function BookPageTemplate() {
         <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
+            <h1>Book Page Template</h1>
             {handlePageContentTest()}
             <br />
             <br />
