@@ -12,10 +12,20 @@ function ContentForm({
     edited,
     path,
     contentName,
+    // test,
 }) {
     const [sections, setSections] = useState([]);
     const [edit, setEdit] = useState(jsonParser(localStorage.getItem(edited)));
     const [confirm, setConfirm] = useState(false);
+
+    useEffect(() => {
+        // console.log(reset);
+        if (reset == true) {
+            // console.log("test");
+            setSections([]);
+            // removeAllObjects(sections);
+        }
+    }, [reset]);
 
     async function grabDataBaseContent() {
         if (path) {
@@ -41,7 +51,7 @@ function ContentForm({
         if (storedArray) {
             if (storedArray.content != null) {
                 // console.log("Defined");
-                if (storedArray.content != undefined) {
+                if (storedArray.content != undefined || null) {
                     setSections(storedArray.content);
                 }
             }
@@ -170,7 +180,7 @@ function ContentForm({
     // This is the new function that handles the image removal
     const removeImage = (index) => {
         const newSections = [...sections];
-        newSections[index].sectionImage = undefined; // Set the image to null
+        newSections[index].sectionImage = undefined || null; // Set the image to null
         setSections(newSections);
         document.getElementById(`image${index}`).value = null;
     };
@@ -195,7 +205,7 @@ function ContentForm({
                 </button>
                 <br />
                 {/* eslint-disable-next-line react/prop-types */}
-                {section.sectionImage === undefined ? (
+                {section.sectionImage === undefined || null ? (
                     <div>
                         {!section.imageUrl && (
                             <button
@@ -216,7 +226,7 @@ function ContentForm({
                         <img src={section.imageUrl} alt="current image" />
                     </div>
                 )}
-                {section.imageUrl !== undefined ? (
+                {section.imageUrl !== undefined || null ? (
                     <div>
                         {section.sectionImage !== null && (
                             <div className="image">
@@ -263,7 +273,7 @@ function ContentForm({
                     </div>
                 ) : (
                     <div>
-                        {section.sectionImage !== undefined && (
+                        {section.sectionImage !== undefined || null && (
                             <div className="image">
                                 <label htmlFor={`image${index}`}>Image:</label>
                                 {section.sectionImage && (
@@ -375,37 +385,38 @@ function ContentForm({
                 ) : (
                     <div>
                         {confirm === false ? (
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setConfirm(true);
-                                }}
-                            >
-                                Reset
-                            </button>
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setConfirm(true);
+                                    }}
+                                >
+                                    Reset
+                                </button>
+                            </div>
                         ) : (
-                            <div />
-                        )}
-                        {confirm === true ? (
                             <div
                                 style={{
                                     display: "flex",
                                     flexDirection: "column",
                                 }}
                             >
-                                <button
-                                    onClick={() => {
-                                        setConfirm(false);
-                                    }}
-                                >
-                                    Cancel reset
-                                </button>
-                                <button onClick={handleReset}>
-                                    Confirm reset
-                                </button>
+                                <div>
+                                    <button
+                                        onClick={() => {
+                                            setConfirm(false);
+                                        }}
+                                    >
+                                        Cancel reset
+                                    </button>
+                                </div>
+                                <div>
+                                    <button onClick={handleReset}>
+                                        Confirm reset
+                                    </button>
+                                </div>
                             </div>
-                        ) : (
-                            <div />
                         )}
                     </div>
                 )}
@@ -427,4 +438,3 @@ function ContentForm({
     );
 }
 export default ContentForm;
-

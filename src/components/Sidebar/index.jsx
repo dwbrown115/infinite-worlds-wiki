@@ -23,10 +23,14 @@ function Sidebar() {
                         <Link to={"/"}>Home</Link>
                     </li>
                     <li>
-                        <a href="https://discord.gg/SMDsWAMr">Discord</a>
+                        <a target="_blank" href="https://discord.gg/SMDsWAMr">
+                            Discord
+                        </a>
                     </li>
                     <li>
-                        <a href="https://sethring.com/">Seth Ring</a>
+                        <a target="_blank" href="https://sethring.com/">
+                            Seth Ring
+                        </a>
                     </li>
                 </ul>
             </div>

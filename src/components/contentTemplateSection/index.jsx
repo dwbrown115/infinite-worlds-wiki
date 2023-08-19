@@ -12,18 +12,34 @@ function ContentTemplateSection({
     submit,
     manualOfStyle,
     optional,
+    Reset,
+    handleProgress,
 }) {
     const [data, setData] = useState([]);
     const [edited, setEdited] = useState(false);
     const [optionalInternal, setOptionalInternal] = useState(optional);
     const [reset, setReset] = useState(false);
+    const [progress, setProgress] = useState([]);
+
+    
+    useEffect(() => {
+        if (submit === true) {
+            handleDataSubmit();
+        }
+    }, [submit]);
 
     useEffect(() => {
-        // console.log("data", data);
+        setReset(Reset);
+    }, [Reset]);
+
+    useEffect(() => {
         localStorage.setItem(`${type}${section}`, JSON.stringify(data));
-        // console.log()
         localStorage.setItem(`edited-${type}`, edited);
     }, [data, edited]);
+
+    useEffect(() => {
+        handleProgress(progress);
+    }, [progress]);
 
     function handleSection(inputArray) {
         setEdited(true);
@@ -35,25 +51,14 @@ function ContentTemplateSection({
 
     async function handleDataSubmit() {
         if (optionalInternal === false) {
+            setProgress((prev) => [...prev, "started"]);
             await replaceImage(data, type, section, name.split(" "));
             await addData(path, section, data);
-            setReset(true);
-            // setData([]);
-        }
-    }
-
-    useEffect(() => {
-        if (submit === true) {
-            handleDataSubmit();
-        }
-    }, [submit]);
-
-    function handleReset() {
-        // setReset(true);
-        if (reset === true) {
-            setReset(false);
-        } else {
-            setReset(true);
+            setProgress((prev) => [...prev, "finished"]);
+            setTimeout(() => {
+                setProgress([]);
+                setReset(true);
+            }, 10);
         }
     }
 
@@ -64,16 +69,12 @@ function ContentTemplateSection({
             </h2>
             {optionalInternal === false ? (
                 <div>
-                    <div>
-                        <button type="button" onClick={handleReset}>
-                            Reset
-                        </button>
-                    </div>
                     <ContentForm
                         handleFormContents={handleSection}
                         isManualOfStyle={manualOfStyle}
                         section={`${type}${section}`}
                         reset={reset}
+                        // test={reset}
                         edited={`edited-${type}`}
                     />
                     <br />
