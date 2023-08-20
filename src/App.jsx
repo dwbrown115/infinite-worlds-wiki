@@ -201,10 +201,10 @@ function App() {
                                 Component={RacePages}
                             />
                             <Route path="/ChangeLog" Component={ChangeLog} />
-                            {/* <Route
+                            <Route
                                 path="/ChangeLogAdd"
                                 Component={ChangeLogAdd}
-                            /> */}
+                            />
                             <Route
                                 path="/PrivacyPolicy"
                                 Component={PrivacyPolicy}

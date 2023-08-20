@@ -467,7 +467,7 @@ function ContentUpload() {
                             );
                         })}
                         {/* <hr /> */}
-                        {addSection === false ? (
+                        {/* {addSection === false ? (
                             <div>
                                 <button
                                     type="button"
@@ -515,7 +515,7 @@ function ContentUpload() {
                             //     </div>
                             // </div>
                             <div />
-                        )}
+                        )} */}
                         {/* {JSON.stringify(Section)} */}
                     </div>
                 ) : null}
