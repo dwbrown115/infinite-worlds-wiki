@@ -12,14 +12,6 @@ import {
     ReportABug,
     RequestAFeature,
     ForgotPassword,
-    BookPageTemplate,
-    CharacterPageTemplate,
-    EventPageTemplate,
-    FactionPageTemplate,
-    ItemPageTemplate,
-    LocationPageTemplate,
-    PowerSystemPageTemplate,
-    RacePageTemplate,
     EditBookPage,
     EditCharacterInfo,
     EditCharacterRelationships,
@@ -81,38 +73,6 @@ function App() {
                             <Route
                                 path="/user/upload"
                                 Component={ContentUpload}
-                            />
-                            <Route
-                                path="/user/upload/BookPageTemplate"
-                                Component={BookPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/CharacterPageTemplate"
-                                Component={CharacterPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/EventPageTemplate"
-                                Component={EventPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/FactionPageTemplate"
-                                Component={FactionPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/ItemPageTemplate"
-                                Component={ItemPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/LocationPageTemplate"
-                                Component={LocationPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/PowerSystemPageTemplate"
-                                Component={PowerSystemPageTemplate}
-                            />
-                            <Route
-                                path="/user/upload/RacePageTemplate"
-                                Component={RacePageTemplate}
                             />
                             <Route
                                 path="/user/ReportABug"

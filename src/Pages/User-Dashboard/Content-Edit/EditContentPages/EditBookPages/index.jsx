@@ -278,11 +278,11 @@ function EditBookPage() {
                 </div>
             ) : (
                 <div
-                    // style={{
-                    //     display: "flex",
-                    //     flexDirection: "column",
-                    //     width: "100%",
-                    // }}
+                // style={{
+                //     display: "flex",
+                //     flexDirection: "column",
+                //     width: "100%",
+                // }}
                 >
                     {reset === false ? (
                         <div>

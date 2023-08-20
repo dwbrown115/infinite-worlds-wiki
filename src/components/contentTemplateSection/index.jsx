@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { ReactPropTypes } from "react";
 
 import { ContentForm } from "../../components";
-import { replaceImage } from "../../helpers";
-import { addData } from "../../firebase";
+import { replaceImage, replacePartOfAString } from "../../helpers";
+import { addData, getData, updateData } from "../../firebase";
+import { arrayUnion } from "firebase/firestore";
 function ContentTemplateSection({
     type,
     section,
@@ -51,7 +53,20 @@ function ContentTemplateSection({
     async function handleDataSubmit() {
         if (optionalInternal === false) {
             setProgress((prev) => [...prev, "started"]);
-            await replaceImage(data, type, section, name.split(" "));
+            let array = await getData("/ContentRef", `${replacePartOfAString(name, " ", "")}`);
+            const Section = { sectionName: section };
+            array = { ...array, sections: arrayUnion(Section) };
+            await updateData(
+                "/ContentRef",
+                replacePartOfAString(name, " ", ""),
+                array
+            );
+            await replaceImage(
+                data,
+                type,
+                section,
+                replacePartOfAString(name, " ", "")
+            );
             await addData(path, section, data);
             setProgress((prev) => [...prev, "finished"]);
             setTimeout(() => {
@@ -64,7 +79,7 @@ function ContentTemplateSection({
     return (
         <div>
             <h2>
-                {type} {sectionName}
+                {type.replace(/([a-z])([A-Z])/g, "$1 $2")} {sectionName}
             </h2>
             {optionalInternal === false ? (
                 <div>
@@ -78,11 +93,11 @@ function ContentTemplateSection({
                     />
                     <br />
 
-                    <div>
+                    {/* <div>
                         <button onClick={() => setOptionalInternal(true)}>
                             Remove the {sectionName.toLowerCase()}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             ) : (
                 <div>
