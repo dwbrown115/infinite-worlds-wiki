@@ -55,14 +55,20 @@ function ContentUpload() {
             manualOfStyle: false,
         },
         {
-            section: "PowersAndAbilities",
-            sectionName: "Powers And Abilities",
+            section: "Info",
+            sectionName: "Info",
             optional: true,
             manualOfStyle: false,
         },
         {
             section: "Equipment",
             sectionName: "Equipment",
+            optional: true,
+            manualOfStyle: false,
+        },
+        {
+            section: "PowersAndAbilities",
+            sectionName: "Powers And Abilities",
             optional: true,
             manualOfStyle: false,
         },
@@ -295,6 +301,8 @@ function ContentUpload() {
     const [name, setName] = useState("");
     const [series, setSeries] = useState("");
     const [type, setType] = useState("");
+    const [bookNumber, setBookNumber] = useState(0);
+    const [locationType, setLocationType] = useState("");
     const [newSectionName, setNewSectionName] = useState("");
     const [addSection, setAddSection] = useState(false);
     const [alert, setAlert] = useState("");
@@ -341,7 +349,6 @@ function ContentUpload() {
             setProgress(0);
             setProgressCheck([]);
             setLoading(false);
-            handleResetConfirm();
         }
     }, [progressCheck]);
 
@@ -368,6 +375,12 @@ function ContentUpload() {
         setConfirm(true);
         setName("");
         setSeries("");
+        if (type === "Locations") {
+            setLocationType("");
+        }
+        if (type === "Books") {
+            setBookNumber(0);
+        }
         setTimeout(() => {
             setReset(false);
             setConfirm(false);
@@ -392,16 +405,21 @@ function ContentUpload() {
     async function handleUpload(e) {
         e.preventDefault();
         setLoading(true);
-        setSubmit(true);
         const time = Date().toLocaleString();
-        const data = {
+        let data = {
             Name: name,
             Series: series,
-            Type: type,
+            Type: type.slice(0, -1),
             sections: [],
             createdAt: time,
             createdBy: email,
         };
+        if (type === "Locations") {
+            data = { ...data, locationType: locationType };
+        }
+        if (type === "Books") {
+            data = { ...data, bookNumber: bookNumber };
+        }
         const docRef = doc(db, "ContentRef", `${name.split(" ")}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -411,7 +429,17 @@ function ContentUpload() {
         } else {
             await setDoc(doc(db, "ContentRef", `${name.split(" ")}`), data)
                 .then(async () => {
-                    // setSubmit(true);
+                    setSubmit(true);
+                    setTimeout(() => {
+                        setName("");
+                        setSeries("");
+                        if (type === "Locations") {
+                            setLocationType("");
+                        }
+                        if (type === "Books") {
+                            setBookNumber(0);
+                        }
+                    }, 10);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -426,7 +454,7 @@ function ContentUpload() {
 
     function addNewSection(section) {
         const newSection = {
-            section: replacePartOfAString(newSectionName, " ", ""),
+            section: replacePartOfAString(newSectionName, " ", ","),
             sectionName: newSectionName,
             optional: false,
             manualOfStyle: false,
@@ -442,7 +470,7 @@ function ContentUpload() {
     function handlePageContent(section) {
         // console.log(eval(section));
         const Section = eval(section);
-        const path = `${collection}/${section}/${name.split(" ")}/`;
+        const path = `${collection}/${section}/${name.split(" ")}`;
         return (
             <div>
                 {Section ? (
@@ -462,6 +490,7 @@ function ContentUpload() {
                                         optional={item.optional}
                                         handleProgress={handleProgressCheck}
                                         Reset={confirm}
+                                        order={key}
                                     />
                                 </div>
                             );
@@ -583,6 +612,46 @@ function ContentUpload() {
                         required
                     />
                 </div>
+                {type === "Books" ? (
+                    <div>
+                        <h3>Book Order Number</h3>
+                        <input
+                            type="number"
+                            placeholder="Book Order Number:"
+                            value={bookNumber}
+                            onChange={(e) => {
+                                setBookNumber(e.target.value);
+                                setEdited(true);
+                            }}
+                            min={0}
+                            required
+                        />
+                    </div>
+                ) : null}
+                {type === "Locations" ? (
+                    <div>
+                        <h3>Location Type</h3>
+                        <select
+                            id="locationType"
+                            onChange={(e) => {
+                                setLocationType(e.target.value);
+                                setEdited(true);
+                            }}
+                            value={locationType}
+                            required
+                        >
+                            <option value="">Select a type</option>
+                            <option value="Universe">Universe</option>
+                            <option value="SolarSystem">Solar System</option>
+                            <option value="Planet">Planet</option>
+                            <option value="Continent">Continent</option>
+                            <option value="Island">Island</option>
+                            <option value="Nation">Nation</option>
+                            <option value="City">City</option>
+                            <option value="Town">Town</option>
+                        </select>
+                    </div>
+                ) : null}
                 <br />
                 {handlePageContent(type)}
                 <hr />

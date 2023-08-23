@@ -11,6 +11,7 @@ function ContentTemplateSection({
     sectionName,
     name,
     path,
+    order,
     submit,
     manualOfStyle,
     optional,
@@ -53,19 +54,19 @@ function ContentTemplateSection({
     async function handleDataSubmit() {
         if (optionalInternal === false) {
             setProgress((prev) => [...prev, "started"]);
-            let array = await getData("/ContentRef", `${replacePartOfAString(name, " ", "")}`);
-            const Section = { sectionName: section };
+            let array = await getData("/ContentRef", `${replacePartOfAString(name, " ", ",")}`);
+            const Section = { sectionName: section, order: order };
             array = { ...array, sections: arrayUnion(Section) };
             await updateData(
                 "/ContentRef",
-                replacePartOfAString(name, " ", ""),
+                replacePartOfAString(name, " ", ","),
                 array
             );
             await replaceImage(
                 data,
                 type,
                 section,
-                replacePartOfAString(name, " ", "")
+                replacePartOfAString(name, " ", ",")
             );
             await addData(path, section, data);
             setProgress((prev) => [...prev, "finished"]);
@@ -93,11 +94,11 @@ function ContentTemplateSection({
                     />
                     <br />
 
-                    {/* <div>
+                    <div>
                         <button onClick={() => setOptionalInternal(true)}>
                             Remove the {sectionName.toLowerCase()}
                         </button>
-                    </div> */}
+                    </div>
                 </div>
             ) : (
                 <div>
