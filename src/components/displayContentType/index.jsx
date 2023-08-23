@@ -50,25 +50,27 @@ function DisplayContentType({ Type }) {
                             <h3>Series: {item.series}</h3>
                             {Type === "Book" ? (
                                 <div>
-                                    {item.contents.map((content, key) => {
-                                        const type = Type.replace(" ", "");
-                                        const name = content.Name.replace(
-                                            " ",
-                                            ","
-                                        );
-                                        // console.log(item);
-                                        return (
-                                            <ul key={key}>
-                                                <li>
-                                                    <Link
-                                                        to={`/${type}/${content.id}`}
-                                                    >
-                                                        {content.Name}
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        );
-                                    })}
+                                    {item.contents
+                                        .reverse()
+                                        .map((content, key) => {
+                                            const type = Type.replace(" ", "");
+                                            const name = content.Name.replace(
+                                                " ",
+                                                ","
+                                            );
+                                            // console.log(item);
+                                            return (
+                                                <ul key={key}>
+                                                    <li>
+                                                        <Link
+                                                            to={`/${type}/${content.id}`}
+                                                        >
+                                                            {content.Name}
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            );
+                                        })}
                                 </div>
                             ) : (
                                 <div>
