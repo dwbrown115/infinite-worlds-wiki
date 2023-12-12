@@ -5,7 +5,7 @@ import {
     EmailAuthProvider,
     reauthenticateWithCredential,
 } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { firebase_app } from "../../../firebase";
 // import firebase_app from "../../../firebase/config";
@@ -16,7 +16,7 @@ function NewPassword() {
     const router = useNavigate();
 
     // const [user, setUser] = useState(auth.currentUser);
-    const [oldPassword, setOldPassword] = useState("@Jivvc115");
+    const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const user = auth.currentUser;
